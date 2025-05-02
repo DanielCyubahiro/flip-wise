@@ -19,7 +19,7 @@ export default function HomePage() {
             <Card
               key={card._id}
               question={card.question}
-              collectionTitle={card.collectionId.title}
+              collectionTitle={card.collectionId?.title}
             ></Card>
           );
         })}
