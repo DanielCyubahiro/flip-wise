@@ -20,6 +20,7 @@ export default function HomePage({ fetcher }) {
             key={card._id}
             question={card.question}
             collectionName={card.collectionId?.title}
+            showCollectionName={true}
           ></Card>
         );
       })}
