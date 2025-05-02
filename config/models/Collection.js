@@ -7,7 +7,6 @@ const collectionsSchema = new Schema({
 });
 
 const Collections =
-  mongoose.models.Collections ||
-  mongoose.model("Collections", collectionsSchema);
+  mongoose.models.Collection || mongoose.model("Collection", collectionsSchema);
 
 export default Collections;
