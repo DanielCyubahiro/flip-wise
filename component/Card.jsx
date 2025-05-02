@@ -21,10 +21,10 @@ const QuestionText = styled.h2`
   color: #333;
 `;
 
-export default function Card({ question, collectionName }) {
+export default function Card({ question, collectionName, showCollectionName }) {
   return (
     <CardBox>
-      <p>#{collectionName}</p>
+      {showCollectionName && <p>#{collectionName}</p>}
       <QuestionText>{question}</QuestionText>
     </CardBox>
   );
