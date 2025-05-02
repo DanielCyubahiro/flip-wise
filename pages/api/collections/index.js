@@ -1,5 +1,6 @@
 import dbConnect from "@/config/database";
-import Collections from "@/config/models/collections";
+import Collections from "@/config/models/Collection";
+
 
 export default async function handler(request, response) {
   try {
