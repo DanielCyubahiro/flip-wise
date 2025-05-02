@@ -1,16 +1,16 @@
-import useSWR from 'swr';
-import Card from '@/component/Card';
-import {StyledH1} from '@/component/StyledHeadings';
-import {StyledWrapper} from '@/component/StyledWrapper';
+import useSWR from "swr";
+import Card from "@/component/Card";
+import {StyledH1} from "@/component/StyledHeadings";
+import {StyledWrapper} from "@/component/StyledWrapper";
 
-export default function HomePage({fetcher}) {
-  const {data: cards, isLoading, error, mutate} = useSWR('/api/cards', fetcher);
+export default function HomePage({ fetcher }) {
+  const {data: cards, isLoading, error, mutate} = useSWR("/api/cards", fetcher);
 
   if (isLoading) return <div>Loading cards...</div>;
   if (error) return <div>Failed to load cards. Error: {error.message}</div>;
   const handleDelete = async (id) => {
     const response = await fetch(`/api/cards/${id}`, {
-      method: 'DELETE',
+      method: "DELETE",
     });
 
     if (response.ok) {
