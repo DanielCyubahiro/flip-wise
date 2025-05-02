@@ -1,5 +1,5 @@
 import dbConnect from '@/config/database';
-import Cards from '@/config/models/cards';
+import Cards from '@/config/models/Card';
 
 export default async function handler(request, response) {
   try {
