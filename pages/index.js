@@ -6,7 +6,7 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function HomePage() {
   const { data: cards, isLoading, error } = useSWR("/api/cards", fetcher);
-  console.log(cards);
+
   if (isLoading) return <div>Loading cards...</div>;
   if (error) return <div>Failed to load cards. Error: {error.message}</div>;
 

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { StyledH2 } from "./StyledHeadings";
 
 const CardContainer = styled.div`
   display: flex;
@@ -14,9 +15,11 @@ const CardBox = styled.div`
   padding: 32px;
   height: 200px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+  gap: 12px;
 `;
 
 const QuestionText = styled.p`
@@ -29,7 +32,7 @@ export default function Card({ question, collectionTitle }) {
   return (
     <CardContainer>
       <CardBox>
-        <p>{collectionTitle}</p>
+        <StyledH2>{collectionTitle}</StyledH2>
         <QuestionText>{question}</QuestionText>
       </CardBox>
     </CardContainer>
