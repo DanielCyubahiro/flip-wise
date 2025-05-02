@@ -15,7 +15,7 @@ const CardBox = styled.section`
   gap: 12px;
 `;
 
-const QuestionText = styled.p`
+const QuestionText = styled.h2`
   font-size: 1.2rem;
   font-weight: 600;
   color: #333;
@@ -24,7 +24,7 @@ const QuestionText = styled.p`
 export default function Card({ question, collectionName }) {
   return (
     <CardBox>
-      <span>#{collectionName}</span>
+      <p>#{collectionName}</p>
       <QuestionText>{question}</QuestionText>
     </CardBox>
   );
