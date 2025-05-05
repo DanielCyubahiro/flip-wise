@@ -23,13 +23,14 @@ const QuestionText = styled.h2`
     color: #333;
 `;
 
-const CardActions = styled.div`
+const CardActions = styled.section`
     display: flex;
     justify-content: space-evenly;
     gap: 1rem;
 `;
 
-const ConfirmationText = styled.div`
+const ConfirmationText = styled.p`
+    all: unset;
     display: flex;
     align-items: center;
 `;
