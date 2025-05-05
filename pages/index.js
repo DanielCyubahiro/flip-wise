@@ -15,6 +15,8 @@ export default function HomePage({fetcher}) {
 
   if (isLoading) return <div>Loading cards...</div>;
   if (error) return <div>Failed to load cards. Error: {error.message}</div>;
+  if (cards) return <div>No cards available. Please insert new cards...</div>;
+
   const handleDelete = async (id) => {
     const response = await fetch(`/api/cards/${id}`, {
       method: 'DELETE',
