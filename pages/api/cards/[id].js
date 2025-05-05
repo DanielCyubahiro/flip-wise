@@ -11,7 +11,6 @@ export default async function handler(request, response) {
       const cardsInOneCollection = await Cards.find({
         collectionId: id,
       }).populate("collectionId");
-      console.log(cardsInOneCollection);
       response.status(200).json(cardsInOneCollection);
       return;
     } catch (err) {
