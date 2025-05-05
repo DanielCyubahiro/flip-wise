@@ -1,10 +1,6 @@
 import useSWR from "swr";
 import Card from "@/component/Card";
-import { StyledH1 } from "@/component/StyledHeadings";
-import { StyledWrapper } from "@/component/StyledWrapper";
 import { StyledLink } from "@/component/StyledLink";
-import useSWR from 'swr';
-import Card from '@/component/Card';
 import {StyledH1} from '@/component/StyledHeadings';
 import {StyledWrapper} from '@/component/StyledWrapper';
 import StyledAlert from '@/component/StyledAlert';
