@@ -1,10 +1,10 @@
 import useSWR from 'swr'
 import Card from '@/component/Card'
+import { StyledLink } from '@/component/StyledLink'
 import { StyledH1 } from '@/component/StyledHeadings'
 import { StyledWrapper } from '@/component/StyledWrapper'
 import StyledAlert from '@/component/StyledAlert'
 import { useState } from 'react'
-import { StyledLink } from '@/component/StyledLink'
 
 export default function HomePage({ fetcher }) {
   const [alert, setAlert] = useState({
