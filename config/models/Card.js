@@ -1,6 +1,4 @@
 import mongoose from 'mongoose'
-import Collections from './Collection'
-
 const { Schema } = mongoose
 
 const cardsSchema = new Schema({
