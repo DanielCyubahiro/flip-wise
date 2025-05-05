@@ -6,7 +6,6 @@ export default async function handler(request, response) {
     await dbConnect();
     if (request.method === "GET") {
       const cards = await Cards.find().populate("collectionId");
-
       return response.status(200).json(cards);
     }
     return response.status(405).json({ message: "Method not allowed" });
