@@ -3,7 +3,6 @@
 import {useEffect} from 'react';
 import styled from 'styled-components';
 
-// Styled components
 const AlertContainer = styled.div`
     border-left: 4px solid;
     padding: 1rem;
@@ -15,6 +14,7 @@ const AlertContainer = styled.div`
     position: fixed;
     top: 1rem;
     right: 1rem;
+    z-index: 1000;
 
     ${({type}) => {
         switch (type) {
