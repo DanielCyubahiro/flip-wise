@@ -1,53 +1,53 @@
-import { useRouter } from "next/router";
-import useSWR from "swr";
-import { StyledH1 } from "@/component/StyledHeadings";
-import Card from "@/component/Card";
-import { StyledWrapper } from "@/component/StyledWrapper";
-import { StyledLink } from "@/component/StyledLink";
-import {useState} from 'react';
-import StyledAlert from '@/component/StyledAlert';
+import { useRouter } from 'next/router'
+import useSWR from 'swr'
+import { StyledH1 } from '@/component/StyledHeadings'
+import Card from '@/component/Card'
+import { StyledWrapper } from '@/component/StyledWrapper'
+import { StyledLink } from '@/component/StyledLink'
+import { useState } from 'react'
+import StyledAlert from '@/component/StyledAlert'
 
 export default function CollectionDetailPage({ fetcher }) {
-  const router = useRouter();
-  const { id } = router.query;
-  const { data: cards, isLoading, error } = useSWR(`/api/cards/${id}`, fetcher);
+  const router = useRouter()
+  const { id } = router.query
+  const { data: cards, isLoading, error } = useSWR(`/api/cards/${id}`, fetcher)
   const [alert, setAlert] = useState({
     show: false,
-    message: "",
-    type: 'info'
-  });
-  if (isLoading) return <div>Loading cards...</div>;
-  if (error) return <div>Error loading cards: {error.message}</div>;
+    message: '',
+    type: 'info',
+  })
+  if (isLoading) return <div>Loading cards...</div>
+  if (error) return <div>Error loading cards: {error.message}</div>
 
   const handleDelete = async (id) => {
     const response = await fetch(`/api/cards/${id}`, {
       method: 'DELETE',
-    });
+    })
     if (response.ok) {
       setAlert({
         show: true,
         message: 'Card deleted successfully!',
-        type: 'success'
+        type: 'success',
       })
-      mutate();
+      mutate()
     } else {
       setAlert({
         show: true,
         message: 'Could not delete card!',
-        type: 'error'
+        type: 'error',
       })
     }
-  };
+  }
 
   return (
     <StyledWrapper>
       {alert.show && (
-          <StyledAlert
-              message={alert.message}
-              type="success"
-              onClose={() => setAlert({...alert, show: false})}
-              duration={3000}
-          />
+        <StyledAlert
+          message={alert.message}
+          type="success"
+          onClose={() => setAlert({ ...alert, show: false })}
+          duration={3000}
+        />
       )}
       <StyledH1>{cards[0]?.collectionId.title}</StyledH1>
       <StyledLink href={`/collections`}>Back to Collection List</StyledLink>
@@ -59,10 +59,10 @@ export default function CollectionDetailPage({ fetcher }) {
             key={card._id}
             question={card.question}
             showCollectionName={false}
-              onDelete={handleDelete}
+            onDelete={handleDelete}
           ></Card>
         ))
       )}
     </StyledWrapper>
-  );
+  )
 }
