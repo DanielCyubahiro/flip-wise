@@ -8,7 +8,7 @@ const CardBox = styled.section`
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     width: 400px;
     padding: 32px;
-    height: 200px;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
