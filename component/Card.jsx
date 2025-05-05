@@ -35,9 +35,8 @@ const ConfirmationText = styled.p`
     align-items: center;
 `;
 
-export default function Card({question, collectionName, onDelete}) {
+export default function Card({ question, collectionName, showCollectionName, onDelete }) {
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
-
   const handleDelete = () => {
     if (deleteConfirmation) {
       setDeleteConfirmation(false);
@@ -47,20 +46,20 @@ export default function Card({question, collectionName, onDelete}) {
     }
   };
   return (
-      <CardBox>
-        <p>#{collectionName}</p>
-        <QuestionText>{question}</QuestionText>
-        <CardActions>
-          {deleteConfirmation && (
-              <>
-                <ConfirmationText>Are you sure?</ConfirmationText>
-                <StyledButton onClick={() => setDeleteConfirmation(false)}>
-                  Cancel
-                </StyledButton>
-              </>
-          )}
-          <StyledButton onClick={handleDelete}>Delete</StyledButton>
-        </CardActions>
-      </CardBox>
+    <CardBox>
+      {showCollectionName && <p>#{collectionName}</p>}
+      <QuestionText>{question}</QuestionText>
+      <CardActions>
+        {deleteConfirmation && (
+            <>
+              <ConfirmationText>Are you sure?</ConfirmationText>
+              <StyledButton onClick={() => setDeleteConfirmation(false)}>
+                Cancel
+              </StyledButton>
+            </>
+        )}
+        <StyledButton onClick={handleDelete}>Delete</StyledButton>
+      </CardActions>
+    </CardBox>
   );
 }

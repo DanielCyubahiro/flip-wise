@@ -1,3 +1,8 @@
+import useSWR from "swr";
+import Card from "@/component/Card";
+import { StyledH1 } from "@/component/StyledHeadings";
+import { StyledWrapper } from "@/component/StyledWrapper";
+import { StyledLink } from "@/component/StyledLink";
 import useSWR from 'swr';
 import Card from '@/component/Card';
 import {StyledH1} from '@/component/StyledHeadings';
@@ -37,26 +42,28 @@ export default function HomePage({fetcher}) {
     }
   };
   return (
-      <StyledWrapper>
-        {alert.show && (
-            <StyledAlert
-                message={alert.message}
-                type="success"
-                onClose={() => setAlert({...alert, show: false})}
-                duration={3000}
-            />
-        )}
-        <StyledH1>All Cards List</StyledH1>
-        {cards.map((card) => {
-          return (
-              <Card
-                  key={card._id}
-                  question={card.question}
-                  collectionName={card.collectionId?.title}
-                  onDelete={() => handleDelete(card._id)}
-              />
-          );
-        })}
-      </StyledWrapper>
+    <StyledWrapper>
+      {alert.show && (
+          <StyledAlert
+              message={alert.message}
+              type="success"
+              onClose={() => setAlert({...alert, show: false})}
+              duration={3000}
+          />
+      )}
+      <StyledH1>All Cards List</StyledH1>
+      <StyledLink href={`/collections`}>To Collection List</StyledLink>
+      {cards.map((card) => {
+        return (
+          <Card
+            key={card._id}
+            question={card.question}
+            collectionName={card.collectionId?.title}
+            showCollectionName={true}
+            onDelete={() => handleDelete(card._id)}
+          ></Card>
+        );
+      })}
+    </StyledWrapper>
   );
 }
