@@ -13,7 +13,7 @@ const CardBox = styled.section`
     padding: 32px;
     transition: transform 0.6s;
     transform-style: preserve-3d;
-    transform: ${props => props.$isFlipped && css`rotateY(180deg)`};
+    transform: ${props => props.$isFlipped && css`rotateY(180 deg)`};
 `;
 
 const QuestionText = styled.h2`
@@ -34,6 +34,13 @@ const ConfirmationText = styled.p`
     align-items: center;
 `;
 
+export default function Card({
+  question,
+  collectionName,
+  showCollectionName,
+  onDelete,
+}) {
+  const [deleteConfirmation, setDeleteConfirmation] = useState(false);
 const FlipButton = styled(StyledButton)`
     background-color: dimgrey;
     color: white;
@@ -83,7 +90,7 @@ export default function Card({question, answer, collectionName, onDelete}) {
         <CardBox $isFlipped={isFlipped}>
           {!isFlipped && (
               <CardFront>
-                <p>#{collectionName}</p>
+                {showCollectionName && <p>#{collectionName}</p>}
                 <QuestionText>{question}</QuestionText>
                 <FlipButton
                     onClick={() => setIsFlipped(!isFlipped)}>Flip</FlipButton>
@@ -103,7 +110,7 @@ export default function Card({question, answer, collectionName, onDelete}) {
           )}
           {isFlipped && (
               <CardBack>
-                <p>#{collectionName}</p>
+                {showCollectionName && <p>#{collectionName}</p>}
                 <QuestionText>{answer}</QuestionText>
                 <FlipButton onClick={() => setIsFlipped(!isFlipped)}>Flip
                   Back</FlipButton>
@@ -121,7 +128,7 @@ export default function Card({question, answer, collectionName, onDelete}) {
                 </CardActions>
               </CardBack>
           )}
-              </CardBox>
-            </CardContainer>
-            );
-          }
+        </CardBox>
+      </CardContainer>
+  );
+}

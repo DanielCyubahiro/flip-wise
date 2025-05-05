@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const StyledWrapper = styled.main`
   display: flex;
@@ -6,4 +6,4 @@ export const StyledWrapper = styled.main`
   align-items: center;
   flex-direction: column;
   gap: 1rem;
-`;
+`

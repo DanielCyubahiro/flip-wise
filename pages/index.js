@@ -4,12 +4,13 @@ import {StyledH1} from '@/component/StyledHeadings';
 import {StyledWrapper} from '@/component/StyledWrapper';
 import StyledAlert from '@/component/StyledAlert';
 import {useState} from 'react';
+import { StyledLink } from '@/component/StyledLink'
 
 export default function HomePage({fetcher}) {
   const [alert, setAlert] = useState({
     show: false,
-    message: '',
-    type: 'info',
+    message: "",
+    type: 'info'
   });
   const {data: cards, isLoading, error, mutate} = useSWR('/api/cards', fetcher);
 
@@ -25,15 +26,15 @@ export default function HomePage({fetcher}) {
       setAlert({
         show: true,
         message: 'Card deleted successfully!',
-        type: 'success',
-      });
+        type: 'success'
+      })
       mutate();
     } else {
       setAlert({
         show: true,
         message: 'Could not delete card!',
-        type: 'error',
-      });
+        type: 'error'
+      })
     }
   };
   return (
@@ -47,6 +48,7 @@ export default function HomePage({fetcher}) {
             />
         )}
         <StyledH1>All Cards List</StyledH1>
+        <StyledLink href={`/collections`}>To Collection List</StyledLink>
         {cards.map((card) => {
           return (
               <Card
