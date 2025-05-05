@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { StyledButton } from '@/component/Button'
 import { useState } from 'react'
 
@@ -13,7 +13,7 @@ const CardBox = styled.section`
   padding: 32px;
   transition: transform 0.6s;
   transform-style: preserve-3d;
-  transform: ${(props) => props.$isFlipped && css`rotateY(180 deg)`};
+  transform: ${(props) => props.$isFlipped && `rotateY(180deg)`};
 `
 
 const QuestionText = styled.h2`
@@ -66,7 +66,7 @@ const CardBack = styled(CardFrontBack)`
   background-color: #dcdcdc;
 `
 
-export default function Card({ question, answer, collectionName, onDelete }) {
+export default function Card({ question, answer, collectionName, onDelete, showCollectionName }) {
   const [deleteConfirmation, setDeleteConfirmation] = useState(false)
   const [isFlipped, setIsFlipped] = useState(false)
 

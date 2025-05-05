@@ -56,6 +56,7 @@ export default function HomePage({ fetcher }) {
             question={card.question}
             answer={card.answer}
             collectionName={card.collectionId?.title}
+            showCollectionName={true}
             onDelete={() => handleDelete(card._id)}
           />
         )

@@ -58,6 +58,7 @@ export default function CollectionDetailPage({ fetcher }) {
           <Card
             key={card._id}
             question={card.question}
+            answer={card.answer}
             showCollectionName={false}
             onDelete={handleDelete}
           ></Card>
