@@ -53,8 +53,9 @@ export default function Card({question, collectionName, onDelete}) {
           {deleteConfirmation && (
               <>
                 <ConfirmationText>Are you sure?</ConfirmationText>
-                <StyledButton onClick={() => setDeleteConfirmation(
-                    false)}>Cancel</StyledButton>
+                <StyledButton onClick={() => setDeleteConfirmation(false)}>
+                  Cancel
+                </StyledButton>
               </>
           )}
           <StyledButton onClick={handleDelete}>Delete</StyledButton>
