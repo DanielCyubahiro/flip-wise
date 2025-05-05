@@ -1,5 +1,6 @@
 import dbConnect from '@/config/database'
 import Cards from '@/config/models/Card'
+import Collections from '@/config/models/Collection'
 
 export default async function handler(request, response) {
   try {
