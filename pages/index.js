@@ -48,7 +48,6 @@ export default function HomePage({ fetcher }) {
         />
       )}
       <StyledH1>All Cards List</StyledH1>
-      <StyledLink href={`/collections`}>To Collection List</StyledLink>
       {cards.map((card) => {
         return (
           <Card

@@ -50,7 +50,6 @@ export default function CollectionDetailPage({ fetcher }) {
         />
       )}
       <StyledH1>{cards[0]?.collectionId.title}</StyledH1>
-      <StyledLink href={`/collections`}>Back to Collection List</StyledLink>
       {cards.length === 0 ? (
         <p>No Cards</p>
       ) : (
