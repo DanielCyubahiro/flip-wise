@@ -3,9 +3,9 @@ import useSWR from 'swr'
 import { StyledH1 } from '@/component/StyledHeadings'
 import Card from '@/component/Card'
 import { StyledWrapper } from '@/component/StyledWrapper'
-import { StyledLink } from '@/component/StyledLink'
 import { useState } from 'react'
 import StyledAlert from '@/component/StyledAlert'
+import Navigation from '@/component/Navigation'
 
 export default function CollectionDetailPage({ fetcher }) {
   const router = useRouter()
@@ -63,6 +63,7 @@ export default function CollectionDetailPage({ fetcher }) {
           ></Card>
         ))
       )}
+      <Navigation />
     </StyledWrapper>
   )
 }

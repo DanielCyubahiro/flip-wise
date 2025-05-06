@@ -1,4 +1,3 @@
-import styled from 'styled-components'
 import { StyledLink } from './StyledLink'
 import { StyledFooter } from './StyledFooter'
 
