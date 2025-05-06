@@ -12,8 +12,8 @@ export const StyledLink = styled(Link)`
 
   color: ${({ variant }) => (variant === 'lightBlue' ? '#1a1a1a' : 'white')};
 
-  background-color: ${({ active, variant }) => {
-    if (active) return 'blue'
+  background-color: ${({ $active, variant }) => {
+    if ($active) return 'blue'
     if (variant === 'lightBlue') return '#e6f4ff'
     return 'black'
   }};

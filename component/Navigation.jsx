@@ -8,10 +8,10 @@ export default function Navigation() {
 
   return (
     <StyledFooter>
-      <StyledLink href={`/`} active={isActive('/')}>
+      <StyledLink href={`/`} $active={isActive('/')}>
         All Cards
       </StyledLink>
-      <StyledLink href={`/collections`} active={isActive('/collections')}>
+      <StyledLink href={`/collections`} $active={isActive('/collections')}>
         Collections
       </StyledLink>
     </StyledFooter>
