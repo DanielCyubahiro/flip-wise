@@ -8,12 +8,16 @@ export const StyledLink = styled(Link)`
   text-decoration: none;
   font-weight: bold;
   border: 1px solid;
-  transition:
-    background-color 0.2s,
-    border-color 0.2s;
+  transition: background-color 0.2s, border-color 0.2s;
 
   color: ${({ variant }) => (variant === 'lightBlue' ? '#1a1a1a' : 'white')};
-  background-color: ${({ variant }) => (variant === 'lightBlue' ? '#e6f4ff' : 'black')};
+
+  background-color: ${({ active, variant }) => {
+    if (active) return 'blue'
+    if (variant === 'lightBlue') return '#e6f4ff'
+    return 'black'
+  }};
+
   border-color: ${({ variant }) => (variant === 'lightBlue' ? '#cce0f5' : 'black')};
 
   &:hover {
