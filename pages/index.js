@@ -54,10 +54,11 @@ export default function HomePage({ fetcher }) {
           <Card
             key={card._id}
             question={card.question}
+            answer={card.answer}
             collectionName={card.collectionId?.title}
             showCollectionName={true}
             onDelete={() => handleDelete(card._id)}
-          ></Card>
+          />
         )
       })}
     </StyledWrapper>
