@@ -10,6 +10,13 @@ export default async function handler(request, response) {
 
       return response.status(200).json(cards);
     }
+    if (request.method === "POST") {
+      const cardData = request.body;
+      console.log(cardData);
+      const newCard = await Cards.create(cardData);
+      return response.status(201).json(newCard);
+    }
+
     return response.status(405).json({ message: "Method not allowed" });
   } catch (error) {
     console.error("API Error:", error);
