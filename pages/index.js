@@ -5,7 +5,6 @@ import { StyledH1 } from '@/component/StyledHeadings'
 import { StyledWrapper } from '@/component/StyledWrapper'
 import StyledAlert from '@/component/StyledAlert'
 import { useState } from 'react'
-import Navigation from '@/component/Navigation'
 
 export default function HomePage({ fetcher }) {
   const [alert, setAlert] = useState({
@@ -61,7 +60,6 @@ export default function HomePage({ fetcher }) {
           />
         )
       })}
-      <Navigation />
     </StyledWrapper>
   )
 }

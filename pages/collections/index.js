@@ -1,4 +1,3 @@
-import Navigation from '@/component/Navigation'
 import { StyledH1 } from '@/component/StyledHeadings'
 import { StyledLink } from '@/component/StyledLink'
 import { StyledWrapper } from '@/component/StyledWrapper'
@@ -24,7 +23,6 @@ export default function CollectionPage({ fetcher }) {
           </StyledLink>
         )
       })}
-      <Navigation />
     </StyledWrapper>
   )
 }
