@@ -63,7 +63,6 @@ export default function CollectionDetailPage({ fetcher }) {
           ></Card>
         ))
       )}
-      <Navigation />
     </StyledWrapper>
   )
 }
