@@ -8,7 +8,7 @@ export default function Navigation() {
 
   return (
     <StyledFooter>
-      <StyledLink href={`/`} $active={isActive('/')}>
+      <StyledLink href={`/cards`} $active={isActive('/cards')}>
         All Cards
       </StyledLink>
       <StyledLink href={`/collections`} $active={isActive('/collections')}>
