@@ -5,7 +5,6 @@ import Card from '@/component/Card'
 import { StyledWrapper } from '@/component/StyledWrapper'
 import { useState } from 'react'
 import StyledAlert from '@/component/StyledAlert'
-import Navigation from '@/component/Navigation'
 
 export default function CollectionDetailPage({ fetcher }) {
   const router = useRouter()
@@ -60,6 +59,7 @@ export default function CollectionDetailPage({ fetcher }) {
             answer={card.answer}
             showCollectionName={false}
             onDelete={handleDelete}
+            showMarkAsCorrectButton
           ></Card>
         ))
       )}

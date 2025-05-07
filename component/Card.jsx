@@ -66,7 +66,14 @@ const CardBack = styled(CardFrontBack)`
   background-color: #dcdcdc;
 `
 
-export default function Card({ question, answer, collectionName, onDelete, showCollectionName }) {
+export default function Card({
+  question,
+  answer,
+  collectionName,
+  onDelete,
+  showCollectionName,
+  showMarkAsCorrectButton,
+}) {
   const [deleteConfirmation, setDeleteConfirmation] = useState(false)
   const [isFlipped, setIsFlipped] = useState(false)
 
@@ -102,6 +109,7 @@ export default function Card({ question, answer, collectionName, onDelete, showC
             {showCollectionName && <p>#{collectionName}</p>}
             <QuestionText>{answer}</QuestionText>
             <FlipButton onClick={() => setIsFlipped(!isFlipped)}>Flip Back</FlipButton>
+            {showMarkAsCorrectButton && <StyledButton>Mark as correct!</StyledButton>}
             <CardActions>
               {deleteConfirmation && (
                 <>
