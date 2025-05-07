@@ -6,14 +6,14 @@ export default async function handler(request, response) {
     await dbConnect();
     if (request.method === "GET") {
       const cards = await Cards.find().populate("collectionId");
-      console.log(cards);
 
       return response.status(200).json(cards);
     }
     if (request.method === "POST") {
       const cardData = request.body;
-      console.log(cardData);
       const newCard = await Cards.create(cardData);
+
+      console.log(newCard);
       return response.status(201).json(newCard);
     }
 

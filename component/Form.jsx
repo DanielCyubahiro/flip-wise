@@ -50,6 +50,8 @@ export default function Form({ setCards }) {
       collectionId: collection,
     };
 
+    console.log(newCard);
+
     try {
       const response = await fetch("/api/cards", {
         method: "POST",
@@ -69,8 +71,9 @@ export default function Form({ setCards }) {
 
       const createdCard = await response.json();
       setCards((prevCards) => [...prevCards, createdCard]);
+      return;
     } catch (error) {
-      console.error("Your card could not be added");
+      //console.error("Your card could not be added");
     }
   }
 
@@ -97,9 +100,10 @@ export default function Form({ setCards }) {
         id="collection"
         value={collection}
         onChange={(e) => setCollection(e.target.value)}
-        required
+        //required
       >
-        <option value="1">1</option>
+        <option value="">Select collection</option>
+        <option value={"6819c0a618d01ad65ca4ff37"}>Mathematics</option>
         <option value="2">2</option>
       </select>
       <FormButton type="submit">Add Card</FormButton>
