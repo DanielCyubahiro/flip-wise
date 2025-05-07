@@ -1,6 +1,5 @@
 import useSWR from 'swr'
 import Card from '@/component/Card'
-import { StyledLink } from '@/component/StyledLink'
 import { StyledH1 } from '@/component/StyledHeadings'
 import { StyledWrapper } from '@/component/StyledWrapper'
 import StyledAlert from '@/component/StyledAlert'
