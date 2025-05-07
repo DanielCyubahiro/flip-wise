@@ -12,7 +12,6 @@ export default function CollectionPage({ fetcher }) {
   return (
     <StyledWrapper>
       <StyledH1>Collection List</StyledH1>
-      <StyledLink href={`/`}>To All Card List</StyledLink>
       {collections.map((collection) => {
         return (
           <StyledLink

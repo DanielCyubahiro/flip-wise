@@ -1,6 +1,5 @@
 import useSWR from 'swr'
 import Card from '@/component/Card'
-import { StyledLink } from '@/component/StyledLink'
 import { StyledH1 } from '@/component/StyledHeadings'
 import { StyledWrapper } from '@/component/StyledWrapper'
 import StyledAlert from '@/component/StyledAlert'
@@ -48,7 +47,6 @@ export default function HomePage({ fetcher }) {
         />
       )}
       <StyledH1>All Cards List</StyledH1>
-      <StyledLink href={`/collections`}>To Collection List</StyledLink>
       {cards.map((card) => {
         return (
           <Card
