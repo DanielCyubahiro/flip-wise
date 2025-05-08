@@ -132,7 +132,7 @@ export default function Card({
             <FlipButton onClick={() => setIsFlipped(!isFlipped)}>Flip Back</FlipButton>
             {showMarkAsCorrectButton && (
               <StyledButton onClick={handleToggleCorrect}>
-                {isCorrect ? 'Unmark as not answered' : 'Mark as correct'}
+                {isCorrect ? 'Mark as not answered yet' : 'Mark as correct'}
               </StyledButton>
             )}
             <CardActions>
