@@ -9,7 +9,7 @@ import StyledAlert from '@/component/StyledAlert'
 export default function CollectionDetailPage({ fetcher }) {
   const router = useRouter()
   const { id } = router.query
-  const { data: cards, isLoading, error } = useSWR(`/api/cards/${id}`, fetcher)
+  const { data: cards, isLoading, error, mutate } = useSWR(`/api/cards/${id}`, fetcher)
   const [alert, setAlert] = useState({
     show: false,
     message: '',

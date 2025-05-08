@@ -11,7 +11,15 @@ export default async function handler(request, response) {
 
     if (request.method === 'POST') {
       const correctCardData = request.body
-      return await CorrectCard.create(correctCardData)
+      try {
+        const markCard = await CorrectCard.create(correctCardData)
+        return response.status(201).json(markCard)
+      } catch (error) {
+        if (error.code === 11000) {
+          return response.status(409).json({ message: 'Card already marked as correct.' })
+        }
+        throw error
+      }
     }
 
     return response.status(405).json({ message: 'Method not allowed' })
