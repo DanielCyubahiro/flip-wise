@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { StyledButton } from '@/component/Button'
 import { useState } from 'react'
+import { mutate } from 'swr'
 
 const CardContainer = styled.section`
   perspective: 1000px;
@@ -73,6 +74,7 @@ export default function Card({
   onDelete,
   showCollectionName,
   showMarkAsCorrectButton,
+  id,
 }) {
   const [deleteConfirmation, setDeleteConfirmation] = useState(false)
   const [isFlipped, setIsFlipped] = useState(false)
@@ -85,6 +87,21 @@ export default function Card({
       setDeleteConfirmation(true)
     }
   }
+
+  const handleMarkAsCorrect = async () => {
+    const response = await fetch('/api/correctCards', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ cardId: id }),
+    })
+
+    if (response.ok) {
+      mutate()
+    }
+  }
+
   return (
     <CardContainer>
       <CardBox $isFlipped={isFlipped}>
@@ -109,7 +126,9 @@ export default function Card({
             {showCollectionName && <p>#{collectionName}</p>}
             <QuestionText>{answer}</QuestionText>
             <FlipButton onClick={() => setIsFlipped(!isFlipped)}>Flip Back</FlipButton>
-            {showMarkAsCorrectButton && <StyledButton>Mark as correct!</StyledButton>}
+            {showMarkAsCorrectButton && (
+              <StyledButton onClick={handleMarkAsCorrect}>Mark as correct!</StyledButton>
+            )}
             <CardActions>
               {deleteConfirmation && (
                 <>

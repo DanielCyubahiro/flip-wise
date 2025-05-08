@@ -2,11 +2,10 @@ import mongoose from 'mongoose'
 
 const { Schema } = mongoose
 
-const correctCardsSchema = new Schema({
+const correctCardSchema = new Schema({
   cardId: { type: String, required: true },
 })
 
-const CorrectCards =
-  mongoose.models.CorrectCard || mongoose.model('CorrectCard', correctCardsSchema)
+const CorrectCard = mongoose.models.CorrectCard || mongoose.model('CorrectCard', correctCardSchema)
 
-export default CorrectCards
+export default CorrectCard

@@ -22,6 +22,7 @@ export default function CollectionDetailPage({ fetcher }) {
     const response = await fetch(`/api/cards/${id}`, {
       method: 'DELETE',
     })
+
     if (response.ok) {
       setAlert({
         show: true,
@@ -55,6 +56,7 @@ export default function CollectionDetailPage({ fetcher }) {
         cards.map((card) => (
           <Card
             key={card._id}
+            id={card._id}
             question={card.question}
             answer={card.answer}
             showCollectionName={false}
