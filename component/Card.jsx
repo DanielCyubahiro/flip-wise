@@ -75,6 +75,7 @@ export default function Card({
   showCollectionName,
   showMarkAsCorrectButton,
   id,
+  isCorrect,
 }) {
   const [deleteConfirmation, setDeleteConfirmation] = useState(false)
   const [isFlipped, setIsFlipped] = useState(false)
@@ -88,18 +89,21 @@ export default function Card({
     }
   }
 
-  const handleMarkAsCorrect = async () => {
-    const response = await fetch('/api/correctCards', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ cardId: id }),
-    })
-
-    if (response.ok) {
-      mutate()
+  const handleToggleCorrect = async () => {
+    if (isCorrect) {
+      await fetch('/api/correctCards', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cardId: id }),
+      })
+    } else {
+      await fetch('/api/correctCards', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cardId: id }),
+      })
     }
+    mutate('/api/correctCards')
   }
 
   return (
@@ -127,7 +131,9 @@ export default function Card({
             <QuestionText>{answer}</QuestionText>
             <FlipButton onClick={() => setIsFlipped(!isFlipped)}>Flip Back</FlipButton>
             {showMarkAsCorrectButton && (
-              <StyledButton onClick={handleMarkAsCorrect}>Mark as correct!</StyledButton>
+              <StyledButton onClick={handleToggleCorrect}>
+                {isCorrect ? 'Unmark as correct' : 'Mark as correct!'}
+              </StyledButton>
             )}
             <CardActions>
               {deleteConfirmation && (

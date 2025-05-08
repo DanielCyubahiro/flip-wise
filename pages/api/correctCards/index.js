@@ -22,6 +22,12 @@ export default async function handler(request, response) {
       }
     }
 
+    if (request.method === 'DELETE') {
+      const { cardId } = request.body
+      await CorrectCard.deleteOne({ cardId })
+      return response.status(200).json({ message: 'Card unmarked successfully.' })
+    }
+
     return response.status(405).json({ message: 'Method not allowed' })
   } catch (error) {
     console.error('API Error:', error)

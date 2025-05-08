@@ -10,6 +10,8 @@ export default function CollectionDetailPage({ fetcher }) {
   const router = useRouter()
   const { id } = router.query
   const { data: cards, isLoading, error, mutate } = useSWR(`/api/cards/${id}`, fetcher)
+  const { data: correctCards = [] } = useSWR('/api/correctCards')
+
   const [alert, setAlert] = useState({
     show: false,
     message: '',
@@ -53,17 +55,21 @@ export default function CollectionDetailPage({ fetcher }) {
       {cards.length === 0 ? (
         <p>No Cards</p>
       ) : (
-        cards.map((card) => (
-          <Card
-            key={card._id}
-            id={card._id}
-            question={card.question}
-            answer={card.answer}
-            showCollectionName={false}
-            onDelete={handleDelete}
-            showMarkAsCorrectButton
-          ></Card>
-        ))
+        cards.map((card) => {
+          const isCorrect = correctCards.some((correctcard) => correctcard.cardId === card._id)
+          return (
+            <Card
+              key={card._id}
+              id={card._id}
+              question={card.question}
+              answer={card.answer}
+              showCollectionName={false}
+              onDelete={handleDelete}
+              showMarkAsCorrectButton
+              isCorrect={isCorrect}
+            />
+          )
+        })
       )}
     </StyledWrapper>
   )
