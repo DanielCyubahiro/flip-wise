@@ -4,6 +4,7 @@ import { StyledH1 } from '@/component/StyledHeadings'
 import { StyledWrapper } from '@/component/StyledWrapper'
 import StyledAlert from '@/component/StyledAlert'
 import { useState } from 'react'
+import Form from '@/component/Form';
 
 export default function HomePage({ fetcher }) {
   const [alert, setAlert] = useState({
@@ -47,6 +48,7 @@ export default function HomePage({ fetcher }) {
         />
       )}
       <StyledH1>All Cards List</StyledH1>
+      <Form mutateCards={mutate}></Form>
       {cards.map((card) => {
         return (
           <Card
