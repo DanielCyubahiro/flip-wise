@@ -5,7 +5,12 @@ import { StyledH1 } from "@/component/StyledHeadings";
 import { StyledWrapper } from "@/component/StyledWrapper";
 
 export default function HomePage({ fetcher }) {
-  const { data: cards, isLoading, error } = useSWR("/api/cards", fetcher);
+  const {
+    data: cards,
+    isLoading,
+    error,
+    mutate,
+  } = useSWR("/api/cards", fetcher);
 
   if (isLoading) return <div>Loading cards...</div>;
   if (error) return <div>Failed to load cards. Error: {error.message}</div>;
@@ -13,7 +18,7 @@ export default function HomePage({ fetcher }) {
   return (
     <StyledWrapper>
       <StyledH1>All Cards List</StyledH1>
-      <Form></Form>
+      <Form mutateCards={mutate}></Form>
       {Array.isArray(cards) &&
         cards.map((card) => {
           return (

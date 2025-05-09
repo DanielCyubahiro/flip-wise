@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const FormBox = styled.form`
   background-color: #eeeeee;
@@ -35,22 +35,34 @@ const FormButton = styled.button`
   color: #333;
 `;
 
-export default function Form({ setCards }) {
+export default function Form({ mutateCards }) {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
-  const [collection, setCollection] = useState("");
+  const [collection, setCollection] = useState(""); // selected value
+  const [collectionOptions, setCollectionOptions] = useState([]); // list of options
+
+  useEffect(() => {
+    async function fetchCollections() {
+      try {
+        const res = await fetch("/api/collections");
+        const data = await res.json();
+        setCollectionOptions(data);
+      } catch (error) {
+        console.error("Error fetching collections", error);
+      }
+    }
+
+    fetchCollections();
+  }, []);
 
   async function handleSubmit(event) {
     event.preventDefault();
-    console.log("This is a handler function");
 
     const newCard = {
-      question: question,
-      answer: answer,
+      question,
+      answer,
       collectionId: collection,
     };
-
-    console.log(newCard);
 
     try {
       const response = await fetch("/api/cards", {
@@ -61,19 +73,18 @@ export default function Form({ setCards }) {
         body: JSON.stringify(newCard),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to add card");
-      }
+      if (!response.ok) throw new Error("Failed to add card");
+
+      await mutateCards();
+
+      /*const createdCard = await response.json();
+      setCards((prevCards) => [...prevCards, createdCard]);*/
 
       setQuestion("");
       setAnswer("");
       setCollection("");
-
-      const createdCard = await response.json();
-      setCards((prevCards) => [...prevCards, createdCard]);
-      return;
     } catch (error) {
-      //console.error("Your card could not be added");
+      console.error("Your card could not be added", error);
     }
   }
 
@@ -100,11 +111,14 @@ export default function Form({ setCards }) {
         id="collection"
         value={collection}
         onChange={(e) => setCollection(e.target.value)}
-        //required
+        required
       >
         <option value="">Select collection</option>
-        <option value={"6819c0a618d01ad65ca4ff37"}>Mathematics</option>
-        <option value="2">2</option>
+        {collectionOptions.map((col) => (
+          <option key={col._id} value={col._id}>
+            {col.title}
+          </option>
+        ))}
       </select>
       <FormButton type="submit">Add Card</FormButton>
     </FormBox>
