@@ -47,7 +47,7 @@ export default function Form({card, collectionsList, onSubmit}) {
       collectionId,
     });
 
-    if (card) {
+    if (!card) {
       setQuestion("");
       setAnswer("");
       setCollectionId("");
