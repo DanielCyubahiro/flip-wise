@@ -1,25 +1,27 @@
-import dbConnect from "@/config/database";
-import Cards from "@/config/models/Card";
+import dbConnect from '@/config/database';
+import Cards from '@/config/models/Card';
 
 export default async function handler(request, response) {
   try {
     await dbConnect();
-    if (request.method === "GET") {
-      const cards = await Cards.find().populate("collectionId");
-
+    if (request.method === 'GET') {
+      const cards = await Cards.find().populate('collectionId');
       return response.status(200).json(cards);
     }
-    if (request.method === "POST") {
+  } catch (error) {
+    console.error('Failed to GET cards \nAPI Error:', error);
+    return response.status(500).json({error: error.message});
+  }
+
+  try {
+    if (request.method === 'POST') {
       const cardData = request.body;
       const newCard = await Cards.create(cardData);
-
-      console.log(newCard);
       return response.status(201).json(newCard);
     }
-
-    return response.status(405).json({ message: "Method not allowed" });
   } catch (error) {
-    console.error("API Error:", error);
-    return response.status(500).json({ error: error.message });
+    console.error('Failed to create card \nAPI Error:', error);
+    return response.status(500).json({error: error.message});
   }
+  return response.status(405).json({ message: "Method not allowed" });
 }
