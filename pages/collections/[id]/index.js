@@ -9,6 +9,7 @@ import StyledAlert from '@/component/StyledAlert'
 export default function CollectionDetailPage({ fetcher }) {
   const router = useRouter()
   const { id } = router.query
+  console.log(id)
   const { data: cards, isLoading, error, mutate } = useSWR(`/api/cards/${id}`, fetcher)
   const { data: correctCards = [] } = useSWR('/api/correctCards')
 

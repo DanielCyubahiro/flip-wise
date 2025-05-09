@@ -1,5 +1,5 @@
-import dbConnect from './config/database.js'
-import CorrectCard from './config/models/CorrectCard.js'
+import dbConnect from './database.js'
+import CorrectCard from './models/CorrectCard.js'
 
 async function run() {
   await dbConnect()
