@@ -69,7 +69,7 @@ export default function CollectionDetailPage({ fetcher }) {
                 question={card.question}
                 answer={card.answer}
                 showCollectionName={false}
-                onDelete={handleDelete}
+                onDelete={() => handleDelete(card._id)}
                 showMarkAsCorrectButton
                 isCorrect={isCorrect}
               />
