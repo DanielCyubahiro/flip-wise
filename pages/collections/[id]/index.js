@@ -10,7 +10,9 @@ import Navigation from '@/component/Navigation'
 export default function CollectionDetailPage({ fetcher }) {
   const router = useRouter()
   const { id } = router.query
-  const { data: cards, isLoading, error } = useSWR(`/api/cards/${id}`, fetcher)
+  const { data: allCards, isLoading, error } = useSWR(`/api/cards`, fetcher)
+  const cards = allCards?.filter(card => card.collectionId._id === id)
+  console.log(cards)
   const [alert, setAlert] = useState({
     show: false,
     message: '',
