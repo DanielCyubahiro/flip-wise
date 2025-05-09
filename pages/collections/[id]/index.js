@@ -5,12 +5,13 @@ import Card from '@/component/Card'
 import { StyledWrapper } from '@/component/StyledWrapper'
 import { useState } from 'react'
 import StyledAlert from '@/component/StyledAlert'
-import Navigation from '@/component/Navigation'
 
 export default function CollectionDetailPage({ fetcher }) {
   const router = useRouter()
   const { id } = router.query
-  const { data: cards, isLoading, error } = useSWR(`/api/cards/${id}`, fetcher)
+  const { data: cards, isLoading, error, mutate } = useSWR(`/api/cards/${id}`, fetcher)
+  const { data: correctCards = [] } = useSWR('/api/correctCards')
+
   const [alert, setAlert] = useState({
     show: false,
     message: '',
@@ -23,6 +24,7 @@ export default function CollectionDetailPage({ fetcher }) {
     const response = await fetch(`/api/cards/${id}`, {
       method: 'DELETE',
     })
+
     if (response.ok) {
       setAlert({
         show: true,
@@ -53,15 +55,26 @@ export default function CollectionDetailPage({ fetcher }) {
       {cards.length === 0 ? (
         <p>No Cards</p>
       ) : (
-        cards.map((card) => (
-          <Card
-            key={card._id}
-            question={card.question}
-            answer={card.answer}
-            showCollectionName={false}
-            onDelete={handleDelete}
-          ></Card>
-        ))
+        cards
+          .filter((card) => {
+            const isCorrect = correctCards.some((correct) => correct.cardId === card._id)
+            return !isCorrect
+          })
+          .map((card) => {
+            const isCorrect = false
+            return (
+              <Card
+                key={card._id}
+                id={card._id}
+                question={card.question}
+                answer={card.answer}
+                showCollectionName={false}
+                onDelete={() => handleDelete(card._id)}
+                showMarkAsCorrectButton
+                isCorrect={isCorrect}
+              />
+            )
+          })
       )}
     </StyledWrapper>
   )

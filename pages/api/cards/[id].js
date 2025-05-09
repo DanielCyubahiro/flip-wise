@@ -8,9 +8,7 @@ export default async function handler(request, response) {
 
   if (request.method === 'GET') {
     try {
-      const cardsInOneCollection = await Cards.find({
-        collectionId: id,
-      }).populate('collectionId')
+      const cardsInOneCollection = await Cards.find({ collectionId: id }).populate('collectionId')
       response.status(200).json(cardsInOneCollection)
       return
     } catch (err) {

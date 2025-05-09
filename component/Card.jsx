@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { StyledButton } from '@/component/Button'
 import { useState } from 'react'
+import { mutate } from 'swr'
 
 const CardContainer = styled.section`
   perspective: 1000px;
@@ -66,7 +67,16 @@ const CardBack = styled(CardFrontBack)`
   background-color: #dcdcdc;
 `
 
-export default function Card({ question, answer, collectionName, onDelete, showCollectionName }) {
+export default function Card({
+  question,
+  answer,
+  collectionName,
+  onDelete,
+  showCollectionName,
+  showMarkAsCorrectButton,
+  id,
+  isCorrect,
+}) {
   const [deleteConfirmation, setDeleteConfirmation] = useState(false)
   const [isFlipped, setIsFlipped] = useState(false)
 
@@ -78,6 +88,24 @@ export default function Card({ question, answer, collectionName, onDelete, showC
       setDeleteConfirmation(true)
     }
   }
+
+  const handleToggleCorrect = async () => {
+    if (isCorrect) {
+      await fetch('/api/correctCards', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cardId: id }),
+      })
+    } else {
+      await fetch('/api/correctCards', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cardId: id }),
+      })
+    }
+    mutate('/api/correctCards')
+  }
+
   return (
     <CardContainer>
       <CardBox $isFlipped={isFlipped}>
@@ -102,6 +130,11 @@ export default function Card({ question, answer, collectionName, onDelete, showC
             {showCollectionName && <p>#{collectionName}</p>}
             <QuestionText>{answer}</QuestionText>
             <FlipButton onClick={() => setIsFlipped(!isFlipped)}>Flip Back</FlipButton>
+            {showMarkAsCorrectButton && (
+              <StyledButton onClick={handleToggleCorrect}>
+                {isCorrect ? 'Mark as not answered yet' : 'Mark as correct'}
+              </StyledButton>
+            )}
             <CardActions>
               {deleteConfirmation && (
                 <>
