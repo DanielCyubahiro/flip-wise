@@ -38,11 +38,11 @@ const FormButton = styled.button`
 export default function Form({ mutateCards }) {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
-  const [collection, setCollection] = useState(""); // selected value
-  const [collectionOptions, setCollectionOptions] = useState([]); // list of options
+  const [collection, setCollection] = useState("");
+  const [collectionOptions, setCollectionOptions] = useState([]);
 
   useEffect(() => {
-    async function fetchCollections() {
+    void (async function fetchCollections() {
       try {
         const res = await fetch("/api/collections");
         const data = await res.json();
@@ -50,9 +50,7 @@ export default function Form({ mutateCards }) {
       } catch (error) {
         console.error("Error fetching collections", error);
       }
-    }
-
-    fetchCollections();
+    })()
   }, []);
 
   async function handleSubmit(event) {
@@ -73,12 +71,7 @@ export default function Form({ mutateCards }) {
         body: JSON.stringify(newCard),
       });
 
-      if (!response.ok) throw new Error("Failed to add card");
-
       await mutateCards();
-
-      /*const createdCard = await response.json();
-      setCards((prevCards) => [...prevCards, createdCard]);*/
 
       setQuestion("");
       setAnswer("");
