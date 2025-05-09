@@ -9,7 +9,6 @@ import StyledAlert from '@/component/StyledAlert'
 export default function CollectionDetailPage({ fetcher }) {
   const router = useRouter()
   const { id } = router.query
-  console.log(id)
   const { data: cards, isLoading, error, mutate } = useSWR(`/api/cards/${id}`, fetcher)
   const { data: correctCards = [] } = useSWR('/api/correctCards')
 
@@ -56,21 +55,26 @@ export default function CollectionDetailPage({ fetcher }) {
       {cards.length === 0 ? (
         <p>No Cards</p>
       ) : (
-        cards.map((card) => {
-          const isCorrect = correctCards.some((correctcard) => correctcard.cardId === card._id)
-          return (
-            <Card
-              key={card._id}
-              id={card._id}
-              question={card.question}
-              answer={card.answer}
-              showCollectionName={false}
-              onDelete={handleDelete}
-              showMarkAsCorrectButton
-              isCorrect={isCorrect}
-            />
-          )
-        })
+        cards
+          .filter((card) => {
+            const isCorrect = correctCards.some((correct) => correct.cardId === card._id)
+            return !isCorrect
+          })
+          .map((card) => {
+            const isCorrect = false
+            return (
+              <Card
+                key={card._id}
+                id={card._id}
+                question={card.question}
+                answer={card.answer}
+                showCollectionName={false}
+                onDelete={handleDelete}
+                showMarkAsCorrectButton
+                isCorrect={isCorrect}
+              />
+            )
+          })
       )}
     </StyledWrapper>
   )
