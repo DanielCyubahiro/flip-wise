@@ -92,23 +92,13 @@ export default function Card({
   }
 
   const handleToggleCorrect = async () => {
-    if (isCorrect) {
-      await fetch('/api/correctCards', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ cardId: id }),
-      })
-    } else {
-      await fetch('/api/correctCards', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ cardId: id }),
-      })
-    }
-    mutate('/api/correctCards')
-    if (collectionId) {
-      mutate(`/api/cards/${collectionId}`)
-    }
+    await fetch('/api/correctCards', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ cardId: id }),
+    })
+
+    mutate(`/api/cards/${collectionId}`)
   }
 
   return (
