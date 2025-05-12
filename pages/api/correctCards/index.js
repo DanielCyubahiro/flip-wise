@@ -5,8 +5,13 @@ export default async function handler(request, response) {
   try {
     await dbConnect()
     if (request.method === 'GET') {
-      const correctCards = await CorrectCard.find()
-      return response.status(200).json(correctCards)
+      try {
+        const correctCards = await CorrectCard.find()
+        return response.status(200).json(correctCards)
+      } catch (error) {
+        console.error('Error fetching correct cards:', error)
+        return response.status(500).json({ message: 'Failed to fetch correct cards.' })
+      }
     }
 
     if (request.method === 'POST') {
@@ -21,13 +26,6 @@ export default async function handler(request, response) {
         throw error
       }
     }
-
-    if (request.method === 'DELETE') {
-      const { cardId } = request.body
-      await CorrectCard.deleteOne({ cardId })
-      return response.status(200).json({ message: 'Card unmarked successfully.' })
-    }
-
     return response.status(405).json({ message: 'Method not allowed' })
   } catch (error) {
     console.error('API Error:', error)
