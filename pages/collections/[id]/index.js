@@ -63,6 +63,7 @@ export default function CollectionDetailPage({ fetcher }) {
             showCollectionName={false}
             onDelete={() => handleDelete(card._id)}
             showMarkAsCorrectButton
+            collectionId={card.collectionId._id}
           />
         ))
       )}

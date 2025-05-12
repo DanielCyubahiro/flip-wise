@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { StyledButton } from '@/component/Button'
 import { useState } from 'react'
 import { mutate } from 'swr'
+import { useRouter } from 'next/router'
 
 const CardContainer = styled.section`
   perspective: 1000px;
@@ -76,6 +77,7 @@ export default function Card({
   showMarkAsCorrectButton,
   id,
   isCorrect,
+  collectionId,
 }) {
   const [deleteConfirmation, setDeleteConfirmation] = useState(false)
   const [isFlipped, setIsFlipped] = useState(false)
@@ -104,6 +106,9 @@ export default function Card({
       })
     }
     mutate('/api/correctCards')
+    if (collectionId) {
+      mutate(`/api/cards/${collectionId}`)
+    }
   }
 
   return (
