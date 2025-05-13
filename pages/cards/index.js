@@ -21,6 +21,7 @@ export default function HomePage({ fetcher }) {
     const response = await fetch(`/api/cards/${id}`, {
       method: 'DELETE',
     })
+
     if (response.ok) {
       setAlert({
         show: true,
