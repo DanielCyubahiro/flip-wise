@@ -51,14 +51,18 @@ export default function CollectionDetailPage({ fetcher }) {
       )}
       <StyledH1>{cards[0]?.collectionId.title}</StyledH1>
       {cards.map((card) => (
-        <Card
-          key={card._id}
-          question={card.question}
-          answer={card.answer}
-          showCollectionName={false}
-          onDelete={handleDelete}
-        ></Card>
-      ))}
+          <Card
+            key={card._id}
+            id={card._id}
+            question={card.question}
+            answer={card.answer}
+            showCollectionName={false}
+            onDelete={() => handleDelete(card._id)}
+            showMarkAsCorrectButton
+            collectionId={card.collectionId._id}
+          />
+        ))
+      }
     </StyledWrapper>
   )
 }
