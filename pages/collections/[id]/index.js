@@ -9,8 +9,7 @@ import StyledAlert from '@/component/StyledAlert'
 export default function CollectionDetailPage({ fetcher }) {
   const router = useRouter()
   const { id } = router.query
-  const { data: cards, isLoading, error, mutate } = useSWR(`/api/cards/${id}`, fetcher)
-
+  const { data: cards, isLoading, error } = useSWR(id ? `/api/collections/${id}` : null)
   const [alert, setAlert] = useState({
     show: false,
     message: '',
@@ -18,12 +17,12 @@ export default function CollectionDetailPage({ fetcher }) {
   })
   if (isLoading) return <div>Loading cards...</div>
   if (error) return <div>Error loading cards: {error.message}</div>
+  if (!cards || cards.length === 0) return <div>No cards available. Please insert new cards...</div>
 
   const handleDelete = async (id) => {
     const response = await fetch(`/api/cards/${id}`, {
       method: 'DELETE',
     })
-
     if (response.ok) {
       setAlert({
         show: true,
@@ -51,10 +50,7 @@ export default function CollectionDetailPage({ fetcher }) {
         />
       )}
       <StyledH1>{cards[0]?.collectionId.title}</StyledH1>
-      {cards.length === 0 ? (
-        <p>No Cards</p>
-      ) : (
-        cards.map((card) => (
+      {cards.map((card) => (
           <Card
             key={card._id}
             id={card._id}
@@ -66,7 +62,7 @@ export default function CollectionDetailPage({ fetcher }) {
             collectionId={card.collectionId._id}
           />
         ))
-      )}
+      }
     </StyledWrapper>
   )
 }
