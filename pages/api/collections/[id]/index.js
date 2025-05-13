@@ -14,7 +14,7 @@ export default async function handler(request, response) {
       }).populate('collectionId')
       return response.status(200).json(cardsInOneCollection)
     } catch (err) {
-      return response.status(500).json({ status: 'Failed to fetch collections.' })
+      return response.status(500).json({ status: 'Failed to fetch collections' })
     }
   }
 }
