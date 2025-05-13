@@ -5,12 +5,11 @@ import Card from '@/component/Card'
 import { StyledWrapper } from '@/component/StyledWrapper'
 import { useState } from 'react'
 import StyledAlert from '@/component/StyledAlert'
-import Navigation from '@/component/Navigation'
 
 export default function CollectionDetailPage({ fetcher }) {
   const router = useRouter()
   const { id } = router.query
-  const { data: cards, isLoading, error } = useSWR(`/api/cards/${id}`, fetcher)
+  const { data: cards, isLoading, error } = useSWR(id ? `/api/collections/${id}` : null, fetcher)
   const [alert, setAlert] = useState({
     show: false,
     message: '',
@@ -18,6 +17,7 @@ export default function CollectionDetailPage({ fetcher }) {
   })
   if (isLoading) return <div>Loading cards...</div>
   if (error) return <div>Error loading cards: {error.message}</div>
+  if (!cards) return <div>No cards available. Please insert new cards...</div>
 
   const handleDelete = async (id) => {
     const response = await fetch(`/api/cards/${id}`, {
@@ -50,19 +50,15 @@ export default function CollectionDetailPage({ fetcher }) {
         />
       )}
       <StyledH1>{cards[0]?.collectionId.title}</StyledH1>
-      {cards.length === 0 ? (
-        <p>No Cards</p>
-      ) : (
-        cards.map((card) => (
-          <Card
-            key={card._id}
-            question={card.question}
-            answer={card.answer}
-            showCollectionName={false}
-            onDelete={handleDelete}
-          ></Card>
-        ))
-      )}
+      {cards.map((card) => (
+        <Card
+          key={card._id}
+          question={card.question}
+          answer={card.answer}
+          showCollectionName={false}
+          onDelete={handleDelete}
+        ></Card>
+      ))}
     </StyledWrapper>
   )
 }
