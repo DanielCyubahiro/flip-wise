@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { useState, useEffect } from 'react'
+import { createCard } from '@/pages/api/cards'
 
 const FormBox = styled.form`
   background-color: #eeeeee;
@@ -65,7 +66,7 @@ export default function Form({ mutateCards }) {
     }
 
     try {
-      const response = await fetch('/api/cards', {
+      /*const response = await fetch('/api/cards', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -73,19 +74,14 @@ export default function Form({ mutateCards }) {
         body: JSON.stringify(newCard),
       })
 
-      if (!response.ok) throw new Error('Failed to add card')
-
+      if (!response.ok) throw new Error('Failed to add card')*/
+      await createCard(newCard)
       await mutateCards()
-
-      /*const createdCard = await response.json();
-      setCards((prevCards) => [...prevCards, createdCard]);*/
 
       setQuestion('')
       setAnswer('')
       setCollection('')
-    } catch (error) {
-      console.error('Your card could not be added', error)
-    }
+    } catch (error) {}
   }
 
   return (
