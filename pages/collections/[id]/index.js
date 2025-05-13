@@ -17,7 +17,7 @@ export default function CollectionDetailPage({ fetcher }) {
   })
   if (isLoading) return <div>Loading cards...</div>
   if (error) return <div>Error loading cards: {error.message}</div>
-  if (!cards) return <div>No cards available. Please insert new cards...</div>
+  if (!cards || cards.length === 0) return <div>No cards available. Please insert new cards...</div>
 
   const handleDelete = async (id) => {
     const response = await fetch(`/api/cards/${id}`, {
