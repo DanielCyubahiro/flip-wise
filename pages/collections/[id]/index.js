@@ -5,12 +5,11 @@ import Card from '@/component/Card'
 import { StyledWrapper } from '@/component/StyledWrapper'
 import { useState } from 'react'
 import StyledAlert from '@/component/StyledAlert'
-import Navigation from '@/component/Navigation'
 
 export default function CollectionDetailPage({ fetcher }) {
   const router = useRouter()
   const { id } = router.query
-  const { data: cards, isLoading, error } = useSWR(id ? `/api/collections/${id}` : null, fetcher)
+  const { data: cards, isLoading, error } = useSWR(id ? `/api/collections/${id}` : null)
   const [alert, setAlert] = useState({
     show: false,
     message: '',
