@@ -4,14 +4,19 @@ import { StyledH1 } from '@/component/StyledHeadings'
 import { StyledWrapper } from '@/component/StyledWrapper'
 import StyledAlert from '@/component/StyledAlert'
 import { useState } from 'react'
+import Form from '@/component/Form'
 
-export default function HomePage({ fetcher }) {
+export default function AllCardsPage({ fetcher }) {
   const [alert, setAlert] = useState({
     show: false,
     message: '',
     type: 'info',
   })
   const { data: cards, isLoading, error, mutate } = useSWR('/api/cards', fetcher)
+
+  /*const collections = Array.from(
+    new Map(cards?.map((card) => card?.collectionId)?.map((item) => [item._id, item])).values(),
+  )*/
 
   if (isLoading) return <div>Loading cards...</div>
   if (error) return <div>Failed to load cards. Error: {error.message}</div>
@@ -37,6 +42,24 @@ export default function HomePage({ fetcher }) {
       })
     }
   }
+
+  const handleSubmit = async (newCard) => {
+    try {
+      const response = await fetch('/api/cards', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newCard),
+      })
+
+      if (response.ok) {
+        await mutate()
+      }
+    } catch (error) {
+      console.error('Your card could not be added', error)
+    }
+  }
   return (
     <StyledWrapper>
       {alert.show && (
@@ -48,6 +71,11 @@ export default function HomePage({ fetcher }) {
         />
       )}
       <StyledH1>All Cards List</StyledH1>
+      <Form
+        mutateCards={mutate}
+        //collectionsList={collections}
+        //onSubmit={handleSubmit}
+      />
       {cards.map((card) => {
         return (
           <Card
