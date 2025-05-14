@@ -66,11 +66,7 @@ export default function HomePage({ fetcher }) {
         />
       )}
       <StyledH1>All Cards List</StyledH1>
-      <Form
-        mutateCards={mutate}
-        //collectionsList={collections}
-        onSubmit={handleSubmit}
-      />
+      <Form onSubmit={handleSubmit} />
       {cards.map((card) => {
         return (
           <Card

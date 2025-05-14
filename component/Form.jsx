@@ -35,7 +35,7 @@ const FormButton = styled.button`
   color: #333;
 `
 
-export default function Form({ mutateCards, onSubmit }) {
+export default function Form({ onSubmit }) {
   const [question, setQuestion] = useState('')
   const [answer, setAnswer] = useState('')
   const [collection, setCollection] = useState('')
@@ -64,21 +64,6 @@ export default function Form({ mutateCards, onSubmit }) {
       collectionId: collection,
     }
 
-    /*try {
-      const response = await fetch('/api/cards', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newCard),
-      })
-
-      if (!response.ok) throw new Error('Failed to add card')
-
-      await mutateCards()
-
-    /*const createdCard = await response.json();
-      setCards((prevCards) => [...prevCards, createdCard]);*/
     try {
       await onSubmit(newCard)
 
