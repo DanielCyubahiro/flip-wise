@@ -11,6 +11,6 @@ const cardsSchema = new Schema({
   answer: { type: String, required: true },
 })
 
-const Cards = mongoose.models.Card || mongoose.model('Card', cardsSchema)
+const Card = mongoose.models.Card || mongoose.model('Card', cardsSchema)
 
-export default Cards
+export default Card

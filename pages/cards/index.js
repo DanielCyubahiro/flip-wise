@@ -1,8 +1,8 @@
 import useSWR from 'swr'
-import Card from '@/component/Card'
-import { StyledH1 } from '@/component/StyledHeadings'
-import { StyledWrapper } from '@/component/StyledWrapper'
-import StyledAlert from '@/component/StyledAlert'
+import Card from '@/components/Card'
+import { StyledH1 } from '@/components/StyledH1'
+import { StyledWrapper } from '@/components/StyledWrapper'
+import StyledAlert from '@/components/StyledAlert'
 import { useState } from 'react'
 import Form from '@/component/Form'
 
