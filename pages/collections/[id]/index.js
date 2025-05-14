@@ -15,13 +15,7 @@ export default function CollectionDetailPage() {
 
   const handleDelete = DeleteCard(mutate, triggerAlert)
 
-  return isLoading ? (
-      <div>Loading cards...</div>
-  ) : error ? (
-      <div>Failed to load cards. Error: {error.message}</div>
-  ) : !cards || cards.length === 0 ? (
-      <div>No cards available. Please insert new cards...</div>
-  ) : (
+  return (
     <StyledWrapper>
       {alert.show && (
         <StyledAlert

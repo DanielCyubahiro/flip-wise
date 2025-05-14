@@ -1,6 +1,6 @@
-import dbConnect from '@/config/database'
-import Cards from '@/config/models/Card'
-import CorrectCard from '@/config/models/CorrectCard'
+import dbConnect from '@/lib/database'
+import Card from '@/db/models/Card'
+import CorrectCard from '@/db/models/CorrectCard'
 
 export default async function handler(request, response) {
   await dbConnect()
@@ -11,7 +11,7 @@ export default async function handler(request, response) {
     try {
       const correctCards = await CorrectCard.find({}, 'cardId')
       const correctCardIds = correctCards.map((document) => document.cardId.toString())
-      const cardsInOneCollection = await Cards.find({
+      const cardsInOneCollection = await Card.find({
         collectionId: id,
         _id: { $nin: correctCardIds },
       }).populate('collectionId')
@@ -25,7 +25,7 @@ export default async function handler(request, response) {
 
   if (request.method === 'DELETE') {
     try {
-      await Cards.findByIdAndDelete(id)
+      await Card.findByIdAndDelete(id)
       return response.status(200).json({ status: 'Card deleted successfully' })
     } catch (err) {
       response.status(500).json({ status: 'Failed to delete card.' })

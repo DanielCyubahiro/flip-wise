@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { StyledButton } from '@/component/Button'
+import { StyledButton } from './StyledButton'
 import { useState } from 'react'
 import { mutate } from 'swr'
 import { useRouter } from 'next/router'
