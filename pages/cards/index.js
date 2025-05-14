@@ -4,7 +4,7 @@ import { StyledWrapper } from '@/component/StyledWrapper'
 import StyledAlert from '@/component/StyledAlert'
 import { useAlert } from '@/hooks/useAlert'
 import CardList from '@/component/CardList'
-import {DeleteCard} from '@/utils';
+import {DeleteCard} from '@/utils/DeleteCard';
 
 export default function HomePage({ fetcher }) {
   const { data: cards, isLoading, error, mutate } = useSWR('/api/cards', fetcher)
