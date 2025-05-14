@@ -5,7 +5,7 @@ import { StyledWrapper } from '@/component/StyledWrapper'
 import StyledAlert from '@/component/StyledAlert'
 import { useAlert } from '@/hooks/useAlert'
 import CardList from '@/component/CardList'
-import { useDeleteCard } from '@/hooks/useDelete'
+import {DeleteCard} from '@/utils';
 
 export default function CollectionDetailPage() {
   const router = useRouter()
@@ -13,7 +13,7 @@ export default function CollectionDetailPage() {
   const { data: cards, isLoading, error, mutate } = useSWR(id ? `/api/collections/${id}` : null)
   const { alert, triggerAlert, closeAlert } = useAlert()
 
-  const handleDelete = useDeleteCard(mutate, triggerAlert)
+  const handleDelete = DeleteCard(mutate, triggerAlert)
 
   return isLoading ? (
       <div>Loading cards...</div>

@@ -1,4 +1,4 @@
-export function useDeleteCard(mutate, triggerAlert) {
+export function DeleteCard(mutate, triggerAlert) {
   return async (id) => {
     try {
       const response = await fetch(`/api/cards/${id}`, { method: 'DELETE' })
