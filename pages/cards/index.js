@@ -2,6 +2,8 @@ import useSWR from 'swr'
 import { StyledH1 } from '@/component/StyledHeadings'
 import { StyledWrapper } from '@/component/StyledWrapper'
 import StyledAlert from '@/component/StyledAlert'
+import { useState } from 'react'
+import Form from '@/component/Form'
 import { useAlert } from '@/hooks/useAlert'
 import CardList from '@/component/CardList'
 import {DeleteCard} from '@/utils/DeleteCard';
@@ -12,6 +14,23 @@ export default function HomePage({ fetcher }) {
 
   const handleDelete = DeleteCard(mutate, triggerAlert)
 
+  const handleSubmit = async (newCard) => {
+    try {
+      const response = await fetch('/api/cards', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newCard),
+      })
+
+      if (response.ok) {
+        await mutate()
+      }
+    } catch (error) {
+      console.error('Your card could not be added', error)
+    }
+  }
   return isLoading ? (
     <div>Loading cards...</div>
   ) : error ? (
@@ -29,6 +48,8 @@ export default function HomePage({ fetcher }) {
         />
       )}
       <StyledH1>All Cards List</StyledH1>
+      <CardList cards={cards} onDelete={handleDelete} showCollectionName={true} />
+      <Form onSubmit={handleSubmit} />
       <CardList cards={cards} onDelete={handleDelete} showCollectionName={true} />
     </StyledWrapper>
   )
