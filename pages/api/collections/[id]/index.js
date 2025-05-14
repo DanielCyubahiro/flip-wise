@@ -1,6 +1,6 @@
-import dbConnect from '@/config/database'
-import Cards from '@/config/models/Card'
-import Collections from '@/config/models/Collection'
+import dbConnect from '@/lib/database'
+import Card from '@/db/models/Card'
+import Collection from '@/db/models/Collection'
 
 export default async function handler(request, response) {
   await dbConnect()
@@ -9,7 +9,7 @@ export default async function handler(request, response) {
 
   if (request.method === 'GET') {
     try {
-      const cardsInOneCollection = await Cards.find({
+      const cardsInOneCollection = await Card.find({
         collectionId: id,
       }).populate('collectionId')
       return response.status(200).json(cardsInOneCollection)

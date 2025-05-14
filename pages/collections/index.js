@@ -1,6 +1,6 @@
-import { StyledH1 } from '@/component/StyledHeadings'
-import { StyledLink } from '@/component/StyledLink'
-import { StyledWrapper } from '@/component/StyledWrapper'
+import { StyledH1 } from '@/components/StyledH1'
+import { StyledLink } from '@/components/StyledLink'
+import { StyledWrapper } from '@/components/StyledWrapper'
 import useSWR from 'swr'
 
 export default function CollectionPage({ fetcher }) {

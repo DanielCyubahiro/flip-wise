@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
-import { StyledH1 } from '@/component/StyledHeadings'
-import Card from '@/component/Card'
-import { StyledWrapper } from '@/component/StyledWrapper'
+import { StyledH1 } from '@/components/StyledH1'
+import Card from '@/components/Card'
+import { StyledWrapper } from '@/components/StyledWrapper'
 import { useState } from 'react'
-import StyledAlert from '@/component/StyledAlert'
+import StyledAlert from '@/components/StyledAlert'
 
 export default function CollectionDetailPage({ fetcher }) {
   const router = useRouter()
@@ -51,18 +51,17 @@ export default function CollectionDetailPage({ fetcher }) {
       )}
       <StyledH1>{cards[0]?.collectionId.title}</StyledH1>
       {cards.map((card) => (
-          <Card
-            key={card._id}
-            id={card._id}
-            question={card.question}
-            answer={card.answer}
-            showCollectionName={false}
-            onDelete={() => handleDelete(card._id)}
-            showMarkAsCorrectButton
-            collectionId={card.collectionId._id}
-          />
-        ))
-      }
+        <Card
+          key={card._id}
+          id={card._id}
+          question={card.question}
+          answer={card.answer}
+          showCollectionName={false}
+          onDelete={() => handleDelete(card._id)}
+          showMarkAsCorrectButton
+          collectionId={card.collectionId._id}
+        />
+      ))}
     </StyledWrapper>
   )
 }
