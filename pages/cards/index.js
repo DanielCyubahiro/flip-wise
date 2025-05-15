@@ -1,43 +1,18 @@
 import useSWR from 'swr'
-import Card from '@/components/Card'
 import { StyledH1 } from '@/components/StyledH1'
 import { StyledWrapper } from '@/components/StyledWrapper'
 import StyledAlert from '@/components/StyledAlert'
-import { useState } from 'react'
-import Form from '@/component/Form'
+import Form from '@/components/Form'
+import { useAlert } from '@/hooks/useAlert'
+import CardList from '@/components/CardList'
+import {DeleteCard} from '@/utils/DeleteCard';
 
 export default function HomePage({ fetcher }) {
-  const [alert, setAlert] = useState({
-    show: false,
-    message: '',
-    type: 'info',
-  })
   const { data: cards, isLoading, error, mutate } = useSWR('/api/cards', fetcher)
+  const { alert, triggerAlert, closeAlert } = useAlert()
 
-  if (isLoading) return <div>Loading cards...</div>
-  if (error) return <div>Failed to load cards. Error: {error.message}</div>
-  if (!cards) return <div>No cards available. Please insert new cards...</div>
+  const handleDelete = DeleteCard(mutate, triggerAlert)
 
-  const handleDelete = async (id) => {
-    const response = await fetch(`/api/cards/${id}`, {
-      method: 'DELETE',
-    })
-
-    if (response.ok) {
-      setAlert({
-        show: true,
-        message: 'Card deleted successfully!',
-        type: 'success',
-      })
-      mutate()
-    } else {
-      setAlert({
-        show: true,
-        message: 'Could not delete card!',
-        type: 'error',
-      })
-    }
-  }
   const handleSubmit = async (newCard) => {
     try {
       const response = await fetch('/api/cards', {
@@ -55,30 +30,25 @@ export default function HomePage({ fetcher }) {
       console.error('Your card could not be added', error)
     }
   }
-  return (
+  return isLoading ? (
+    <div>Loading cards...</div>
+  ) : error ? (
+    <div>Failed to load cards. Error: {error.message}</div>
+  ) : !cards || cards.length === 0 ? (
+    <div>No cards available. Please insert new cards...</div>
+  ) : (
     <StyledWrapper>
       {alert.show && (
         <StyledAlert
           message={alert.message}
-          type="success"
-          onClose={() => setAlert({ ...alert, show: false })}
+          type={alert.type}
+          onClose={closeAlert}
           duration={3000}
         />
       )}
       <StyledH1>All Cards List</StyledH1>
-      <Form onSubmit={handleSubmit} />
-      {cards.map((card) => {
-        return (
-          <Card
-            key={card._id}
-            question={card.question}
-            answer={card.answer}
-            collectionName={card.collectionId?.title}
-            showCollectionName={true}
-            onDelete={() => handleDelete(card._id)}
-          />
-        )
-      })}
+     <Form onSubmit={handleSubmit} />
+      <CardList cards={cards} onDelete={handleDelete} showCollectionName={true} />
     </StyledWrapper>
   )
 }

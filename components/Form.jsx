@@ -25,7 +25,7 @@ const FormText = styled.label`
 const FormInput = styled.input`
   font-size: 1.2rem;
   font-weight: 600;
-  border: 0px;
+  border: 0;
   color: #333;
 `
 

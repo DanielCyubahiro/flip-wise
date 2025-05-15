@@ -1,67 +1,38 @@
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import { StyledH1 } from '@/components/StyledH1'
-import Card from '@/components/Card'
 import { StyledWrapper } from '@/components/StyledWrapper'
-import { useState } from 'react'
 import StyledAlert from '@/components/StyledAlert'
+import { useAlert } from '@/hooks/useAlert'
+import CardList from '@/components/CardList'
+import {DeleteCard} from '@/utils/DeleteCard';
 
-export default function CollectionDetailPage({ fetcher }) {
+export default function CollectionDetailPage() {
   const router = useRouter()
   const { id } = router.query
-  const { data: cards, isLoading, error } = useSWR(id ? `/api/collections/${id}` : null)
-  const [alert, setAlert] = useState({
-    show: false,
-    message: '',
-    type: 'info',
-  })
-  if (isLoading) return <div>Loading cards...</div>
-  if (error) return <div>Error loading cards: {error.message}</div>
-  if (!cards || cards.length === 0) return <div>No cards available. Please insert new cards...</div>
+  const { data: cards, isLoading, error, mutate } = useSWR(id ? `/api/collections/${id}` : null)
+  const { alert, triggerAlert, closeAlert } = useAlert()
 
-  const handleDelete = async (id) => {
-    const response = await fetch(`/api/cards/${id}`, {
-      method: 'DELETE',
-    })
-    if (response.ok) {
-      setAlert({
-        show: true,
-        message: 'Card deleted successfully!',
-        type: 'success',
-      })
-      mutate()
-    } else {
-      setAlert({
-        show: true,
-        message: 'Could not delete card!',
-        type: 'error',
-      })
-    }
-  }
+  const handleDelete = DeleteCard(mutate, triggerAlert)
 
-  return (
+  return isLoading ? (
+      <div>Loading cards...</div>
+  ) : error ? (
+      <div>Failed to load cards. Error: {error.message}</div>
+  ) : !cards || cards.length === 0 ? (
+      <div>No cards available. Please insert new cards...</div>
+  ) : (
     <StyledWrapper>
       {alert.show && (
         <StyledAlert
           message={alert.message}
-          type="success"
-          onClose={() => setAlert({ ...alert, show: false })}
+          type={alert.type}
+          onClose={closeAlert}
           duration={3000}
         />
       )}
       <StyledH1>{cards[0]?.collectionId.title}</StyledH1>
-      {cards.map((card) => (
-        <Card
-          key={card._id}
-          id={card._id}
-          question={card.question}
-          answer={card.answer}
-          showCollectionName={false}
-          onDelete={() => handleDelete(card._id)}
-          showMarkAsCorrectButton
-          collectionId={card.collectionId._id}
-        />
-      ))}
+      <CardList cards={cards} onDelete={handleDelete} showCollectionName={false} />
     </StyledWrapper>
   )
 }
