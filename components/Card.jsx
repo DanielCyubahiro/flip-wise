@@ -91,6 +91,12 @@ export default function Card({
     }
   }
 
+  const router = useRouter()
+
+  const handleUpdate = () => {
+    router.push('/update-page')
+  }
+
   const handleToggleCorrect = async () => {
     await fetch('/api/correctCards', {
       method: 'POST',
@@ -116,6 +122,7 @@ export default function Card({
                   <StyledButton onClick={() => setDeleteConfirmation(false)}>Cancel</StyledButton>
                 </>
               )}
+              <StyledButton onClick={handleUpdate}>Edit</StyledButton>
               <StyledButton onClick={handleDelete}>Delete</StyledButton>
             </CardActions>
           </CardFront>
