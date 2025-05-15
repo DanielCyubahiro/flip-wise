@@ -35,7 +35,7 @@ const FormButton = styled.button`
   color: #333;
 `
 
-export default function Form({ onSubmit }) {
+export default function Form({ onSubmit, onReturnClick, showUpdate = false }) {
   const [question, setQuestion] = useState('')
   const [answer, setAnswer] = useState('')
   const [collection, setCollection] = useState('')
@@ -108,6 +108,11 @@ export default function Form({ onSubmit }) {
         ))}
       </select>
       <FormButton type="submit">Add Card</FormButton>
+      {showUpdate && (
+        <FormButton type="button" onClick={onReturnClick}>
+          Cancel
+        </FormButton>
+      )}
     </FormBox>
   )
 }
