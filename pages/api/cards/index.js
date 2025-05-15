@@ -7,14 +7,14 @@ export default async function handler(req, res) {
     await dbConnect()
 
     if (req.method === 'GET') {
-      const cards = await Cards.find().populate('collectionId')
+      const cards = await Card.find().populate('collectionId')
       return res.status(200).json(cards)
     }
 
     if (req.method === 'POST') {
       try {
         const cardData = req.body
-        const newCard = await Cards.create(cardData)
+        const newCard = await Card.create(cardData)
         return res.status(201).json(newCard)
       } catch (err) {
         console.error('Error creating card:', err)
