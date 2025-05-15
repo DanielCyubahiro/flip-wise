@@ -6,6 +6,7 @@ import StyledAlert from '@/components/StyledAlert'
 import { useAlert } from '@/hooks/useAlert'
 import CardList from '@/components/CardList'
 import {DeleteCard} from '@/utils/DeleteCard';
+import SideMenu from '@/components/SideMenu';
 
 export default function CollectionDetailPage() {
   const router = useRouter()
@@ -32,6 +33,7 @@ export default function CollectionDetailPage() {
         />
       )}
       <StyledH1>{cards[0]?.collectionId.title}</StyledH1>
+      <SideMenu/>
       <CardList cards={cards} onDelete={handleDelete} showCollectionName={false} />
     </StyledWrapper>
   )
