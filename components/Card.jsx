@@ -117,6 +117,7 @@ export default function Card({
                 </>
               )}
               <StyledButton onClick={handleDelete}>Delete</StyledButton>
+              <StyledButton>Edit</StyledButton>
             </CardActions>
           </CardFront>
         )}
