@@ -94,7 +94,7 @@ export default function Card({
   const router = useRouter()
 
   const handleUpdate = () => {
-    router.push('/update-page')
+    router.push(`/update-page/${id}`)
   }
 
   const handleToggleCorrect = async () => {
