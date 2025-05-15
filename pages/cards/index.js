@@ -7,30 +7,17 @@ import { useAlert } from '@/hooks/useAlert'
 import CardList from '@/components/CardList'
 import {DeleteCard} from '@/utils/DeleteCard';
 import SideMenu from '@/components/SideMenu';
+import {useState} from 'react';
+import {CreateCard} from '@/utils/CreateCard';
 
 export default function HomePage({ fetcher }) {
   const { data: cards, isLoading, error, mutate } = useSWR('/api/cards', fetcher)
   const { alert, triggerAlert, closeAlert } = useAlert()
+  const [showForm, setShowForm] = useState(false)
 
   const handleDelete = DeleteCard(mutate, triggerAlert)
+  const handleSubmit = CreateCard(mutate, setShowForm)
 
-  const handleSubmit = async (newCard) => {
-    try {
-      const response = await fetch('/api/cards', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newCard),
-      })
-
-      if (response.ok) {
-        await mutate()
-      }
-    } catch (error) {
-      console.error('Your card could not be added', error)
-    }
-  }
   return isLoading ? (
     <div>Loading cards...</div>
   ) : error ? (
@@ -48,8 +35,8 @@ export default function HomePage({ fetcher }) {
         />
       )}
       <StyledH1>All Cards List</StyledH1>
-     <Form onSubmit={handleSubmit} />
-     <SideMenu/>
+      {showForm && <Form onSubmit={handleSubmit} />}
+     <SideMenu onCreate={setShowForm} />
       <CardList cards={cards} onDelete={handleDelete} showCollectionName={true} />
     </StyledWrapper>
   )

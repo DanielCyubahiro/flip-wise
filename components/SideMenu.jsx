@@ -18,6 +18,9 @@ const StyledMenu = styled.ul`
 
 const StyledMenuItem = styled.li`
     list-style: none;
+    &:hover {
+        cursor: pointer;
+    }
 `
 
 const StyledSideMenuButton = styled(StyledButton)`
@@ -28,9 +31,13 @@ const StyledSideMenuButton = styled(StyledButton)`
     place-items: center;
 `
 
-const SideMenu = () => {
+const SideMenu = ({onCreate}) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const handleCreate = () => {
+    setIsOpen(false);
+    onCreate(true);
+  }
   return (
       <>
         <StyledSideMenuButton onClick={() => setIsOpen(!isOpen)}>
@@ -38,7 +45,9 @@ const SideMenu = () => {
         </StyledSideMenuButton>
         {isOpen && (
             <StyledMenu>
-              <StyledMenuItem>Create</StyledMenuItem>
+              <StyledMenuItem onClick={handleCreate}>
+                Create
+              </StyledMenuItem>
             </StyledMenu>
         )}
       </>
