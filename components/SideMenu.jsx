@@ -36,7 +36,7 @@ const SideMenu = ({onCreate}) => {
 
   const handleCreate = () => {
     setIsOpen(false);
-    onCreate(true);
+    onCreate(prevState => !prevState);
   }
   return (
       <>
