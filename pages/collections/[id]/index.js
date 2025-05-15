@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
-import { StyledH1 } from '@/component/StyledHeadings'
-import { StyledWrapper } from '@/component/StyledWrapper'
-import StyledAlert from '@/component/StyledAlert'
+import { StyledH1 } from '@/components/StyledH1'
+import { StyledWrapper } from '@/components/StyledWrapper'
+import StyledAlert from '@/components/StyledAlert'
 import { useAlert } from '@/hooks/useAlert'
-import CardList from '@/component/CardList'
+import CardList from '@/components/CardList'
 import {DeleteCard} from '@/utils/DeleteCard';
 
 export default function CollectionDetailPage() {
@@ -15,7 +15,13 @@ export default function CollectionDetailPage() {
 
   const handleDelete = DeleteCard(mutate, triggerAlert)
 
-  return (
+  return isLoading ? (
+      <div>Loading cards...</div>
+  ) : error ? (
+      <div>Failed to load cards. Error: {error.message}</div>
+  ) : !cards || cards.length === 0 ? (
+      <div>No cards available. Please insert new cards...</div>
+  ) : (
     <StyledWrapper>
       {alert.show && (
         <StyledAlert

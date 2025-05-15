@@ -1,11 +1,10 @@
 import useSWR from 'swr'
-import { StyledH1 } from '@/component/StyledHeadings'
-import { StyledWrapper } from '@/component/StyledWrapper'
-import StyledAlert from '@/component/StyledAlert'
-import { useState } from 'react'
-import Form from '@/component/Form'
+import { StyledH1 } from '@/components/StyledH1'
+import { StyledWrapper } from '@/components/StyledWrapper'
+import StyledAlert from '@/components/StyledAlert'
+import Form from '@/components/Form'
 import { useAlert } from '@/hooks/useAlert'
-import CardList from '@/component/CardList'
+import CardList from '@/components/CardList'
 import {DeleteCard} from '@/utils/DeleteCard';
 
 export default function HomePage({ fetcher }) {
