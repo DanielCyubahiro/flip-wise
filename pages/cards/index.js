@@ -48,7 +48,7 @@ export default function HomePage({ fetcher }) {
         />
       )}
       <StyledH1>All Cards List</StyledH1>
-      <Form onSubmit={handleSubmit} />
+     <Form onSubmit={handleSubmit} />
      <SideMenu/>
       <CardList cards={cards} onDelete={handleDelete} showCollectionName={true} />
     </StyledWrapper>
