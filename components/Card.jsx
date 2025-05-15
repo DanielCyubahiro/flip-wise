@@ -139,15 +139,6 @@ export default function Card({
                 {isCorrect ? 'Mark as not answered yet' : 'Mark as correct'}
               </StyledButton>
             )}
-            <CardActions>
-              {deleteConfirmation && (
-                <>
-                  <ConfirmationText>Are you sure?</ConfirmationText>
-                  <StyledButton onClick={() => setDeleteConfirmation(false)}>Cancel</StyledButton>
-                </>
-              )}
-              <StyledButton onClick={handleDelete}>Delete</StyledButton>
-            </CardActions>
           </CardBack>
         )}
       </CardBox>
