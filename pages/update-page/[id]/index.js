@@ -31,7 +31,7 @@ export default function UpdateDetailPage() {
 
   const handleUpdate = async (updatedCard) => {
     try {
-      await fetch(`/api/cards/${id}`, {
+      const response = await fetch(`/api/cards/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ export default function UpdateDetailPage() {
         body: JSON.stringify(updatedCard),
       })
 
-      if (!res.ok) {
+      if (!response.ok) {
         throw new Error('Failed to update')
       }
 
