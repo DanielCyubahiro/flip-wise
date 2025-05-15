@@ -8,6 +8,12 @@ export default async function handler(request, response) {
   const { id } = request.query
 
   if (request.method === 'GET') {
+    const card = await Card.findById(id)
+    return response.status(200).json(card)
+  }
+
+  /*
+  if (request.method === 'GET') {
     try {
       const correctCards = await CorrectCard.find({}, 'cardId')
       const correctCardIds = correctCards.map((document) => document.cardId.toString())
@@ -21,6 +27,17 @@ export default async function handler(request, response) {
       response.status(500).json({ status: 'Failed to fetch cards.' })
       return
     }
+  }*/
+
+  if (request.method === 'PUT') {
+    try {
+      const updatedCard = await Card.findByIdAndUpdate(id, request.body, {
+        new: true,
+      })
+      return response.status(200).json(updatedCard)
+    } catch (error) {
+      return response.status(500).json({ error: 'Failed to update card' })
+    }
   }
 
   if (request.method === 'DELETE') {
@@ -33,4 +50,6 @@ export default async function handler(request, response) {
     }
   }
   response.status(405).json({ message: 'Method Not Allowed' })
+  response.setHeader('Allow', ['GET', 'PUT'])
+  response.status(405).end(`Method ${request.method} Not Allowed`)
 }

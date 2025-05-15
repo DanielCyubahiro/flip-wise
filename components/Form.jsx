@@ -35,11 +35,19 @@ const FormButton = styled.button`
   color: #333;
 `
 
-export default function Form({ onSubmit, onReturnClick, showUpdate = false }) {
+export default function Form({ onSubmit, onReturnClick, showUpdate = false, initialData }) {
   const [question, setQuestion] = useState('')
   const [answer, setAnswer] = useState('')
   const [collection, setCollection] = useState('')
   const [collectionOptions, setCollectionOptions] = useState([])
+
+  useEffect(() => {
+    if (initialData) {
+      setQuestion(initialData.question || '')
+      setAnswer(initialData.answer || '')
+      setCollection(initialData.collectionId || '')
+    }
+  }, [initialData])
 
   useEffect(() => {
     async function fetchCollections() {
@@ -66,10 +74,11 @@ export default function Form({ onSubmit, onReturnClick, showUpdate = false }) {
 
     try {
       await onSubmit(newCard)
-
-      setQuestion('')
-      setAnswer('')
-      setCollection('')
+      if (!showUpdate) {
+        setQuestion('')
+        setAnswer('')
+        setCollection('')
+      }
     } catch (error) {
       console.error('Your card could not be added', error)
     }
@@ -107,7 +116,7 @@ export default function Form({ onSubmit, onReturnClick, showUpdate = false }) {
           </option>
         ))}
       </select>
-      <FormButton type="submit">Add Card</FormButton>
+      <FormButton type="submit">{showUpdate ? 'Update Card' : 'Add Card'}</FormButton>
       {showUpdate && (
         <FormButton type="button" onClick={onReturnClick}>
           Cancel
