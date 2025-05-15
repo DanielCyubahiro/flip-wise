@@ -81,6 +81,7 @@ export default function Card({
 }) {
   const [deleteConfirmation, setDeleteConfirmation] = useState(false)
   const [isFlipped, setIsFlipped] = useState(false)
+  const [showMoreOption, setShowMoreOption] = useState(false)
 
   const handleDelete = () => {
     if (deleteConfirmation) {
@@ -106,6 +107,9 @@ export default function Card({
       <CardBox $isFlipped={isFlipped}>
         {!isFlipped && (
           <CardFront>
+            <StyledButton $variant="more" onClick={() => setShowMoreOption((show) => !show)}>
+              ...
+            </StyledButton>
             {showCollectionName && <p>#{collectionName}</p>}
             <QuestionText>{question}</QuestionText>
             <FlipButton onClick={() => setIsFlipped(!isFlipped)}>Flip</FlipButton>
@@ -116,8 +120,12 @@ export default function Card({
                   <StyledButton onClick={() => setDeleteConfirmation(false)}>Cancel</StyledButton>
                 </>
               )}
-              <StyledButton onClick={handleDelete}>Delete</StyledButton>
-              <StyledButton>Edit</StyledButton>
+              {showMoreOption && (
+                <>
+                  <StyledButton onClick={handleDelete}>Delete</StyledButton>
+                  <StyledButton>Edit</StyledButton>
+                </>
+              )}
             </CardActions>
           </CardFront>
         )}
