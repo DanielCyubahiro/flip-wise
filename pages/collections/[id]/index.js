@@ -40,7 +40,7 @@ export default function CollectionDetailPage() {
       <StyledH1>{cards[0]?.collectionId.title}</StyledH1>
       {showForm && <Form onSubmit={handleSubmit} />}
       <SideMenu onCreate={setShowForm}/>
-      <CardList cards={cards} onDelete={handleDelete} showCollectionName={false} />
+      <CardList cards={cards} onDelete={handleDelete} fromAllCardsPage={false} />
     </StyledWrapper>
   )
 }
