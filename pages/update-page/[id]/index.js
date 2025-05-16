@@ -2,28 +2,15 @@ import { useRouter } from 'next/router'
 import { StyledH1 } from '@/components/StyledH1'
 import { StyledWrapper } from '@/components/StyledWrapper'
 import Form from '@/components/Form'
-import { useEffect, useState } from 'react'
+import useSWR from 'swr'
+
+const fetcher = (url) => fetch(url).then((response) => response.json())
 
 export default function UpdateDetailPage() {
   const router = useRouter()
   const { id } = router.query
-  const [cardData, setCardData] = useState(null)
 
-  useEffect(() => {
-    if (!id) return
-
-    async function fetchCard() {
-      try {
-        const response = await fetch(`/api/cards/${id}`)
-        const data = await response.json()
-        setCardData(data)
-      } catch (error) {
-        console.error('Failed to fetch card data', error)
-      }
-    }
-
-    fetchCard()
-  }, [id])
+  const { data } = useSWR(`/api/cards/${id}`, fetcher)
 
   const handleReturn = () => {
     router.push('/cards')
@@ -52,12 +39,12 @@ export default function UpdateDetailPage() {
   return (
     <StyledWrapper>
       <StyledH1>Update Page</StyledH1>
-      {cardData ? (
+      {data ? (
         <Form
           showUpdate={true}
           onReturnClick={handleReturn}
           onSubmit={handleUpdate}
-          initialData={cardData}
+          initialData={data}
         />
       ) : (
         <p>Loading...</p>
