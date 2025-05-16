@@ -1,4 +1,4 @@
-import dbConnect from '@/lib/database'
+import dbConnect from '@/config/database'
 import CorrectCard from '@/db/models/CorrectCard'
 
 export default async function handler(request, response) {

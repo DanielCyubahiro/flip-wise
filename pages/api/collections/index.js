@@ -1,4 +1,4 @@
-import dbConnect from '@/lib/database'
+import dbConnect from '@/config/database'
 import Collection from '@/db/models/Collection'
 
 export default async function handler(request, response) {

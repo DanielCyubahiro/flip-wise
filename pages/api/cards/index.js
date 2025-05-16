@@ -1,4 +1,4 @@
-import dbConnect from '@/lib/database'
+import dbConnect from '@/config/database'
 import Card from '@/db/models/Card'
 import Collection from '@/db/models/Collection'
 
