@@ -4,13 +4,11 @@ import { StyledWrapper } from '@/components/StyledWrapper'
 import Form from '@/components/Form'
 import useSWR from 'swr'
 
-const fetcher = (url) => fetch(url).then((response) => response.json())
-
 export default function UpdateDetailPage() {
   const router = useRouter()
   const { id } = router.query
 
-  const { data } = useSWR(`/api/cards/${id}`, fetcher)
+  const { data } = useSWR(`/api/cards/${id}`)
 
   const handleReturn = () => {
     router.push('/cards')
