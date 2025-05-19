@@ -15,6 +15,9 @@ import Logout from '@/components/Logout';
 
 export default function AllCardsList({ fetcher }) {
   const { status } = useSession();
+  if (status === 'unauthenticated') {
+    return <HomePage/>
+  }
   const { data: cards, isLoading, error, mutate } = useSWR('/api/cards', fetcher)
   const { alert, triggerAlert, closeAlert } = useAlert()
   const [showForm, setShowForm] = useState(false)
@@ -22,9 +25,6 @@ export default function AllCardsList({ fetcher }) {
   const handleDelete = DeleteCard(mutate, triggerAlert)
   const handleSubmit = CreateCard(mutate, setShowForm)
 
-  if (status === 'unauthenticated') {
-    return <HomePage/>
-  }
   return isLoading ? (
     <div>Loading cards...</div>
   ) : error ? (
