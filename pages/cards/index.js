@@ -9,8 +9,10 @@ import {DeleteCard} from '@/utils/DeleteCard';
 import SideMenu from '@/components/SideMenu';
 import {useState} from 'react';
 import {CreateCard} from '@/utils/CreateCard';
+import {useSession} from 'next-auth/react';
 
-export default function HomePage({ fetcher }) {
+export default function AllCardsList({ fetcher }) {
+  const { status } = useSession();
   const { data: cards, isLoading, error, mutate } = useSWR('/api/cards', fetcher)
   const { alert, triggerAlert, closeAlert } = useAlert()
   const [showForm, setShowForm] = useState(false)
@@ -18,6 +20,9 @@ export default function HomePage({ fetcher }) {
   const handleDelete = DeleteCard(mutate, triggerAlert)
   const handleSubmit = CreateCard(mutate, setShowForm)
 
+  if (status === 'unauthenticated') {
+    return <>Access denied</>
+  }
   return isLoading ? (
     <div>Loading cards...</div>
   ) : error ? (
