@@ -10,6 +10,8 @@ import SideMenu from '@/components/SideMenu';
 import {useState} from 'react';
 import {CreateCard} from '@/utils/CreateCard';
 import {useSession} from 'next-auth/react';
+import HomePage from '@/pages';
+import Logout from '@/components/Logout';
 
 export default function AllCardsList({ fetcher }) {
   const { status } = useSession();
@@ -21,7 +23,7 @@ export default function AllCardsList({ fetcher }) {
   const handleSubmit = CreateCard(mutate, setShowForm)
 
   if (status === 'unauthenticated') {
-    return <>Access denied</>
+    return <HomePage/>
   }
   return isLoading ? (
     <div>Loading cards...</div>
@@ -38,6 +40,9 @@ export default function AllCardsList({ fetcher }) {
           onClose={closeAlert}
           duration={3000}
         />
+      )}
+      {status === 'authenticated' && (
+          <Logout/>
       )}
       <StyledH1>All Cards List</StyledH1>
       {showForm && <Form onSubmit={handleSubmit} />}
