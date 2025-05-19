@@ -26,7 +26,7 @@ export default function CardList({ cards, onDelete, fromAllCardsPage = false }) 
 
   return (
     <>
-      <StyledButton onClick={handleReset}>Reset</StyledButton>
+      {!fromAllCardsPage && <StyledButton onClick={handleReset}>Reset</StyledButton>}
       {correctCardsList &&
         cards.map((card) => (
           <Card
