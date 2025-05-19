@@ -10,8 +10,10 @@ import SideMenu from '@/components/SideMenu';
 import Form from '@/components/Form';
 import {useState} from 'react';
 import {CreateCard} from '@/utils/CreateCard';
+import {useSession} from 'next-auth/react';
 
 export default function CollectionDetailPage() {
+  const { status } = useSession();
   const router = useRouter()
   const { id } = router.query
   const { data: cards, isLoading, error, mutate } = useSWR(id ? `/api/collections/${id}` : null)
@@ -39,7 +41,7 @@ export default function CollectionDetailPage() {
       )}
       <StyledH1>{cards[0]?.collectionId.title}</StyledH1>
       {showForm && <Form onSubmit={handleSubmit} />}
-      <SideMenu onCreate={setShowForm}/>
+      {status === 'authenticated' && <SideMenu onCreate={setShowForm}/>}
       <CardList cards={cards} onDelete={handleDelete} showCollectionName={false} />
     </StyledWrapper>
   )

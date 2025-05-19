@@ -3,6 +3,7 @@ import { StyledButton } from './StyledButton'
 import { useState } from 'react'
 import { mutate } from 'swr'
 import { useRouter } from 'next/router'
+import {useSession} from 'next-auth/react';
 
 const CardContainer = styled.section`
   perspective: 1000px;
@@ -79,6 +80,7 @@ export default function Card({
   isCorrect,
   collectionId,
 }) {
+  const { status } = useSession();
   const [deleteConfirmation, setDeleteConfirmation] = useState(false)
   const [isFlipped, setIsFlipped] = useState(false)
   const [showMoreOption, setShowMoreOption] = useState(false)
@@ -113,9 +115,11 @@ export default function Card({
       <CardBox $isFlipped={isFlipped}>
         {!isFlipped && (
           <CardFront>
-            <StyledButton $variant="more" onClick={() => setShowMoreOption((show) => !show)}>
-              ...
-            </StyledButton>
+            {status === 'authenticated' && (
+                <StyledButton $variant="more" onClick={() => setShowMoreOption((show) => !show)}>
+                  ...
+                </StyledButton>)
+            }
             {showCollectionName && <p>#{collectionName}</p>}
             <QuestionText>{question}</QuestionText>
             <FlipButton onClick={() => setIsFlipped(!isFlipped)}>Flip</FlipButton>

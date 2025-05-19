@@ -1,8 +1,15 @@
 import dbConnect from '@/config/database'
 import Card from '@/db/models/Card'
+import {getServerSession} from 'next-auth/next';
+import {authOptions} from '@/pages/api/auth/[...nextauth]';
 
 export default async function handler(request, response) {
   await dbConnect()
+  const session = await getServerSession(request, response, authOptions);
+
+  if (!session){
+    return response.status(401).json({ status: "Not authorized" });
+  }
 
   const { id } = request.query
 
@@ -17,6 +24,9 @@ export default async function handler(request, response) {
   }
 
   if (request.method === 'PUT') {
+    if (!session){
+      return response.status(401).json({ status: "Not authorized" });
+    }
     try {
       const updatedCard = await Card.findByIdAndUpdate(id, request.body, {
         new: true,
@@ -28,6 +38,9 @@ export default async function handler(request, response) {
   }
 
   if (request.method === 'DELETE') {
+    if (!session){
+      return response.status(401).json({ status: "Not authorized" });
+    }
     try {
       await Card.findByIdAndDelete(id)
       return response.status(200).json({ status: 'Card deleted successfully' })
