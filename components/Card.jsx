@@ -109,8 +109,6 @@ export default function Card({
     router.push(`/update-page/${id}`)
   }
 
-  console.log(isCorrect)
-
   return (
     <CardContainer>
       <CardBox $isFlipped={isFlipped} $isCorrect={isCorrect}>
