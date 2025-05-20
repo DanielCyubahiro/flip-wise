@@ -9,14 +9,53 @@ import { DeleteCard } from '@/utils/DeleteCard'
 import SideMenu from '@/components/SideMenu'
 import { useState } from 'react'
 import { CreateCard } from '@/utils/CreateCard'
+import Modal from '@/components/Modal'
 
 export default function HomePage({ fetcher }) {
   const { data: cards, isLoading, error, mutate } = useSWR('/api/cards', fetcher)
   const { alert, triggerAlert, closeAlert } = useAlert()
   const [showForm, setShowForm] = useState(false)
+  const [editCard, setEditCard] = useState(null)
 
   const handleDelete = DeleteCard(mutate, triggerAlert)
-  const handleSubmit = CreateCard(mutate, setShowForm)
+  const handleSubmit = CreateCard(mutate, () => {
+    setShowForm(false), setEditCard(null)
+  })
+
+  const handleUpdate = async (updatedCard) => {
+    try {
+      const response = await fetch(`/api/cards/${editCard._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedCard),
+      })
+
+      if (!response.ok) throw new Error('Failed to update')
+
+      await mutate()
+      setShowForm(false)
+      setEditCard(null)
+      triggerAlert('Card updated!', 'success')
+    } catch (err) {
+      triggerAlert('Update failed', 'error')
+    }
+  }
+
+  const openCreateForm = () => {
+    if (showForm && !editCard) {
+      setShowForm(false)
+    } else {
+      setEditCard(null)
+      setShowForm(true)
+    }
+  }
+
+  const openEditForm = (card) => {
+    setEditCard(card)
+    setShowForm(true)
+  }
 
   return isLoading ? (
     <div>Loading cards...</div>
@@ -35,9 +74,32 @@ export default function HomePage({ fetcher }) {
         />
       )}
       <StyledH1>All Cards List</StyledH1>
-      {showForm && <Form onSubmit={handleSubmit} />}
-      <SideMenu onCreate={setShowForm} />
-      <CardList cards={cards} onDelete={handleDelete} showCollectionName={true} />
+      {showForm && (
+        <Modal
+          onClose={() => {
+            setShowForm(false)
+            setEditCard(null)
+          }}
+        >
+          <Form
+            showUpdate={!!editCard}
+            onSubmit={editCard ? handleUpdate : handleSubmit}
+            initialData={editCard}
+            onReturnClick={() => {
+              setShowForm(false)
+              setEditCard(null)
+            }}
+          />
+        </Modal>
+      )}
+
+      <SideMenu onCreate={openCreateForm} />
+      <CardList
+        cards={cards}
+        onDelete={handleDelete}
+        onEdit={openEditForm}
+        showCollectionName={true}
+      />
     </StyledWrapper>
   )
 }

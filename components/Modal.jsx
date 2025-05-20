@@ -1,52 +1,40 @@
-import { useRouter } from 'next/router'
-import { StyledH1 } from '@/components/StyledH1'
-import { StyledWrapper } from '@/components/StyledWrapper'
-import Form from '@/components/Form'
-import useSWR from 'swr'
+import styled from 'styled-components'
+import { useEffect } from 'react'
 
-export default function Modal() {
-  const router = useRouter()
-  const { id } = router.query
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
-  const { data } = useSWR(`/api/cards/${id}`)
+const ModalContainer = styled.div`
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+`
 
-  const handleReturn = () => {
-    router.push('/cards')
-  }
-
-  const handleUpdate = async (updatedCard) => {
-    try {
-      const response = await fetch(`/api/cards/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedCard),
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to update')
-      }
-
-      router.push('/cards')
-    } catch (error) {
-      console.error('Failed to update card', error)
+export default function Modal({ children, onClose }) {
+  useEffect(() => {
+    const onEsc = (e) => {
+      if (e.key === 'Escape') onClose()
     }
-  }
+    window.addEventListener('keydown', onEsc)
+    return () => window.removeEventListener('keydown', onEsc)
+  }, [onClose])
 
   return (
-    <StyledWrapper>
-      <StyledH1>Update Page</StyledH1>
-      {data ? (
-        <Form
-          showUpdate={true}
-          onReturnClick={handleReturn}
-          onSubmit={handleUpdate}
-          initialData={data}
-        />
-      ) : (
-        <p>Loading...</p>
-      )}
-    </StyledWrapper>
+    <Overlay onClick={onClose}>
+      <ModalContainer onClick={(e) => e.stopPropagation()}>{children}</ModalContainer>
+    </Overlay>
   )
 }
