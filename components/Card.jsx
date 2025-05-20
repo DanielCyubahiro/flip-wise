@@ -2,7 +2,9 @@ import styled from 'styled-components'
 import { StyledButton } from './StyledButton'
 import { useState } from 'react'
 import { mutate } from 'swr'
-import { useRouter } from 'next/router'
+import Form from './Form'
+import Modal from './Modal'
+import useSWR from 'swr'
 
 const CardContainer = styled.section`
   perspective: 1000px;
@@ -82,6 +84,27 @@ export default function Card({
   const [deleteConfirmation, setDeleteConfirmation] = useState(false)
   const [isFlipped, setIsFlipped] = useState(false)
   const [showMoreOption, setShowMoreOption] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
+
+  const handleUpdate = async (updatedCard) => {
+    try {
+      const response = await fetch(`/api/cards/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedCard),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to update')
+      }
+      setIsEditing(false)
+      mutate('/api/cards')
+    } catch (error) {
+      console.error('Failed to update card', error)
+    }
+  }
 
   const handleDelete = () => {
     if (deleteConfirmation) {
@@ -92,10 +115,14 @@ export default function Card({
     }
   }
 
-  const router = useRouter()
+  const { data } = useSWR(`/api/cards/${id}`)
 
-  const handleUpdate = () => {
-    router.push(`/update-page/${id}`)
+  const handleEdit = () => {
+    setIsEditing(true)
+  }
+
+  const handleReturn = () => {
+    setIsEditing(false)
   }
 
   const handleToggleCorrect = async () => {
@@ -109,45 +136,62 @@ export default function Card({
   }
 
   return (
-    <CardContainer>
-      <CardBox $isFlipped={isFlipped}>
-        {!isFlipped && (
-          <CardFront>
-            <StyledButton $variant="more" onClick={() => setShowMoreOption((show) => !show)}>
-              ...
-            </StyledButton>
-            {showCollectionName && <p>#{collectionName}</p>}
-            <QuestionText>{question}</QuestionText>
-            <FlipButton onClick={() => setIsFlipped(!isFlipped)}>Flip</FlipButton>
-            <CardActions>
-              {deleteConfirmation && (
-                <>
-                  <ConfirmationText>Are you sure?</ConfirmationText>
-                  <StyledButton onClick={() => setDeleteConfirmation(false)}>Cancel</StyledButton>
-                </>
+    <>
+      {isEditing ? (
+        <>
+          <Form
+            showUpdate={true}
+            onReturnClick={handleReturn}
+            onSubmit={handleUpdate}
+            initialData={data}
+          ></Form>
+        </>
+      ) : (
+        <>
+          <CardContainer>
+            <CardBox $isFlipped={isFlipped}>
+              {!isFlipped && (
+                <CardFront>
+                  <StyledButton $variant="more" onClick={() => setShowMoreOption((show) => !show)}>
+                    ...
+                  </StyledButton>
+                  {showCollectionName && <p>#{collectionName}</p>}
+                  <QuestionText>{question}</QuestionText>
+                  <FlipButton onClick={() => setIsFlipped(!isFlipped)}>Flip</FlipButton>
+                  <CardActions>
+                    {deleteConfirmation && (
+                      <>
+                        <ConfirmationText>Are you sure?</ConfirmationText>
+                        <StyledButton onClick={() => setDeleteConfirmation(false)}>
+                          Cancel
+                        </StyledButton>
+                      </>
+                    )}
+                    {showMoreOption && (
+                      <>
+                        <StyledButton onClick={handleDelete}>Delete</StyledButton>
+                        <StyledButton onClick={handleEdit}>Edit</StyledButton>
+                      </>
+                    )}
+                  </CardActions>
+                </CardFront>
               )}
-              {showMoreOption && (
-                <>
-                  <StyledButton onClick={handleDelete}>Delete</StyledButton>
-                  <StyledButton onClick={handleUpdate}>Edit</StyledButton>
-                </>
+              {isFlipped && (
+                <CardBack>
+                  {showCollectionName && <p>#{collectionName}</p>}
+                  <QuestionText>{answer}</QuestionText>
+                  <FlipButton onClick={() => setIsFlipped(!isFlipped)}>Flip Back</FlipButton>
+                  {showMarkAsCorrectButton && (
+                    <StyledButton onClick={handleToggleCorrect}>
+                      {isCorrect ? 'Mark as not answered yet' : 'Mark as correct'}
+                    </StyledButton>
+                  )}
+                </CardBack>
               )}
-            </CardActions>
-          </CardFront>
-        )}
-        {isFlipped && (
-          <CardBack>
-            {showCollectionName && <p>#{collectionName}</p>}
-            <QuestionText>{answer}</QuestionText>
-            <FlipButton onClick={() => setIsFlipped(!isFlipped)}>Flip Back</FlipButton>
-            {showMarkAsCorrectButton && (
-              <StyledButton onClick={handleToggleCorrect}>
-                {isCorrect ? 'Mark as not answered yet' : 'Mark as correct'}
-              </StyledButton>
-            )}
-          </CardBack>
-        )}
-      </CardBox>
-    </CardContainer>
+            </CardBox>
+          </CardContainer>
+        </>
+      )}
+    </>
   )
 }

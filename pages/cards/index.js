@@ -5,10 +5,10 @@ import StyledAlert from '@/components/StyledAlert'
 import Form from '@/components/Form'
 import { useAlert } from '@/hooks/useAlert'
 import CardList from '@/components/CardList'
-import {DeleteCard} from '@/utils/DeleteCard';
-import SideMenu from '@/components/SideMenu';
-import {useState} from 'react';
-import {CreateCard} from '@/utils/CreateCard';
+import { DeleteCard } from '@/utils/DeleteCard'
+import SideMenu from '@/components/SideMenu'
+import { useState } from 'react'
+import { CreateCard } from '@/utils/CreateCard'
 
 export default function HomePage({ fetcher }) {
   const { data: cards, isLoading, error, mutate } = useSWR('/api/cards', fetcher)
@@ -36,7 +36,7 @@ export default function HomePage({ fetcher }) {
       )}
       <StyledH1>All Cards List</StyledH1>
       {showForm && <Form onSubmit={handleSubmit} />}
-     <SideMenu onCreate={setShowForm} />
+      <SideMenu onCreate={setShowForm} />
       <CardList cards={cards} onDelete={handleDelete} showCollectionName={true} />
     </StyledWrapper>
   )
