@@ -15,11 +15,11 @@ export default function HomePage({ fetcher }) {
   const { data: cards, isLoading, error, mutate } = useSWR('/api/cards', fetcher)
   const { alert, triggerAlert, closeAlert } = useAlert()
   const [showForm, setShowForm] = useState(false)
-  const [editCard, setEditCard] = useState(null)
+  const [editCard, setEditCard] = useState(false)
 
   const handleDelete = DeleteCard(mutate, triggerAlert)
   const handleSubmit = CreateCard(mutate, () => {
-    setShowForm(false), setEditCard(null)
+    setShowForm(false), setEditCard(false)
   })
 
   const handleUpdate = async (updatedCard) => {
@@ -36,7 +36,7 @@ export default function HomePage({ fetcher }) {
 
       await mutate()
       setShowForm(false)
-      setEditCard(null)
+      setEditCard(false)
       triggerAlert('Card updated!', 'success')
     } catch (err) {
       triggerAlert('Update failed', 'error')
@@ -47,7 +47,7 @@ export default function HomePage({ fetcher }) {
     if (showForm && !editCard) {
       setShowForm(false)
     } else {
-      setEditCard(null)
+      setEditCard(false)
       setShowForm(true)
     }
   }
@@ -78,7 +78,7 @@ export default function HomePage({ fetcher }) {
         <Modal
           onClose={() => {
             setShowForm(false)
-            setEditCard(null)
+            setEditCard(false)
           }}
         >
           <Form
@@ -87,7 +87,7 @@ export default function HomePage({ fetcher }) {
             initialData={editCard}
             onReturnClick={() => {
               setShowForm(false)
-              setEditCard(null)
+              setEditCard(false)
             }}
           />
         </Modal>
