@@ -24,9 +24,6 @@ export default async function handler(request, response) {
   }
 
   if (request.method === 'PUT') {
-    if (!session){
-      return response.status(401).json({ status: "Not authorized" });
-    }
     try {
       const updatedCard = await Card.findByIdAndUpdate(id, request.body, {
         new: true,
@@ -38,9 +35,6 @@ export default async function handler(request, response) {
   }
 
   if (request.method === 'DELETE') {
-    if (!session){
-      return response.status(401).json({ status: "Not authorized" });
-    }
     try {
       await Card.findByIdAndDelete(id)
       return response.status(200).json({ status: 'Card deleted successfully' })
