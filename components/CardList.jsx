@@ -1,17 +1,46 @@
 import Card from './Card'
+import { StyledButton } from '@/components/StyledButton'
+import useLocalStorageState from 'use-local-storage-state'
 
-export default function CardList({ cards, onDelete, showCollectionName = false }) {
-  return cards.map((card) => (
-    <Card
-      key={card._id}
-      id={card._id}
-      question={card.question}
-      answer={card.answer}
-      collectionName={card.collectionId?.title}
-      showCollectionName={showCollectionName}
-      onDelete={() => onDelete(card._id)}
-      showMarkAsCorrectButton={!!card.collectionId}
-      collectionId={card.collectionId?._id}
-    />
-  ))
+export default function CardList({ cards, onDelete, fromAllCardsPage = false }) {
+  const [correctCardsList, setCorrectCardsList] = useLocalStorageState('correctCardsList', {
+    defaultValue: [],
+  })
+  const handleToggleCorrect = async (cardId) => {
+    if (!correctCardsList.some((card) => card.cardId === cardId)) {
+      const collectionId = cards.find((card) => card._id === cardId)?.collectionId?._id
+      setCorrectCardsList([...correctCardsList, { cardId, collectionId }])
+    }
+  }
+
+  const handleReset = () => {
+    if (!fromAllCardsPage) {
+      // Reset for only one collection
+      const collectionId = cards && cards[0].collectionId._id
+      setCorrectCardsList(correctCardsList.filter((card) => card.collectionId !== collectionId))
+    } else {
+      // Reset all cards in the game
+      setCorrectCardsList([])
+    }
+  }
+
+  return (
+    <>
+      {!fromAllCardsPage && <StyledButton onClick={handleReset}>Reset</StyledButton>}
+      {correctCardsList &&
+        cards.map((card) => (
+          <Card
+            key={card._id}
+            id={card._id}
+            question={card.question}
+            answer={card.answer}
+            collectionName={card.collectionId?.title}
+            fromAllCardsPage={fromAllCardsPage}
+            onDelete={() => onDelete(card._id)}
+            isCorrect={correctCardsList.some((c) => c.cardId === card._id)}
+            handleToggleCorrect={handleToggleCorrect}
+          />
+        ))}
+    </>
+  )
 }
