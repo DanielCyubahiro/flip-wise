@@ -11,6 +11,7 @@ import Form from '@/components/Form';
 import {useState} from 'react';
 import {CreateCard} from '@/utils/CreateCard';
 import {useSession} from 'next-auth/react';
+import Navigation from '@/components/Navigation';
 
 export default function CollectionDetailPage() {
   const { status } = useSession();
@@ -43,6 +44,7 @@ export default function CollectionDetailPage() {
       {showForm && <Form onSubmit={handleSubmit} />}
       {status === 'authenticated' && <SideMenu onCreate={setShowForm}/>}
       <CardList cards={cards} onDelete={handleDelete} showCollectionName={false} />
+      <Navigation/>
     </StyledWrapper>
   )
 }

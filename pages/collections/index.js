@@ -2,6 +2,7 @@ import { StyledH1 } from '@/components/StyledH1'
 import { StyledLink } from '@/components/StyledLink'
 import { StyledWrapper } from '@/components/StyledWrapper'
 import useSWR from 'swr'
+import Navigation from '@/components/Navigation';
 
 export default function CollectionPage({ fetcher }) {
   const { data: collections, isLoading, error } = useSWR('/api/collections', fetcher)
@@ -23,6 +24,7 @@ export default function CollectionPage({ fetcher }) {
           </StyledLink>
         )
       })}
+      <Navigation/>
     </StyledWrapper>
   )
 }

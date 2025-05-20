@@ -2,6 +2,7 @@ import {StyledLink} from './StyledLink';
 import {StyledFooter} from './StyledFooter';
 import {useRouter} from 'next/router';
 import {useSession} from 'next-auth/react';
+import Logout from '@/components/Logout';
 
 export default function Navigation() {
   const router = useRouter();
@@ -18,6 +19,9 @@ export default function Navigation() {
         <StyledLink href={`/collections`} $active={isActive('/collections')}>
           Collections
         </StyledLink>
+        {status === 'authenticated' && (
+            <Logout/>
+        )}
       </StyledFooter>
   );
 }

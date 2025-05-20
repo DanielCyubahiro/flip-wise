@@ -11,16 +11,18 @@ import {useState} from 'react';
 import {CreateCard} from '@/utils/CreateCard';
 import {useSession} from 'next-auth/react';
 import HomePage from '@/pages';
-import Logout from '@/components/Logout';
+import Navigation from '@/components/Navigation';
 
-export default function AllCardsList({ fetcher }) {
+export default function AllCardsList() {
   const { status } = useSession();
+
+  const { data: cards, isLoading, error, mutate } = useSWR('/api/cards')
+  const { alert, triggerAlert, closeAlert } = useAlert()
+  const [showForm, setShowForm] = useState(false)
+
   if (status !== 'authenticated') {
     return <HomePage/>
   }
-  const { data: cards, isLoading, error, mutate } = useSWR('/api/cards', fetcher)
-  const { alert, triggerAlert, closeAlert } = useAlert()
-  const [showForm, setShowForm] = useState(false)
 
   const handleDelete = DeleteCard(mutate, triggerAlert)
   const handleSubmit = CreateCard(mutate, setShowForm)
@@ -41,13 +43,11 @@ export default function AllCardsList({ fetcher }) {
           duration={3000}
         />
       )}
-      {status === 'authenticated' && (
-          <Logout/>
-      )}
       <StyledH1>All Cards List</StyledH1>
       {showForm && <Form onSubmit={handleSubmit} />}
      <SideMenu onCreate={setShowForm} />
-      <CardList cards={cards} onDelete={handleDelete} showCollectionName={true} />
+      <CardList cards={cards} onDelete={handleDelete} showCollectionName={true} />\
+      <Navigation/>
     </StyledWrapper>
   )
 }

@@ -3,17 +3,19 @@ import {StyledButton} from '@/components/StyledButton';
 import styled from 'styled-components';
 
 const StyledLogoutButton = styled(StyledButton)`
-    position: absolute;
-    top: 1.5rem;
-    left: 1.5rem;
-    display: flex;
-    place-items: center;
+    background: black;
+    color: white;
+    border-style: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0.6rem;
+    font-weight: bold;
+    font-size: 1rem;
 `
 const Logout = () => {
   const { data: session } = useSession();
 
   if (session) {
-    return <StyledLogoutButton onClick={() => signOut()}>Sign out</StyledLogoutButton>
+    return <StyledLogoutButton onClick={() => signOut({ callbackUrl: "/" })}>Sign out</StyledLogoutButton>
   }
 };
 
