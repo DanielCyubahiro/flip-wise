@@ -79,6 +79,7 @@ export default function Card({
   answer,
   collectionName,
   onDelete,
+  onEdit,
   showCollectionName,
   id,
   isCorrect,
@@ -101,14 +102,13 @@ export default function Card({
     }
   }
 
-  const router = useRouter()
+  const handleEdit = () => {
+    if (onEdit) {
+      onEdit()
+    }
 
-  const handleUpdate = () => {
-    router.push(`/update-page/${id}`)
+    console.log(isCorrect)
   }
-
-  console.log(isCorrect)
-
   return (
     <CardContainer>
       <CardBox $isFlipped={isFlipped} $isCorrect={isCorrect}>
@@ -130,7 +130,7 @@ export default function Card({
               {showMoreOption && (
                 <>
                   <StyledButton onClick={handleDelete}>Delete</StyledButton>
-                  <StyledButton onClick={handleUpdate}>Edit</StyledButton>
+                  <StyledButton onClick={handleEdit}>Edit</StyledButton>
                 </>
               )}
             </CardActions>
