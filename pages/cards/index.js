@@ -46,7 +46,7 @@ export default function AllCardsList() {
       <StyledH1>All Cards List</StyledH1>
       {showForm && <Form onSubmit={handleSubmit} />}
      <SideMenu onCreate={setShowForm} />
-      <CardList cards={cards} onDelete={handleDelete} showCollectionName={true} />\
+      <CardList cards={cards} onDelete={handleDelete} fromAllCardsPage={true} />
       <Navigation/>
     </StyledWrapper>
   )

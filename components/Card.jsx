@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { StyledButton } from './StyledButton'
-import { useState } from 'react'
-import { mutate } from 'swr'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import {useSession} from 'next-auth/react';
 
@@ -9,7 +8,7 @@ const CardContainer = styled.section`
   perspective: 1000px;
 `
 const CardBox = styled.section`
-  background-color: #ffffff;
+  background-color: ${(props) => (props.$isCorrect ? 'grey' : '#ffffff')};
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   width: 400px;
@@ -22,6 +21,13 @@ const CardBox = styled.section`
 const QuestionText = styled.h2`
   font-size: 1.2rem;
   font-weight: 600;
+  color: #333;
+`
+
+const AnswerText = styled.h2`
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: 400;
   color: #333;
 `
 
@@ -75,15 +81,18 @@ export default function Card({
   collectionName,
   onDelete,
   showCollectionName,
-  showMarkAsCorrectButton,
   id,
   isCorrect,
-  collectionId,
+  handleToggleCorrect,
 }) {
   const { status } = useSession();
   const [deleteConfirmation, setDeleteConfirmation] = useState(false)
-  const [isFlipped, setIsFlipped] = useState(false)
   const [showMoreOption, setShowMoreOption] = useState(false)
+  const [isFlipped, setIsFlipped] = useState(isCorrect)
+
+  useEffect(() => {
+    setIsFlipped(isCorrect)
+  }, [isCorrect])
 
   const handleDelete = () => {
     if (deleteConfirmation) {
@@ -100,19 +109,11 @@ export default function Card({
     router.push(`/update-page/${id}`)
   }
 
-  const handleToggleCorrect = async () => {
-    await fetch('/api/correctCards', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ cardId: id }),
-    })
-
-    mutate(`/api/cards/${collectionId}`)
-  }
+  console.log(isCorrect)
 
   return (
     <CardContainer>
-      <CardBox $isFlipped={isFlipped}>
+      <CardBox $isFlipped={isFlipped} $isCorrect={isCorrect}>
         {!isFlipped && (
           <CardFront>
             {status === 'authenticated' && (
@@ -142,12 +143,13 @@ export default function Card({
         {isFlipped && (
           <CardBack>
             {showCollectionName && <p>#{collectionName}</p>}
-            <QuestionText>{answer}</QuestionText>
-            <FlipButton onClick={() => setIsFlipped(!isFlipped)}>Flip Back</FlipButton>
-            {showMarkAsCorrectButton && (
-              <StyledButton onClick={handleToggleCorrect}>
-                {isCorrect ? 'Mark as not answered yet' : 'Mark as correct'}
-              </StyledButton>
+            <QuestionText>{question}</QuestionText>
+            <AnswerText>{answer}</AnswerText>
+            {!isCorrect && (
+              <>
+                <FlipButton onClick={() => setIsFlipped(!isFlipped)}>Flip Back</FlipButton>
+                <StyledButton onClick={() => handleToggleCorrect(id)}>Mark as correct</StyledButton>
+              </>
             )}
           </CardBack>
         )}
