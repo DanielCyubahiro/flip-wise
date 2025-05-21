@@ -15,7 +15,7 @@ export default function CollectionPage({ fetcher }) {
 
   return (
     <StyledWrapper>
-      <StyledH1>Harry Potter</StyledH1>
+      <StyledH1>HarryPotter</StyledH1>
       <StyledH1 $variant="small">Flipwise</StyledH1>
 
       <StyledCardWrapper>
