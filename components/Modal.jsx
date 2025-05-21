@@ -7,7 +7,7 @@ const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.8);
   z-index: 1000;
   display: flex;
   justify-content: center;
@@ -15,12 +15,12 @@ const Overlay = styled.div`
 `
 
 const ModalContainer = styled.div`
+  display: flex;
   background: white;
   padding: 2rem;
   border-radius: 1rem;
-  max-width: 600px;
-  width: 100%;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  width: 60%;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
 `
 
 export default function Modal({ children, onClose }) {

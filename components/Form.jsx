@@ -5,7 +5,7 @@ const FormBox = styled.form`
   background-color: #eeeeee;
   border-radius: 16px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  width: 450px;
+  width: 100%;
   padding: 32px;
   height: 300px;
   display: flex;
