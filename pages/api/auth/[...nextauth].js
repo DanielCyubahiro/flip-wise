@@ -31,6 +31,18 @@ export const authOptions = {
       clientSecret: process.env.GITHUB_SECRET,
     }),
   ],
+  cookies: {
+    callbackUrl: {
+      name: '__Secure-next-auth.callback-url',
+      options: {
+        httpOnly: false,
+        sameSite: 'lax',
+        path: '/cards',
+        secure: true,
+        maxAge: 300,
+      },
+    },
+  },
 };
 
 export default NextAuth(authOptions)
