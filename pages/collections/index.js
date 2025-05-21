@@ -1,7 +1,7 @@
 import { StyledH1 } from '@/components/StyledH1'
 import { StyledWrapper } from '@/components/StyledWrapper'
 import { StyledCardWrapper } from '@/components/LevelCardWrapper'
-import { LevelCard } from '@/components/LevelCard'
+import { LevelCard, LevelText } from '@/components/LevelCard'
 import Link from 'next/link'
 import useSWR from 'swr'
 
@@ -21,7 +21,9 @@ export default function CollectionPage({ fetcher }) {
       <StyledCardWrapper>
         {collections.map((collection, index) => (
           <Link key={collection._id} href={`/collections/${collection._id}`} passHref>
-            <LevelCard $background={getImagePath(index)}></LevelCard>
+            <LevelCard $background={getImagePath(index)}>
+              <LevelText>{collection.title}</LevelText>
+            </LevelCard>
           </Link>
         ))}
       </StyledCardWrapper>
