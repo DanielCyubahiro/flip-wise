@@ -9,19 +9,16 @@ import {DeleteCard} from '@/utils/DeleteCard';
 import SideMenu from '@/components/SideMenu';
 import {useState} from 'react';
 import {CreateCard} from '@/utils/CreateCard';
-import {useSession} from 'next-auth/react';
-import HomePage from '@/pages';
 import Navigation from '@/components/Navigation';
+import {getSession} from 'next-auth/react';
 
-export default function AllCardsList() {
-  const { status } = useSession();
-
+export default function AllCardsList({ isAuthenticated}) {
   const { data: cards, isLoading, error, mutate } = useSWR('/api/cards')
   const { alert, triggerAlert, closeAlert } = useAlert()
   const [showForm, setShowForm] = useState(false)
 
-  if (status !== 'authenticated') {
-    return <HomePage/>
+  if (!isAuthenticated) {
+    return null
   }
 
   const handleDelete = DeleteCard(mutate, triggerAlert)
@@ -50,4 +47,23 @@ export default function AllCardsList() {
       <Navigation/>
     </StyledWrapper>
   )
+}
+
+export const getServerSideProps = async (context) => {
+  const session = await getSession(context)
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      }
+    }
+  }
+
+  return {
+    props: {
+      isAuthenticated: !!session,
+    }
+  }
 }
