@@ -15,7 +15,7 @@ const Logout = () => {
   const { data: session } = useSession();
 
   if (session) {
-    return <StyledLogoutButton onClick={() => signOut({ callbackUrl: "/" })}>Sign out</StyledLogoutButton>
+    return <StyledLogoutButton onClick={() => signOut({ callbackUrl: "/cards" })}>Sign out</StyledLogoutButton>
   }
 };
 
