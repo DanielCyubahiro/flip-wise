@@ -146,7 +146,7 @@ export default function Card({
             {!isCorrect && (
               <>
                 <FlipButton onClick={() => setIsFlipped(!isFlipped)}>Flip Back</FlipButton>
-                {status !== 'authenticated' && <StyledButton onClick={() => handleToggleCorrect(id)}>Mark as correct</StyledButton>}
+                {status !== 'authenticated' && <StyledButton onClick={() => handleToggleCorrect(id)}>I know it!</StyledButton>}
               </>
             )}
           </CardBack>
