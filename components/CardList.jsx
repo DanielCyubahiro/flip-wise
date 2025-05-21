@@ -2,7 +2,7 @@ import Card from './Card'
 import { StyledButton } from '@/components/StyledButton'
 import useLocalStorageState from 'use-local-storage-state'
 
-export default function CardList({ cards, onDelete, fromAllCardsPage = false }) {
+export default function CardList({ cards, onDelete, onEdit, fromAllCardsPage = false }) {
   const [correctCardsList, setCorrectCardsList] = useLocalStorageState('correctCardsList', {
     defaultValue: [],
   })
@@ -37,6 +37,7 @@ export default function CardList({ cards, onDelete, fromAllCardsPage = false }) 
             collectionName={card.collectionId?.title}
             fromAllCardsPage={fromAllCardsPage}
             onDelete={() => onDelete(card._id)}
+            onEdit={() => onEdit(card)}
             isCorrect={correctCardsList.some((c) => c.cardId === card._id)}
             handleToggleCorrect={handleToggleCorrect}
           />
