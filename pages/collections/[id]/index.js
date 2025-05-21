@@ -11,7 +11,6 @@ import Form from '@/components/Form';
 import {useState} from 'react';
 import {CreateCard} from '@/utils/CreateCard';
 import {useSession} from 'next-auth/react';
-import Navigation from '@/components/Navigation';
 import Modal from '@/components/Modal'
 
 export default function CollectionDetailPage() {
@@ -107,8 +106,6 @@ export default function CollectionDetailPage() {
         onEdit={openEditForm}
         fromAllCardsPage={false}
       />
-      <Navigation/>
-
     </StyledWrapper>
   )
 }

@@ -9,7 +9,6 @@ import {DeleteCard} from '@/utils/DeleteCard';
 import SideMenu from '@/components/SideMenu';
 import {useState} from 'react';
 import {CreateCard} from '@/utils/CreateCard';
-import Navigation from '@/components/Navigation';
 import {getSession} from 'next-auth/react';
 import Modal from '@/components/Modal'
 
@@ -105,7 +104,6 @@ export default function AllCardsList({ isAuthenticated}) {
           onEdit={openEditForm}
           fromAllCardsPage={true}
       />
-      <Navigation/>
     </StyledWrapper>
   )
 }
