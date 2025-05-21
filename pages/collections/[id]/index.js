@@ -5,14 +5,14 @@ import { StyledWrapper } from '@/components/StyledWrapper'
 import StyledAlert from '@/components/StyledAlert'
 import { useAlert } from '@/hooks/useAlert'
 import CardList from '@/components/CardList'
-import { DeleteCard } from '@/utils/DeleteCard'
-import SideMenu from '@/components/SideMenu'
-import Form from '@/components/Form'
-import { useState } from 'react'
-import { CreateCard } from '@/utils/CreateCard'
-import { useSession } from 'next-auth/react'
-import Navigation from '@/components/Navigation'
-import useLocalStorageState from 'use-local-storage-state'
+import {DeleteCard} from '@/utils/DeleteCard';
+import SideMenu from '@/components/SideMenu';
+import Form from '@/components/Form';
+import {useState} from 'react';
+import {CreateCard} from '@/utils/CreateCard';
+import {useSession} from 'next-auth/react';
+import Navigation from '@/components/Navigation';
+import Modal from '@/components/Modal'
 
 export default function CollectionDetailPage() {
   const { status } = useSession()
@@ -27,9 +27,48 @@ export default function CollectionDetailPage() {
       defaultValue: [],
     },
   )
+  const [editCard, setEditCard] = useState(null)
 
   const handleDelete = DeleteCard(mutate, triggerAlert)
-  const handleSubmit = CreateCard(mutate, setShowForm)
+  const handleSubmit = CreateCard(mutate, () => {
+    setShowForm(false)
+    setEditCard(null)
+  })
+
+  const handleUpdate = async (updatedCard) => {
+    try {
+      const response = await fetch(`/api/cards/${editCard._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedCard),
+      })
+
+      if (!response.ok) throw new Error('Failed to update')
+
+      await mutate()
+      setShowForm(false)
+      setEditCard(null)
+      triggerAlert('Card updated!', 'success')
+    } catch (err) {
+      triggerAlert('Update failed', 'error')
+    }
+  }
+
+  const openCreateForm = () => {
+    if (showForm && !editCard) {
+      setShowForm(false)
+    } else {
+      setEditCard(null)
+      setShowForm(true)
+    }
+  }
+
+  const openEditForm = (card) => {
+    setEditCard(card)
+    setShowForm(true)
+  }
 
   return isLoading ? (
     <div>Loading cards...</div>
@@ -48,12 +87,30 @@ export default function CollectionDetailPage() {
         />
       )}
       <StyledH1>{cards[0]?.collectionId.title}</StyledH1>
-      {showForm && <Form onSubmit={handleSubmit} />}
+      {showForm && (
+          <Modal
+              onClose={() => {
+                setShowForm(false)
+                setEditCard(null)
+              }}
+          >
+            <Form
+                showUpdate={!!editCard}
+                onSubmit={editCard ? handleUpdate : handleSubmit}
+                initialData={editCard}
+                onReturnClick={() => {
+                  setShowForm(false)
+                  setEditCard(null)
+                }}
+            />
+          </Modal>
+      )}
       {status === 'authenticated' && <SideMenu onCreate={setShowForm} />}
       <CardList
         cards={cards}
         onDelete={handleDelete}
         fromAllCardsPage={false}
+        onEdit={openEditForm}
         completedCollections={completedCollections}
         setCompletedCollections={setCompletedCollections}
       />

@@ -12,7 +12,7 @@ export function useAlert() {
   }
 
   const closeAlert = () => {
-    setAlert({ ...alert, show: true })
+    setAlert({ ...alert, show: false })
   }
 
   return { alert, triggerAlert, closeAlert }

@@ -6,6 +6,7 @@ export default function CardList({
   cards,
   onDelete,
   fromAllCardsPage = false,
+  onEdit,
   completedCollections,
   setCompletedCollections,
 }) {
@@ -56,6 +57,7 @@ export default function CardList({
             collectionName={card.collectionId?.title}
             fromAllCardsPage={fromAllCardsPage}
             onDelete={() => onDelete(card._id)}
+            onEdit={() => onEdit(card)}
             isCorrect={correctCardsList.some((c) => c.cardId === card._id)}
             handleToggleCorrect={handleToggleCorrect}
           />
