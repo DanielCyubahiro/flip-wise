@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const LevelCard = styled.a`
+export const LevelCard = styled.button`
   display: inline-block;
   width: 300px;
   height: 100px;
