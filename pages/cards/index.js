@@ -53,6 +53,12 @@ export const getServerSideProps = async (context) => {
   const session = await getSession(context)
 
   if (!session) {
+    // Clear problematic cookies before redirect
+    context.res.setHeader(
+        'Set-Cookie',
+        'next-auth.session-token='
+    );
+
     return {
       redirect: {
         destination: `/?callbackUrl=${encodeURIComponent(context.resolvedUrl)}`,
