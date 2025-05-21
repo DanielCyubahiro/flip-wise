@@ -8,7 +8,9 @@ export const StyledLink = styled(Link)`
   text-decoration: none;
   font-weight: bold;
   border: 1px solid;
-  transition: background-color 0.2s, border-color 0.2s;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s;
 
   color: ${({ variant }) => (variant === 'lightBlue' ? '#1a1a1a' : 'white')};
 

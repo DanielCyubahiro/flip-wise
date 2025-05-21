@@ -1,18 +1,18 @@
-import styled from 'styled-components';
-import Login from '@/components/Login';
+import styled from 'styled-components'
+import Login from '@/components/Login'
 
 const StyledContainer = styled.section`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 90vh;
-`;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+`
 const HomePage = () => {
   return (
-      <StyledContainer>
-        <Login/>
-      </StyledContainer>
-  );
-};
+    <StyledContainer>
+      <Login />
+    </StyledContainer>
+  )
+}
 
-export default HomePage;
+export default HomePage
