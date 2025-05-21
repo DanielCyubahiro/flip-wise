@@ -11,6 +11,7 @@ export default function Login() {
     return <Logout/>
   }
 
-  const callbackUrl = router.query.callbackUrl || router.asPath || '/';
+  const callbackUrl = router.query.callbackUrl || '/cards';
+  console.log('router.query.callbackUrl: ' + router.query.callbackUrl + '\nrouter.asPath:' + router.asPath + '\ncallbackUrl' + callbackUrl);
   return <StyledButton onClick={() => signIn("github", { callbackUrl })}>Sign in</StyledButton>
 }
