@@ -4,9 +4,8 @@ import { StyledWrapper } from '@/components/StyledWrapper'
 import useSWR from 'swr'
 import Navigation from '@/components/Navigation';
 
-export default function CollectionPage({ fetcher }) {
-  const { data: collections, isLoading, error } = useSWR('/api/collections', fetcher)
-
+export default function CollectionPage() {
+  const { data: collections, isLoading, error } = useSWR('/api/collections')
   if (isLoading) return <div>Loading collections...</div>
   if (error) return <div>Failed to load collections. Error: {error.message}</div>
 

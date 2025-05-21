@@ -2,26 +2,29 @@ import Card from './Card'
 import { StyledButton } from '@/components/StyledButton'
 import useLocalStorageState from 'use-local-storage-state'
 
-export default function CardList({ cards, onDelete, fromAllCardsPage = false }) {
+export default function CardList({ cards, onDelete, fromAllCardsPage = false, setCompletedCollections }) {
   const [correctCardsList, setCorrectCardsList] = useLocalStorageState('correctCardsList', {
     defaultValue: [],
   })
+  const collectionId = cards && cards[0].collectionId._id
+
   const handleToggleCorrect = async (cardId) => {
     if (!correctCardsList.some((card) => card.cardId === cardId)) {
-      const collectionId = cards.find((card) => card._id === cardId)?.collectionId?._id
       setCorrectCardsList([...correctCardsList, { cardId, collectionId }])
     }
   }
 
   const handleReset = () => {
     if (!fromAllCardsPage) {
-      // Reset for only one collection
-      const collectionId = cards && cards[0].collectionId._id
       setCorrectCardsList(correctCardsList.filter((card) => card.collectionId !== collectionId))
     } else {
       // Reset all cards in the game
       setCorrectCardsList([])
     }
+  }
+
+  if (cards?.length === correctCardsList?.length) {
+    setCompletedCollections(prev => ({ ...prev, collectionId }))
   }
 
   return (

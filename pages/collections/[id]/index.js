@@ -12,6 +12,7 @@ import {useState} from 'react';
 import {CreateCard} from '@/utils/CreateCard';
 import {useSession} from 'next-auth/react';
 import Navigation from '@/components/Navigation';
+import useLocalStorageState from 'use-local-storage-state';
 
 export default function CollectionDetailPage() {
   const { status } = useSession();
@@ -20,6 +21,9 @@ export default function CollectionDetailPage() {
   const { data: cards, isLoading, error, mutate } = useSWR(id ? `/api/collections/${id}` : null)
   const { alert, triggerAlert, closeAlert } = useAlert()
   const [showForm, setShowForm] = useState(false)
+  const [completedCollections, setCompletedCollections] = useLocalStorageState('completedCollections', {
+    defaultValue: [],
+  })
 
   const handleDelete = DeleteCard(mutate, triggerAlert)
   const handleSubmit = CreateCard(mutate, setShowForm)
@@ -43,7 +47,7 @@ export default function CollectionDetailPage() {
       <StyledH1>{cards[0]?.collectionId.title}</StyledH1>
       {showForm && <Form onSubmit={handleSubmit} />}
       {status === 'authenticated' && <SideMenu onCreate={setShowForm}/>}
-      <CardList cards={cards} onDelete={handleDelete} fromAllCardsPage={false} />
+      <CardList cards={cards} onDelete={handleDelete} fromAllCardsPage={false} setCompletedCollections={setCompletedCollections} />
       <Navigation/>
     </StyledWrapper>
   )
