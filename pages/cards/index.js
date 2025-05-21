@@ -5,15 +5,15 @@ import StyledAlert from '@/components/StyledAlert'
 import Form from '@/components/Form'
 import { useAlert } from '@/hooks/useAlert'
 import CardList from '@/components/CardList'
-import { DeleteCard } from '@/utils/DeleteCard'
-import SideMenu from '@/components/SideMenu'
-import { useState } from 'react'
-import { CreateCard } from '@/utils/CreateCard'
-import Navigation from '@/components/Navigation'
-import { getSession } from 'next-auth/react'
+import {DeleteCard} from '@/utils/DeleteCard';
+import SideMenu from '@/components/SideMenu';
+import {useState} from 'react';
+import {CreateCard} from '@/utils/CreateCard';
+import Navigation from '@/components/Navigation';
+import {getSession} from 'next-auth/react';
 import Modal from '@/components/Modal'
 
-export default function AllCardsList({ isAuthenticated }) {
+export default function AllCardsList({ isAuthenticated}) {
   const { data: cards, isLoading, error, mutate } = useSWR('/api/cards')
   const { alert, triggerAlert, closeAlert } = useAlert()
   const [showForm, setShowForm] = useState(false)
@@ -81,31 +81,30 @@ export default function AllCardsList({ isAuthenticated }) {
       )}
       <StyledH1>All Cards List</StyledH1>
       {showForm && (
-        <Modal
-          onClose={() => {
-            setShowForm(false)
-            setEditCard(null)
-          }}
-        >
-          <Form
-            showUpdate={!!editCard}
-            onSubmit={editCard ? handleUpdate : handleSubmit}
-            initialData={editCard}
-            onReturnClick={() => {
-              setShowForm(false)
-              setEditCard(null)
-            }}
-          />
-        </Modal>
+          <Modal
+              onClose={() => {
+                setShowForm(false)
+                setEditCard(null)
+              }}
+          >
+            <Form
+                showUpdate={!!editCard}
+                onSubmit={editCard ? handleUpdate : handleSubmit}
+                initialData={editCard}
+                onReturnClick={() => {
+                  setShowForm(false)
+                  setEditCard(null)
+                }}
+            />
+          </Modal>
       )}
       <SideMenu onCreate={openCreateForm} />
       <CardList
-        cards={cards}
-        onDelete={handleDelete}
-        onEdit={openEditForm}
-        fromAllCardsPage={true}
+          cards={cards}
+          onDelete={handleDelete}
+          onEdit={openEditForm}
+          fromAllCardsPage={true}
       />
-      <Navigation />
     </StyledWrapper>
   )
 }
@@ -118,13 +117,13 @@ export const getServerSideProps = async (context) => {
       redirect: {
         destination: `/?callbackUrl=${encodeURIComponent(context.resolvedUrl)}`,
         permanent: false,
-      },
+      }
     }
   }
 
   return {
     props: {
       isAuthenticated: !!session,
-    },
+    }
   }
 }

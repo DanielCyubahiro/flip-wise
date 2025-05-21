@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { StyledButton } from './StyledButton'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { useSession } from 'next-auth/react'
+import {useSession} from 'next-auth/react';
 
 const CardContainer = styled.section`
   perspective: 1000px;
@@ -86,7 +86,7 @@ export default function Card({
   isCorrect,
   handleToggleCorrect,
 }) {
-  const { status } = useSession()
+  const { status } = useSession();
   const [deleteConfirmation, setDeleteConfirmation] = useState(false)
   const [showMoreOption, setShowMoreOption] = useState(false)
   const [isFlipped, setIsFlipped] = useState(isCorrect)

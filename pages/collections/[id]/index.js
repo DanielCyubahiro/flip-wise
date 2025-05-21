@@ -5,13 +5,13 @@ import { StyledWrapper } from '@/components/StyledWrapper'
 import StyledAlert from '@/components/StyledAlert'
 import { useAlert } from '@/hooks/useAlert'
 import CardList from '@/components/CardList'
-import { DeleteCard } from '@/utils/DeleteCard'
-import SideMenu from '@/components/SideMenu'
-import Form from '@/components/Form'
-import { useState } from 'react'
-import { CreateCard } from '@/utils/CreateCard'
-import { useSession } from 'next-auth/react'
-import Navigation from '@/components/Navigation'
+import {DeleteCard} from '@/utils/DeleteCard';
+import SideMenu from '@/components/SideMenu';
+import Form from '@/components/Form';
+import {useState} from 'react';
+import {CreateCard} from '@/utils/CreateCard';
+import {useSession} from 'next-auth/react';
+import Navigation from '@/components/Navigation';
 import Modal from '@/components/Modal'
 
 export default function CollectionDetailPage() {
@@ -105,7 +105,8 @@ export default function CollectionDetailPage() {
           />
         </Modal>
       )}
-      {status === 'authenticated' && <SideMenu onCreate={setShowForm} />}
+
+      {status === 'authenticated' && <SideMenu onCreate={openCreateForm}/>}
       <CardList
         cards={cards}
         onDelete={handleDelete}
@@ -114,7 +115,6 @@ export default function CollectionDetailPage() {
         completedCollections={completedCollections}
         setCompletedCollections={setCompletedCollections}
       />
-      <Navigation />
     </StyledWrapper>
   )
 }

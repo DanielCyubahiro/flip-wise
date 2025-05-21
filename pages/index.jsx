@@ -1,6 +1,6 @@
-import styled from 'styled-components'
-import Login from '@/components/Login'
-import { StyledButton } from '@/components/StyledButton'
+import styled from 'styled-components';
+import Login from '@/components/Login';
+import {StyledButton} from '@/components/StyledButton';
 import Link from 'next/link'
 
 const StyledContainer = styled.section`
@@ -22,4 +22,4 @@ const HomePage = () => {
   )
 }
 
-export default HomePage
+export default HomePage;

@@ -2,7 +2,6 @@ import { StyledH1 } from '@/components/StyledH1'
 import { StyledLink } from '@/components/StyledLink'
 import { StyledWrapper } from '@/components/StyledWrapper'
 import useSWR from 'swr'
-import Navigation from '@/components/Navigation'
 import { useEffect, useState } from 'react'
 import { StyledSmallText } from '@/components/StyledSmallText'
 
@@ -42,7 +41,6 @@ export default function CollectionPage() {
           </div>
         )
       })}
-      <Navigation />
     </StyledWrapper>
   )
 }
