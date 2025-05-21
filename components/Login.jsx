@@ -5,9 +5,12 @@ import {useRouter} from 'next/router';
 
 export default function Login() {
   const { data: session } = useSession();
+  const router = useRouter();
 
   if (session) {
     return <Logout/>
   }
-  return <StyledButton onClick={() => signIn("github", { callbackUrl: '/cards' })}>Sign in</StyledButton>
+
+  const callbackUrl = router.query.callbackUrl || '/cards';
+  return <StyledButton onClick={() => signIn("github", { callbackUrl })}>Sign in</StyledButton>
 }
