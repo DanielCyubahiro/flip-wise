@@ -21,6 +21,7 @@
     "react-dom": "18.2.0",
     "styled-components": "^6.1.17",
     "swr": "^2.3.3",
+    "use-local-storage": "^3.0.0",
     "use-local-storage-state": "^19.5.0"
   },
   "devDependencies": {
