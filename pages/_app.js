@@ -2,6 +2,7 @@ import { SWRConfig } from 'swr'
 import GlobalStyle from '../styles'
 import { SessionProvider } from 'next-auth/react'
 import {useRouter} from 'next/router';
+import Navigation from '@/components/Navigation';
 
 const fetcher = (url) => fetch(url).then((response) => response.json())
 
