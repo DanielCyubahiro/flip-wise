@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { StyledButton } from './StyledButton'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import {useSession} from 'next-auth/react';
+import { useSession } from 'next-auth/react'
 
 const CardContainer = styled.section`
   perspective: 1000px;
@@ -86,7 +86,7 @@ export default function Card({
   isCorrect,
   handleToggleCorrect,
 }) {
-  const { status } = useSession();
+  const { status } = useSession()
   const [deleteConfirmation, setDeleteConfirmation] = useState(false)
   const [showMoreOption, setShowMoreOption] = useState(false)
   const [isFlipped, setIsFlipped] = useState(isCorrect)
@@ -108,17 +108,17 @@ export default function Card({
     if (onEdit) {
       onEdit()
     }
-}
+  }
   return (
     <CardContainer>
       <CardBox $isFlipped={isFlipped} $isCorrect={isCorrect}>
         {!isFlipped && (
           <CardFront>
             {status === 'authenticated' && (
-                <StyledButton $variant="more" onClick={() => setShowMoreOption((show) => !show)}>
-                  ...
-                </StyledButton>)
-            }
+              <StyledButton $variant="more" onClick={() => setShowMoreOption((show) => !show)}>
+                ...
+              </StyledButton>
+            )}
             {showCollectionName && <p>#{collectionName}</p>}
             <QuestionText>{question}</QuestionText>
             <FlipButton onClick={() => setIsFlipped(!isFlipped)}>Flip</FlipButton>
@@ -146,7 +146,9 @@ export default function Card({
             {!isCorrect && (
               <>
                 <FlipButton onClick={() => setIsFlipped(!isFlipped)}>Flip Back</FlipButton>
-                {status !== 'authenticated' && <StyledButton onClick={() => handleToggleCorrect(id)}>I know it!</StyledButton>}
+                {status !== 'authenticated' && (
+                  <StyledButton onClick={() => handleToggleCorrect(id)}>I know it!</StyledButton>
+                )}
               </>
             )}
           </CardBack>

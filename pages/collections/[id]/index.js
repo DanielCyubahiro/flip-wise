@@ -5,13 +5,13 @@ import { StyledWrapper } from '@/components/StyledWrapper'
 import StyledAlert from '@/components/StyledAlert'
 import { useAlert } from '@/hooks/useAlert'
 import CardList from '@/components/CardList'
-import {DeleteCard} from '@/utils/DeleteCard';
-import SideMenu from '@/components/SideMenu';
-import Form from '@/components/Form';
-import {useState} from 'react';
-import {CreateCard} from '@/utils/CreateCard';
-import {useSession} from 'next-auth/react';
-import Navigation from '@/components/Navigation';
+import { DeleteCard } from '@/utils/DeleteCard'
+import SideMenu from '@/components/SideMenu'
+import Form from '@/components/Form'
+import { useState } from 'react'
+import { CreateCard } from '@/utils/CreateCard'
+import { useSession } from 'next-auth/react'
+import Navigation from '@/components/Navigation'
 import Modal from '@/components/Modal'
 
 export default function CollectionDetailPage() {
@@ -88,22 +88,22 @@ export default function CollectionDetailPage() {
       )}
       <StyledH1>{cards[0]?.collectionId.title}</StyledH1>
       {showForm && (
-          <Modal
-              onClose={() => {
-                setShowForm(false)
-                setEditCard(null)
-              }}
-          >
-            <Form
-                showUpdate={!!editCard}
-                onSubmit={editCard ? handleUpdate : handleSubmit}
-                initialData={editCard}
-                onReturnClick={() => {
-                  setShowForm(false)
-                  setEditCard(null)
-                }}
-            />
-          </Modal>
+        <Modal
+          onClose={() => {
+            setShowForm(false)
+            setEditCard(null)
+          }}
+        >
+          <Form
+            showUpdate={!!editCard}
+            onSubmit={editCard ? handleUpdate : handleSubmit}
+            initialData={editCard}
+            onReturnClick={() => {
+              setShowForm(false)
+              setEditCard(null)
+            }}
+          />
+        </Modal>
       )}
       {status === 'authenticated' && <SideMenu onCreate={setShowForm} />}
       <CardList
