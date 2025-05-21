@@ -11,12 +11,14 @@ export const StyledLink = styled(Link)`
     background-color 0.2s,
     border-color 0.2s;
   color: ${({ variant }) => (variant === 'lightBlue' ? '#1a1a1a' : 'white')};
+
   background-color: ${({ $active, variant }) => {
     if ($active) return 'blue'
     if (variant === 'lightBlue') return '#e6f4ff'
     if (variant === 'disabled') return 'grey'
     return 'black'
   }};
+
   border-color: ${({ variant }) => (variant === 'lightBlue' ? '#cce0f5' : 'black')};
   cursor: ${({ variant }) => (variant === 'disabled' ? 'not-allowed' : 'pointer')};
   pointer-events: ${({ variant }) => (variant === 'disabled' ? 'none' : 'auto')};
