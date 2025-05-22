@@ -21,42 +21,35 @@ export default function CollectionPage() {
   if (isLoading) return <div>Loading collections...</div>
   if (error) return <div>Failed to load collections. Error: {error.message}</div>
 
-const sortedCollections = collections.sort((a, b) => a.order - b.order)
-const getImagePath = (index) => `/levels/level${index + 1}.png`
+  const sortedCollections = collections.sort((a, b) => a.order - b.order)
+  const getImagePath = (index) => `/levels/level${index + 1}.png`
 
-return (
-  <StyledWrapper>
-    <StyledH1>Collection List</StyledH1>
-    <StyledH1 $variant="small">Flipwise</StyledH1>
-    <StyledCardWrapper>
-      {sortedCollections.map((collection, index) => {
-        const isEnabled =
-          index === 0 || completedCollections.includes(sortedCollections[index - 1]._id)
-        const isCompleted = completedCollections.includes(collection._id)
+  return (
+    <StyledWrapper>
+      <StyledH1>Collection List</StyledH1>
+      <StyledH1 $variant="small">Flipwise</StyledH1>
+      <StyledCardWrapper>
+        {sortedCollections.map((collection, index) => {
+          const isEnabled =
+            index === 0 || completedCollections.includes(sortedCollections[index - 1]._id)
+          const isCompleted = completedCollections.includes(collection._id)
 
-        return (
-          <div key={collection._id}>
-            <Link
-              href={isEnabled ? `/collections/${collection._id}` : ''}
-              passHref
-            >
-              <LevelCard $background={getImagePath(index)} $disabled={!isEnabled}>
-                <LevelText>
-                  {collection.title}
-                  {!isEnabled && ' (Locked)'}
-                  {isCompleted && ' ✓'}
-                </LevelText>
-              </LevelCard>
-            </Link>
-            {!isEnabled && (
-              <StyledSmallText>
-                Complete Level {index} to unlock
-              </StyledSmallText>
-            )}
-          </div>
-        )
-      })}
-    </StyledCardWrapper>
-  </StyledWrapper>
-)
+          return (
+            <div key={collection._id}>
+              <Link href={isEnabled ? `/collections/${collection._id}` : ''} passHref>
+                <LevelCard $background={getImagePath(index)} $disabled={!isEnabled}>
+                  <LevelText>
+                    {collection.title}
+                    {!isEnabled && ' (Locked)'}
+                    {isCompleted && ' ✓'}
+                  </LevelText>
+                </LevelCard>
+              </Link>
+              {!isEnabled && <StyledSmallText>Complete Level {index} to unlock</StyledSmallText>}
+            </div>
+          )
+        })}
+      </StyledCardWrapper>
+    </StyledWrapper>
+  )
 }

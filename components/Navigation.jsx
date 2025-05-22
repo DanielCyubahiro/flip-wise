@@ -9,15 +9,17 @@ export default function Navigation() {
   const isActive = (path) => router.pathname === path
   const { status } = useSession()
 
-  return status === 'authenticated' && (
-    <StyledFooter>
+  return (
+    status === 'authenticated' && (
+      <StyledFooter>
         <StyledLink href={`/cards`} $active={isActive('/cards')}>
           All Cards
         </StyledLink>
-      <StyledLink href={`/collections`} $active={isActive('/collections')}>
-        Collections
-      </StyledLink>
-      <Logout />
-    </StyledFooter>
+        <StyledLink href={`/collections`} $active={isActive('/collections')}>
+          Collections
+        </StyledLink>
+        <Logout />
+      </StyledFooter>
+    )
   )
 }

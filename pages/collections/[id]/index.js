@@ -5,14 +5,14 @@ import { StyledWrapper } from '@/components/StyledWrapper'
 import StyledAlert from '@/components/StyledAlert'
 import { useAlert } from '@/hooks/useAlert'
 import CardList from '@/components/CardList'
-import {DeleteCard} from '@/utils/DeleteCard';
-import SideMenu from '@/components/SideMenu';
-import Form from '@/components/Form';
-import {useState} from 'react';
-import {CreateCard} from '@/utils/CreateCard';
-import {useSession} from 'next-auth/react';
+import { DeleteCard } from '@/utils/DeleteCard'
+import SideMenu from '@/components/SideMenu'
+import Form from '@/components/Form'
+import { useState } from 'react'
+import { CreateCard } from '@/utils/CreateCard'
+import { useSession } from 'next-auth/react'
 import Modal from '@/components/Modal'
-import useLocalStorageState from 'use-local-storage-state';
+import useLocalStorageState from 'use-local-storage-state'
 
 export default function CollectionDetailPage() {
   const { status } = useSession()
@@ -106,7 +106,7 @@ export default function CollectionDetailPage() {
         </Modal>
       )}
 
-      {status === 'authenticated' && <SideMenu onCreate={openCreateForm}/>}
+      {status === 'authenticated' && <SideMenu onCreate={openCreateForm} />}
       <CardList
         cards={cards}
         onDelete={handleDelete}
