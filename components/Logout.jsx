@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 const StyledLogoutButton = styled(StyledButton)`
   display: inline-block;
-  padding: 0.85rem 1.3rem;
+  padding: 0.85rem 1.4rem;
   border-radius: 0.6rem;
   text-decoration: none;
   font-weight: bold;
