@@ -37,7 +37,7 @@ return (
         return (
           <div key={collection._id}>
             <Link
-              href={isEnabled ? `/collections/${collection._id}` : '#'}
+              href={isEnabled ? `/collections/${collection._id}` : ''}
               passHref
             >
               <LevelCard $background={getImagePath(index)} $disabled={!isEnabled}>
