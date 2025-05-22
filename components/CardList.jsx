@@ -15,18 +15,20 @@ export default function CardList({ cards, onDelete, onEdit, fromAllCardsPage = f
 
   const handleReset = () => {
     if (!fromAllCardsPage) {
-      // Reset for only one collection
       const collectionId = cards && cards[0].collectionId._id
       setCorrectCardsList(correctCardsList.filter((card) => card.collectionId !== collectionId))
     } else {
-      // Reset all cards in the game
       setCorrectCardsList([])
     }
   }
 
   return (
     <>
-      {!fromAllCardsPage && <StyledButton onClick={handleReset}>Reset</StyledButton>}
+      {!fromAllCardsPage && (
+        <StyledButton $variant="reset" onClick={handleReset}>
+          Reset
+        </StyledButton>
+      )}
       {correctCardsList &&
         cards.map((card) => (
           <Card
