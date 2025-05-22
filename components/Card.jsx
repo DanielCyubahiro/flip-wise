@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { StyledButton } from './StyledButton'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
 
 const CardContainer = styled.section`
   perspective: 1000px;
@@ -79,11 +80,13 @@ export default function Card({
   answer,
   collectionName,
   onDelete,
+  onEdit,
   showCollectionName,
   id,
   isCorrect,
   handleToggleCorrect,
 }) {
+  const { status } = useSession()
   const [deleteConfirmation, setDeleteConfirmation] = useState(false)
   const [showMoreOption, setShowMoreOption] = useState(false)
   const [isFlipped, setIsFlipped] = useState(isCorrect)
@@ -101,22 +104,21 @@ export default function Card({
     }
   }
 
-  const router = useRouter()
-
-  const handleUpdate = () => {
-    router.push(`/update-page/${id}`)
+  const handleEdit = () => {
+    if (onEdit) {
+      onEdit()
+    }
   }
-
-  console.log(isCorrect)
-
   return (
     <CardContainer>
       <CardBox $isFlipped={isFlipped} $isCorrect={isCorrect}>
         {!isFlipped && (
           <CardFront>
-            <StyledButton $variant="more" onClick={() => setShowMoreOption((show) => !show)}>
-              ...
-            </StyledButton>
+            {status === 'authenticated' && (
+              <StyledButton $variant="more" onClick={() => setShowMoreOption((show) => !show)}>
+                ...
+              </StyledButton>
+            )}
             {showCollectionName && <p>#{collectionName}</p>}
             <QuestionText>{question}</QuestionText>
             <FlipButton onClick={() => setIsFlipped(!isFlipped)}>Flip</FlipButton>
@@ -130,7 +132,7 @@ export default function Card({
               {showMoreOption && (
                 <>
                   <StyledButton onClick={handleDelete}>Delete</StyledButton>
-                  <StyledButton onClick={handleUpdate}>Edit</StyledButton>
+                  <StyledButton onClick={handleEdit}>Edit</StyledButton>
                 </>
               )}
             </CardActions>
@@ -144,7 +146,11 @@ export default function Card({
             {!isCorrect && (
               <>
                 <FlipButton onClick={() => setIsFlipped(!isFlipped)}>Flip Back</FlipButton>
-                <StyledButton onClick={() => handleToggleCorrect(id)}>Mark as correct</StyledButton>
+                {status !== 'authenticated' && (
+                  <StyledButton onClick={() => handleToggleCorrect(id)}>
+                    Mark as correct
+                  </StyledButton>
+                )}
               </>
             )}
           </CardBack>

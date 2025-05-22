@@ -10,6 +10,7 @@ export const StyledLink = styled(Link)`
   border: 1px solid black;
   transition: background-color 0.2s, border-color 0.2s;
 
+
   color: white;
   background-color: ${({ $active }) => ($active ? 'blue' : 'black')};
 

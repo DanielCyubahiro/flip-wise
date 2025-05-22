@@ -1,8 +1,15 @@
 import dbConnect from '@/config/database'
 import Card from '@/db/models/Card'
+import { getServerSession } from 'next-auth/next'
+import { authOptions } from '@/pages/api/auth/[...nextauth]'
 
 export default async function handler(request, response) {
   await dbConnect()
+  const session = await getServerSession(request, response, authOptions)
+
+  if (!session) {
+    return response.status(401).json({ status: 'Not authorized' })
+  }
 
   const { id } = request.query
 
