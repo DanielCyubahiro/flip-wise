@@ -7,24 +7,16 @@ export const StyledLink = styled(Link)`
   border-radius: 0.6rem;
   text-decoration: none;
   font-weight: bold;
-  transition:
-    background-color 0.2s,
-    border-color 0.2s;
-  color: ${({ variant }) => (variant === 'lightBlue' ? '#1a1a1a' : 'white')};
 
-  background-color: ${({ $active, variant }) => {
-    if ($active) return 'blue'
-    if (variant === 'lightBlue') return '#e6f4ff'
-    if (variant === 'disabled') return 'grey'
-    return 'black'
-  }};
+  border: 1px solid black;
+  transition: background-color 0.2s, border-color 0.2s;
 
-  border-color: ${({ variant }) => (variant === 'lightBlue' ? '#cce0f5' : 'black')};
-  cursor: ${({ variant }) => (variant === 'disabled' ? 'not-allowed' : 'pointer')};
-  pointer-events: ${({ variant }) => (variant === 'disabled' ? 'none' : 'auto')};
+
+  color: white;
+  background-color: ${({ $active }) => ($active ? 'blue' : 'black')};
 
   &:hover {
-    background-color: ${({ variant }) => (variant === 'lightBlue' ? '#9cd0fa' : '#4a4949')};
-    border-color: ${({ variant }) => (variant === 'lightBlue' ? '#99ccf3' : '#1a1a1a')};
+    background-color: #4a4949;
+    border-color: #1a1a1a;
   }
 `
