@@ -10,7 +10,6 @@ const fetcher = (url) => fetch(url).then((response) => response.json())
 export default function App({ Component, pageProps: { session, ...pageProps } }) {
   usePageBackground()
   const router = useRouter()
-  console.log(router)
   return (
     <SessionProvider session={session}>
       <GlobalStyle />
