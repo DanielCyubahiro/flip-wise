@@ -12,5 +12,10 @@ export default function Login() {
   }
 
   const callbackUrl = router.query.callbackUrl || '/cards'
-  return <StyledButton onClick={() => signIn('github', { callbackUrl })}>Sign in</StyledButton>
+  return (
+    <>
+      <StyledButton>Start Game</StyledButton>
+      <StyledButton onClick={() => signIn('github', { callbackUrl })}>Log in</StyledButton>
+    </>
+  )
 }
