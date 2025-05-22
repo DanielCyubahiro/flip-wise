@@ -42,7 +42,7 @@ return (
             >
               <LevelCard $background={getImagePath(index)} $disabled={!isEnabled}>
                 <LevelText>
-                  {`Level ${index + 1}: ${collection.title}`}
+                  {collection.title}
                   {!isEnabled && ' (Locked)'}
                   {isCompleted && ' ✓'}
                 </LevelText>
