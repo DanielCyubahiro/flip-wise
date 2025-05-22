@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components'
 
 export const StyledH1 = styled.h1`
   text-align: center;
+
   color: var(--color-secondary);
   font-family: HARRY;
   font-size: 4rem;
