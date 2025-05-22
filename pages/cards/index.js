@@ -9,13 +9,18 @@ import { DeleteCard } from '@/utils/DeleteCard'
 import SideMenu from '@/components/SideMenu'
 import { useState } from 'react'
 import { CreateCard } from '@/utils/CreateCard'
+import { getSession } from 'next-auth/react'
 import Modal from '@/components/Modal'
 
-export default function HomePage({ fetcher }) {
-  const { data: cards, isLoading, error, mutate } = useSWR('/api/cards', fetcher)
+export default function AllCardsList({ isAuthenticated }) {
+  const { data: cards, isLoading, error, mutate } = useSWR('/api/cards')
   const { alert, triggerAlert, closeAlert } = useAlert()
   const [showForm, setShowForm] = useState(false)
   const [editCard, setEditCard] = useState(null)
+
+  if (!isAuthenticated) {
+    return null
+  }
 
   const handleDelete = DeleteCard(mutate, triggerAlert)
   const handleSubmit = CreateCard(mutate, () => {
@@ -101,4 +106,23 @@ export default function HomePage({ fetcher }) {
       />
     </StyledWrapper>
   )
+}
+
+export const getServerSideProps = async (context) => {
+  const session = await getSession(context)
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: `/?callbackUrl=${encodeURIComponent(context.resolvedUrl)}`,
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {
+      isAuthenticated: !!session,
+    },
+  }
 }

@@ -10,9 +10,11 @@ import SideMenu from '@/components/SideMenu'
 import Form from '@/components/Form'
 import { useState } from 'react'
 import { CreateCard } from '@/utils/CreateCard'
+import { useSession } from 'next-auth/react'
 import Modal from '@/components/Modal'
 
 export default function CollectionDetailPage() {
+  const { status } = useSession()
   const router = useRouter()
   const { id } = router.query
   const { data: cards, isLoading, error, mutate } = useSWR(id ? `/api/collections/${id}` : null)
@@ -96,7 +98,8 @@ export default function CollectionDetailPage() {
           />
         </Modal>
       )}
-      <SideMenu onCreate={openCreateForm} />
+
+      {status === 'authenticated' && <SideMenu onCreate={openCreateForm} />}
       <CardList
         cards={cards}
         onDelete={handleDelete}
