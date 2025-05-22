@@ -1,6 +1,6 @@
 import dbConnect from '@/config/database'
 import Card from '@/db/models/Card'
-import Collection from '@/db/models/Collection'
+import Collection from '@/db/models/Level'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../auth/[...nextauth]'
 

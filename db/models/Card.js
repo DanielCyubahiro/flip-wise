@@ -2,9 +2,9 @@ import mongoose from 'mongoose'
 const { Schema } = mongoose
 
 const cardsSchema = new Schema({
-  collectionId: {
+  levelId: {
     type: Schema.Types.ObjectId,
-    ref: 'Collection',
+    ref: 'Level',
     required: true,
   },
   question: { type: String, required: true },

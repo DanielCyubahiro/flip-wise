@@ -1,6 +1,6 @@
 import dbConnect from '@/config/database'
 import Card from '@/db/models/Card'
-import Collection from '@/db/models/Collection'
+import Collection from '@/db/models/Level'
 
 export default async function handler(request, response) {
   await dbConnect()
