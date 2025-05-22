@@ -1,6 +1,17 @@
 import { createGlobalStyle } from 'styled-components'
 
 export default createGlobalStyle`
+  
+  :root {
+  --color-primary: #000000;           
+  --color-secondary: #ffff00;         
+  --color-tertiary: #65574c;          
+  --color-quaternary: #714E33;        
+  --color-quinary: #1C1B26;           
+  --color-button-one:rgba(65, 69, 87, 0.7);
+  --color-button-two:rgba(113, 78, 51, 0.51);
+}
+
   *,
   *::before,
   *::after {
@@ -13,17 +24,6 @@ export default createGlobalStyle`
   font-weight: normal;
   font-style: normal;
 }
-
-  :root {
-  --color-primary: #000000;           
-  --color-secondary: #ffff00;         
-  --color-tertiary: #65574c;          
-  --color-quaternary: #714E33;        
-  --color-quinary: #1C1B26;           
-  --color-button-one:rgba(65, 69, 87, 0.7);
-  --color-button-two:rgba(113, 78, 51, 0.51);
-}
-
 
   body {
     margin: 0;
