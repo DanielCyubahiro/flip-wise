@@ -10,21 +10,6 @@ export const StyledH1 = styled.h1`
   margin-bottom: 0px;
 
   ${(props) =>
-    props.$variant === 'small' &&
-    css`
-      font-size: 1.5rem;
-      margin: 0;
-    `}
-
-  ${(props) =>
-    props.$variant === 'big' &&
-    css`
-      font-size: 2rem;
-      position: absolute;
-      top: 200px;
-    `}
-
-  ${(props) =>
     props.$variant === 'extra' &&
     css`
       font-size: 6rem;
