@@ -24,11 +24,11 @@ export default function CardList({ cards, onDelete, onEdit, fromAllCardsPage = f
 
   return (
     <>
-      {!fromAllCardsPage && (
+      {/*!fromAllCardsPage && (
         <StyledButton $variant="reset" onClick={handleReset}>
           Reset
         </StyledButton>
-      )}
+      )*/}
       {correctCardsList &&
         cards.map((card) => (
           <Card
