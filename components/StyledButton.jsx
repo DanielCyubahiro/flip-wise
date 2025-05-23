@@ -1,10 +1,24 @@
 import styled, { css } from 'styled-components'
 
 const ButtonStyle = {
+  edit: css`
+    background-color: var(--color-button-one);
+    border-radius: 6px;
+    color: var(--color-secondary);
+    font-size: 0.7rem;
+    border-width: 3px;
+    height: 30px;
+  `,
   more: css`
+    background-color: var(--color-button-one);
+    border-radius: 6px;
     position: absolute;
     right: 35px;
     top: 35px;
+    color: var(--color-secondary);
+    font-size: 1rem;
+    border-width: 3px;
+    height: 30px;
   `,
   startGame: css`
     background-color: var(--color-button-one);
@@ -52,6 +66,27 @@ const ButtonStyle = {
     &:hover {
       transform: scale(1.1);
     }
+  `,
+  sideMenu: css`
+    background-color: var(--color-button-one);
+    border-width: 6px;
+    border-color: var(--color-button-one);
+    border-radius: 15px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.5rem;
+    font-weight: normal;
+    outline: 0;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    position: absolute;
+    top: 20px;
+    right: 10px;
   `,
   reset: css`
     background-color: var(--color-button-two);

@@ -41,6 +41,7 @@ const ConfirmationText = styled.p`
   all: unset;
   display: flex;
   align-items: center;
+  color: var(--color-tertiary);
 `
 
 const FlipButton = styled(StyledButton)`
@@ -150,13 +151,19 @@ export default function Card({
               {deleteConfirmation && (
                 <>
                   <ConfirmationText>Are you sure?</ConfirmationText>
-                  <StyledButton onClick={() => setDeleteConfirmation(false)}>Cancel</StyledButton>
+                  <StyledButton $variant="edit" onClick={() => setDeleteConfirmation(false)}>
+                    Cancel
+                  </StyledButton>
                 </>
               )}
               {showMoreOption && (
                 <>
-                  <StyledButton onClick={handleDelete}>Delete</StyledButton>
-                  <StyledButton onClick={handleEdit}>Edit</StyledButton>
+                  <StyledButton $variant="edit" onClick={handleDelete}>
+                    Delete
+                  </StyledButton>
+                  <StyledButton $variant="edit" onClick={handleEdit}>
+                    Edit
+                  </StyledButton>
                 </>
               )}
             </CardActions>

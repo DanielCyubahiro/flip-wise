@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { useState, useEffect } from 'react'
 
 const FormBox = styled.form`
-  background-color: #eeeeee;
+  background-color: var(--color-button-two);
   border-radius: 16px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   width: 100%;

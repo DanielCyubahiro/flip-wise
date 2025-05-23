@@ -13,11 +13,11 @@ export default function Navigation() {
     <StyledFooter>
       {status === 'authenticated' && (
         <StyledLink href={`/cards`} $active={isActive('/cards')}>
-          All Cards
+          Cards
         </StyledLink>
       )}
       <StyledLink href={`/collections`} $active={isActive('/collections')}>
-        Collections
+        Levels
       </StyledLink>
       {status === 'authenticated' && <Logout />}
     </StyledFooter>
