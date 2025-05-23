@@ -14,6 +14,7 @@ import { useSession } from 'next-auth/react'
 import Modal from '@/components/Modal'
 import useLocalStorageState from 'use-local-storage-state'
 import { StatusMessage } from '@/components/StatusMessage'
+import { StyledButton } from '@/components/StyledButton'
 
 export default function CollectionDetailPage() {
   const { status } = useSession()
@@ -55,6 +56,10 @@ export default function CollectionDetailPage() {
     } catch (err) {
       triggerAlert('Update failed', 'error')
     }
+  }
+
+  const handleBack = () => {
+    router.push('/collections')
   }
 
   const openCreateForm = () => {
@@ -106,7 +111,9 @@ export default function CollectionDetailPage() {
           />
         </Modal>
       )}
-
+      <StyledButton $variant="back" onClick={handleBack}>
+        ◀︎
+      </StyledButton>
       {status === 'authenticated' && <SideMenu onCreate={openCreateForm} />}
       <CardList
         cards={cards}

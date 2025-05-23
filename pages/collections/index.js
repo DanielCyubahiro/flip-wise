@@ -8,11 +8,16 @@ import { useEffect, useState } from 'react'
 import { StyledSmallText } from '@/components/StyledSmallText'
 import { StyledH2 } from '@/components/StyledH2'
 import { StatusMessage } from '@/components/StatusMessage'
+import { StyledButton } from '@/components/StyledButton'
+import { useRouter } from 'next/router'
 
 export default function CollectionPage() {
   const { data: collections, isLoading, error } = useSWR('/api/collections')
   const [completedCollections, setCompletedCollections] = useState([])
-
+  const router = useRouter()
+  const handleBackHome = () => {
+    router.push('/')
+  }
   useEffect(() => {
     const storedCompleted = localStorage.getItem('completedCollections')
     if (storedCompleted) {
@@ -31,6 +36,9 @@ export default function CollectionPage() {
     <StyledWrapper>
       <StyledH1>HarryPotter</StyledH1>
       <StyledH2 $variant="small">Flipwise</StyledH2>
+      <StyledButton $variant="back" onClick={handleBackHome}>
+        ◀︎
+      </StyledButton>
 
       <StyledCardWrapper>
         {sortedCollections.map((collection, index) => {
