@@ -1,6 +1,7 @@
 import Card from './Card'
 import { StyledButton } from '@/components/StyledButton'
 import useLocalStorageState from 'use-local-storage-state'
+import {useSession} from 'next-auth/react';
 
 export default function CardList({
   cards,
@@ -10,6 +11,7 @@ export default function CardList({
   completedCollections,
   setCompletedCollections,
 }) {
+  const { status } = useSession()
   const [correctCardsList, setCorrectCardsList] = useLocalStorageState('correctCardsList', {
     defaultValue: [],
   })
@@ -50,7 +52,7 @@ export default function CardList({
 
   return (
     <>
-      {!fromAllCardsPage && (
+      {(!fromAllCardsPage && status !== 'authenticated') && (
         <StyledButton $variant="reset" onClick={handleReset}>
           Reset
         </StyledButton>
