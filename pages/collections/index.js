@@ -5,12 +5,14 @@ import { LevelCard, LevelText } from '@/components/LevelCard'
 import Link from 'next/link'
 import useSWR from 'swr'
 import { StyledH2 } from '@/components/StyledH2'
+import { StatusMessage } from '@/components/StatusMessage'
 
 export default function CollectionPage({ fetcher }) {
   const { data: collections, isLoading, error } = useSWR('/api/collections', fetcher)
 
-  if (isLoading) return <div>Loading collections...</div>
-  if (error) return <div>Failed to load collections. Error: {error.message}</div>
+  if (isLoading) return <StatusMessage>Loading collections...</StatusMessage>
+  if (error)
+    return <StatusMessage>Failed to load collections. Error: {error.message}</StatusMessage>
 
   const getImagePath = (index) => `/levels/level${index + 1}.png`
 

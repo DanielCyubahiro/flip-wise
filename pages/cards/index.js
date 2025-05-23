@@ -11,6 +11,7 @@ import { useState } from 'react'
 import { CreateCard } from '@/utils/CreateCard'
 import { getSession } from 'next-auth/react'
 import Modal from '@/components/Modal'
+import { StatusMessage } from '@/components/StatusMessage'
 
 export default function AllCardsList({ isAuthenticated }) {
   const { data: cards, isLoading, error, mutate } = useSWR('/api/cards')
@@ -63,11 +64,11 @@ export default function AllCardsList({ isAuthenticated }) {
   }
 
   return isLoading ? (
-    <div>Loading cards...</div>
+    <StatusMessage>Loading</StatusMessage>
   ) : error ? (
-    <div>Failed to load cards. Error: {error.message}</div>
+    <StatusMessage>Failed to load cards. Error: {error.message}</StatusMessage>
   ) : !cards || cards.length === 0 ? (
-    <div>No cards available. Please insert new cards...</div>
+    <StatusMessage>No cards available. Please insert new cards...</StatusMessage>
   ) : (
     <StyledWrapper>
       {alert.show && (
