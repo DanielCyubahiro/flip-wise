@@ -3,6 +3,7 @@ import { StyledFooter } from './StyledFooter'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import Logout from '@/components/Logout'
+import Music from './Music'
 
 export default function Navigation() {
   const router = useRouter()
@@ -10,16 +11,17 @@ export default function Navigation() {
   const { status } = useSession()
 
   return (
-    status === 'authenticated' && (
-      <StyledFooter>
+    <StyledFooter>
+      {status === 'authenticated' && (
         <StyledLink href={`/cards`} $active={isActive('/cards')}>
-          All Cards
+          Cards
         </StyledLink>
-        <StyledLink href={`/collections`} $active={isActive('/collections')}>
-          Levels
-        </StyledLink>
-        <Logout />
-      </StyledFooter>
-    )
+      )}
+      <StyledLink href={`/collections`} $active={isActive('/collections')}>
+        Levels
+      </StyledLink>
+      {status === 'authenticated' && <Logout />}
+      <Music></Music>
+    </StyledFooter>
   )
 }
