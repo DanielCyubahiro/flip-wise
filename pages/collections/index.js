@@ -6,9 +6,15 @@ import Link from 'next/link'
 import useSWR from 'swr'
 import { StyledH2 } from '@/components/StyledH2'
 import { StatusMessage } from '@/components/StatusMessage'
+import { StyledButton } from '@/components/StyledButton'
+import { useRouter } from 'next/router'
 
 export default function CollectionPage({ fetcher }) {
   const { data: collections, isLoading, error } = useSWR('/api/collections', fetcher)
+  const router = useRouter()
+  const handleBackHome = () => {
+    router.push('/')
+  }
 
   if (isLoading) return <StatusMessage>Loading collections...</StatusMessage>
   if (error)
@@ -20,6 +26,9 @@ export default function CollectionPage({ fetcher }) {
     <StyledWrapper>
       <StyledH1>HarryPotter</StyledH1>
       <StyledH2 $variant="small">Flipwise</StyledH2>
+      <StyledButton $variant="back" onClick={handleBackHome}>
+        ◀︎
+      </StyledButton>
 
       <StyledCardWrapper>
         {collections.map((collection, index) => (
