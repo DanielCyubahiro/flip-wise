@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { StyledButton } from './StyledButton'
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 
 const CardContainer = styled.section`
@@ -178,9 +177,7 @@ export default function Card({
               <>
                 <FlipButton onClick={() => setIsFlipped(!isFlipped)}>Flip Back</FlipButton>
                 {status !== 'authenticated' && (
-                  <StyledButton onClick={() => handleToggleCorrect(id)}>
-                    Mark as correct
-                  </StyledButton>
+                  <StyledButton onClick={() => handleToggleCorrect(id)}>I know it!</StyledButton>
                 )}
               </>
             )}

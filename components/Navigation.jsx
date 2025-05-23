@@ -10,16 +10,16 @@ export default function Navigation() {
   const { status } = useSession()
 
   return (
-    <StyledFooter>
-      {status === 'authenticated' && (
+    status === 'authenticated' && (
+      <StyledFooter>
         <StyledLink href={`/cards`} $active={isActive('/cards')}>
-          Cards
+          All Cards
         </StyledLink>
-      )}
-      <StyledLink href={`/collections`} $active={isActive('/collections')}>
-        Levels
-      </StyledLink>
-      {status === 'authenticated' && <Logout />}
-    </StyledFooter>
+        <StyledLink href={`/collections`} $active={isActive('/collections')}>
+          Levels
+        </StyledLink>
+        <Logout />
+      </StyledFooter>
+    )
   )
 }

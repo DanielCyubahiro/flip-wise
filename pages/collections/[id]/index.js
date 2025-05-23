@@ -12,7 +12,9 @@ import { useState } from 'react'
 import { CreateCard } from '@/utils/CreateCard'
 import { useSession } from 'next-auth/react'
 import Modal from '@/components/Modal'
+import useLocalStorageState from 'use-local-storage-state'
 import { StatusMessage } from '@/components/StatusMessage'
+import { StyledButton } from '@/components/StyledButton'
 
 export default function CollectionDetailPage() {
   const { status } = useSession()
@@ -21,6 +23,12 @@ export default function CollectionDetailPage() {
   const { data: cards, isLoading, error, mutate } = useSWR(id ? `/api/collections/${id}` : null)
   const { alert, triggerAlert, closeAlert } = useAlert()
   const [showForm, setShowForm] = useState(false)
+  const [completedCollections, setCompletedCollections] = useLocalStorageState(
+    'completedCollections',
+    {
+      defaultValue: [],
+    },
+  )
   const [editCard, setEditCard] = useState(null)
 
   const handleDelete = DeleteCard(mutate, triggerAlert)
@@ -48,6 +56,10 @@ export default function CollectionDetailPage() {
     } catch (err) {
       triggerAlert('Update failed', 'error')
     }
+  }
+
+  const handleBack = () => {
+    router.push('/collections')
   }
 
   const openCreateForm = () => {
@@ -99,13 +111,17 @@ export default function CollectionDetailPage() {
           />
         </Modal>
       )}
-
+      <StyledButton $variant="back" onClick={handleBack}>
+        ◀︎
+      </StyledButton>
       {status === 'authenticated' && <SideMenu onCreate={openCreateForm} />}
       <CardList
         cards={cards}
         onDelete={handleDelete}
-        onEdit={openEditForm}
         fromAllCardsPage={false}
+        onEdit={openEditForm}
+        completedCollections={completedCollections}
+        setCompletedCollections={setCompletedCollections}
       />
     </StyledWrapper>
   )
