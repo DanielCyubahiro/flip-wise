@@ -15,7 +15,7 @@ const HomePage = () => {
   return (
     <StyledContainer>
       <Link href={'/collections'}>
-        <StyledButton>Start Game</StyledButton>
+        <StyledButton $variant="startGame">Start Game</StyledButton>
       </Link>
       <Login />
     </StyledContainer>
