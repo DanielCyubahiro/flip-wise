@@ -10,11 +10,13 @@ import { StyledH2 } from '@/components/StyledH2'
 import { StatusMessage } from '@/components/StatusMessage'
 import { StyledButton } from '@/components/StyledButton'
 import { useRouter } from 'next/router'
+import {useSession} from 'next-auth/react';
 
 export default function CollectionPage() {
   const { data: collections, isLoading, error } = useSWR('/api/collections')
   const [completedCollections, setCompletedCollections] = useState([])
   const router = useRouter()
+  const { status } = useSession()
   const handleBackHome = () => {
     router.push('/')
   }
@@ -43,7 +45,7 @@ export default function CollectionPage() {
       <StyledCardWrapper>
         {sortedCollections.map((collection, index) => {
           const isEnabled =
-            index === 0 || completedCollections.includes(sortedCollections[index - 1]._id)
+            index === 0 || completedCollections.includes(sortedCollections[index - 1]._id) || status === 'authenticated'
           const isCompleted = completedCollections.includes(collection._id)
 
           return (
