@@ -8,8 +8,8 @@ export default function usePageBackground() {
     const handleRouteChange = (url) => {
       if (url === '/collections') {
         document.body.classList.add('collections-background')
-      } else {
-        document.body.classList.remove('collections-background')
+      } else if (url === '/') {
+        document.body.classList.add('home-background')
       }
     }
 

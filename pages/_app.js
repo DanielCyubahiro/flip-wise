@@ -10,6 +10,7 @@ const fetcher = (url) => fetch(url).then((res) => res.json())
 export default function App({ Component, pageProps: { session, ...pageProps } }) {
   usePageBackground()
   const router = useRouter()
+
   return (
     <SessionProvider session={session}>
       <GlobalStyle />
@@ -18,5 +19,6 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
       </SWRConfig>
       {router.pathname !== '/' && <Navigation />}
     </SessionProvider>
+
   )
 }

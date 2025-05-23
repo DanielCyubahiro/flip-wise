@@ -6,6 +6,7 @@ import Link from 'next/link'
 import useSWR from 'swr'
 import { useEffect, useState } from 'react'
 import { StyledSmallText } from '@/components/StyledSmallText'
+import { StyledH2 } from '@/components/StyledH2'
 
 export default function CollectionPage() {
   const { data: collections, isLoading, error } = useSWR('/api/collections')
@@ -26,8 +27,9 @@ export default function CollectionPage() {
 
   return (
     <StyledWrapper>
-      <StyledH1>Collection List</StyledH1>
-      <StyledH1 $variant="small">Flipwise</StyledH1>
+      <StyledH1>HarryPotter</StyledH1>
+      <StyledH2 $variant="small">Flipwise</StyledH2>
+
       <StyledCardWrapper>
         {sortedCollections.map((collection, index) => {
           const isEnabled =
