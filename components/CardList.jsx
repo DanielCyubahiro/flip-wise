@@ -29,8 +29,14 @@ export default function CardList({
     if (!fromAllCardsPage) {
       // Reset for only one collection
       const collectionId = cards && cards[0].collectionId._id
-      setCorrectCardsList(correctCardsList.filter((card) => card.collectionId !== collectionId))
-      setCompletedCollections(normalizedCompletedCollections.filter((id) => id !== collectionId))
+
+      let index = correctCardsList.findIndex((card) => card.collectionId === collectionId)
+      setCorrectCardsList(index !== -1 ? correctCardsList.slice(0, index) : correctCardsList)
+
+      index = completedCollections.indexOf(collectionId)
+      setCompletedCollections(index !== -1 ? completedCollections.slice(0, index) : completedCollections)
+      console.log('correctCardsList',correctCardsList)
+      console.log('completedCollections',completedCollections)
     } else {
       // Reset all cards in the game
       setCorrectCardsList([])
