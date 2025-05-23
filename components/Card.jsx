@@ -23,11 +23,18 @@ const QuestionText = styled.h2`
   color: var(--color-secondary);
 `
 
+const BackQuestionText = styled.h2`
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--color-Primary);
+`
+
 const AnswerText = styled.h2`
   font-size: 1rem;
   font-style: italic;
   font-weight: 400;
   color: #333;
+  margin: 0;
 `
 
 const CardActions = styled.section`
@@ -88,7 +95,7 @@ const CardFront = styled(CardFrontBack)`
 const CardBack = styled(CardFrontBack)`
   transform: rotateY(180deg);
   background-color: #c3c2c2;
-  height: 190px;
+  height: 250px;
 `
 const Logo = styled.span`
   font-family: HARRY;
@@ -172,6 +179,7 @@ export default function Card({
         {isFlipped && (
           <CardBack>
             {showCollectionName && <p>#{collectionName}</p>}
+            <BackQuestionText>{question}</BackQuestionText>
             <AnswerText>{answer}</AnswerText>
             {!isCorrect && (
               <>
