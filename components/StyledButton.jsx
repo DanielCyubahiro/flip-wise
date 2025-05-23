@@ -53,6 +53,27 @@ const ButtonStyle = {
       transform: scale(1.1);
     }
   `,
+  sideMenu: css`
+    background-color: var(--color-button-one);
+    border-width: 6px;
+    border-color: var(--color-button-one);
+    border-radius: 15px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.5rem;
+    font-weight: normal;
+    outline: 0;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    position: absolute;
+    top: 20px;
+    right: 10px;
+  `,
 }
 
 export const StyledButton = styled.button`
