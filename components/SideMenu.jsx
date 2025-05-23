@@ -27,11 +27,28 @@ const StyledMenuItem = styled.li`
 
 const SideMenu = ({ onCreate }) => {
   const [isOpen, setIsOpen] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(true)
 
   const handleCreate = () => {
     setIsOpen(false)
     onCreate((prevState) => !prevState)
   }
+
+  const handleToggleMusic = () => {
+    const audio = window.backgroundMusic
+    if (!audio) return
+
+    if (audio.paused) {
+      audio.play()
+      setIsPlaying(true)
+    } else {
+      audio.pause()
+      setIsPlaying(false)
+    }
+
+    setIsOpen(false)
+  }
+
   return (
     <>
       <StyledButton $variant="sideMenu" onClick={() => setIsOpen(!isOpen)}>
@@ -40,6 +57,9 @@ const SideMenu = ({ onCreate }) => {
       {isOpen && (
         <StyledMenu>
           <StyledMenuItem onClick={handleCreate}>Create</StyledMenuItem>
+          <StyledMenuItem onClick={handleToggleMusic}>
+            {isPlaying ? 'Pause Music' : 'Play Music'}
+          </StyledMenuItem>
         </StyledMenu>
       )}
     </>
