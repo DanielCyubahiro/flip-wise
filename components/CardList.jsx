@@ -27,6 +27,8 @@ export default function CardList({
 
   const handleReset = () => {
     if (!fromAllCardsPage) {
+      // Reset for only one collection
+      const collectionId = cards && cards[0].collectionId._id
       setCorrectCardsList(correctCardsList.filter((card) => card.collectionId !== collectionId))
       setCompletedCollections(normalizedCompletedCollections.filter((id) => id !== collectionId))
     } else {
@@ -46,7 +48,6 @@ export default function CardList({
 
   return (
     <>
-      {!fromAllCardsPage && <StyledButton onClick={handleReset}>Reset</StyledButton>}
       {correctCardsList &&
         cards.map((card) => (
           <Card

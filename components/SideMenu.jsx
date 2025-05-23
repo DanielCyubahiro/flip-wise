@@ -7,13 +7,15 @@ const StyledMenu = styled.ul`
   position: absolute;
   top: 3.5rem;
   right: 1.5rem;
-  background: white;
-  border: 1px solid #cccccc;
+  background: var(--color-button-one);
+  border: 3px solid #cccccc;
+  border-radius: 15px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin-top: 0.5rem;
   border-radius: 0.2rem;
   z-index: 100;
   padding: 0.5rem;
+  color: white;
 `
 
 const StyledMenuItem = styled.li`
@@ -21,14 +23,6 @@ const StyledMenuItem = styled.li`
   &:hover {
     cursor: pointer;
   }
-`
-
-const StyledSideMenuButton = styled(StyledButton)`
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  display: flex;
-  place-items: center;
 `
 
 const SideMenu = ({ onCreate }) => {
@@ -40,9 +34,9 @@ const SideMenu = ({ onCreate }) => {
   }
   return (
     <>
-      <StyledSideMenuButton onClick={() => setIsOpen(!isOpen)}>
+      <StyledButton $variant="sideMenu" onClick={() => setIsOpen(!isOpen)}>
         <AlignJustify />
-      </StyledSideMenuButton>
+      </StyledButton>
       {isOpen && (
         <StyledMenu>
           <StyledMenuItem onClick={handleCreate}>Create</StyledMenuItem>

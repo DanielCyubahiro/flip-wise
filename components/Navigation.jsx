@@ -16,7 +16,7 @@ export default function Navigation() {
           All Cards
         </StyledLink>
         <StyledLink href={`/collections`} $active={isActive('/collections')}>
-          Collections
+          Levels
         </StyledLink>
         <Logout />
       </StyledFooter>
