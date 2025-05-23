@@ -79,7 +79,7 @@ export default function AllCardsList({ isAuthenticated }) {
           duration={3000}
         />
       )}
-      <StyledH1>All Cards List</StyledH1>
+      <StyledH1 $variant="norm">All Cards List</StyledH1>
       {showForm && (
         <Modal
           onClose={() => {
