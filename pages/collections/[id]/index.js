@@ -12,6 +12,7 @@ import { useState } from 'react'
 import { CreateCard } from '@/utils/CreateCard'
 import { useSession } from 'next-auth/react'
 import Modal from '@/components/Modal'
+import { StatusMessage } from '@/components/StatusMessage'
 
 export default function CollectionDetailPage() {
   const { status } = useSession()
@@ -64,11 +65,11 @@ export default function CollectionDetailPage() {
   }
 
   return isLoading ? (
-    <div>Loading cards...</div>
+    <StatusMessage>Loading cards...</StatusMessage>
   ) : error ? (
-    <div>Failed to load cards. Error: {error.message}</div>
+    <StatusMessage>Failed to load cards. Error: {error.message}</StatusMessage>
   ) : !cards || cards.length === 0 ? (
-    <div>No cards available. Please insert new cards...</div>
+    <StatusMessage>No cards available. Please insert new cards...</StatusMessage>
   ) : (
     <StyledWrapper>
       {alert.show && (
