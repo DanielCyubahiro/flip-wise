@@ -48,6 +48,7 @@ export default function CardList({
 
   return (
     <>
+      {!fromAllCardsPage && <StyledButton onClick={handleReset}>Reset</StyledButton>}
       {correctCardsList &&
         cards.map((card) => (
           <Card
