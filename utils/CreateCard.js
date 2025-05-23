@@ -9,10 +9,13 @@ export function CreateCard(mutate, setShowForm) {
         body: JSON.stringify(newCard),
       })
 
-      if (response.ok) {
-        await mutate()
-        setShowForm(false)
-      }
+      if (!response.ok) throw new Error('Failed to create card')
+
+      const createdCard = await response.json()
+
+      mutate((currentCards) => [createdCard, ...currentCards], false)
+
+      setShowForm(false)
     } catch (error) {
       console.error('Your card could not be added', error)
     }
