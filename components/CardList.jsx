@@ -27,18 +27,12 @@ export default function CardList({
 
   const handleReset = () => {
     if (!fromAllCardsPage) {
-      // Reset for only one collection
-      const collectionId = cards && cards[0].collectionId._id
-
       let index = correctCardsList.findIndex((card) => card.collectionId === collectionId)
       setCorrectCardsList(index !== -1 ? correctCardsList.slice(0, index) : correctCardsList)
 
       index = completedCollections.indexOf(collectionId)
       setCompletedCollections(index !== -1 ? completedCollections.slice(0, index) : completedCollections)
-      console.log('correctCardsList',correctCardsList)
-      console.log('completedCollections',completedCollections)
-    } else {
-      // Reset all cards in the game
+} else {
       setCorrectCardsList([])
       setCompletedCollections([])
     }
@@ -52,11 +46,17 @@ export default function CardList({
     setCompletedCollections([...normalizedCompletedCollections, collectionId])
   }
 
+  const sortedCards = [...(cards || [])].sort((a, b) => b._id.localeCompare(a._id))
+
   return (
     <>
-      {!fromAllCardsPage && <StyledButton onClick={handleReset}>Reset</StyledButton>}
+      {!fromAllCardsPage && (
+        <StyledButton $variant="reset" onClick={handleReset}>
+          Reset
+        </StyledButton>
+      )}
       {correctCardsList &&
-        cards.map((card) => (
+        sortedCards.map((card) => (
           <Card
             key={card._id}
             id={card._id}

@@ -6,7 +6,7 @@ import Logout from '@/components/Logout'
 
 export default function Navigation() {
   const router = useRouter()
-  const isActive = (path) => router.pathname === path
+  const isActive = (path) => router.pathname.startsWith(path)
   const { status } = useSession()
 
   return (

@@ -10,7 +10,8 @@ export function CreateCard(mutate, setShowForm) {
       })
 
       if (response.ok) {
-        await mutate()
+        const createdCard = await response.json()
+        await mutate((currentCards) => [createdCard, ...currentCards], false)
         setShowForm(false)
       }
     } catch (error) {
