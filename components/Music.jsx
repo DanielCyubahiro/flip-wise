@@ -6,9 +6,9 @@ const BackgroundMusic = styled.audio`
 
 export default function Music() {
   return (
-    <audio autoPlay loop style={{ display: 'none' }}>
+    <BackgroundMusic autoPlay loop style={{ display: 'none' }}>
       <source src="/sound/HP-theme.mp3" type="audio/mpeg" />
       Your browser does not support the audio element.
-    </audio>
+    </BackgroundMusic>
   )
 }

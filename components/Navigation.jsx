@@ -3,6 +3,7 @@ import { StyledFooter } from './StyledFooter'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import Logout from '@/components/Logout'
+import Music from './Music'
 
 export default function Navigation() {
   const router = useRouter()
@@ -20,6 +21,7 @@ export default function Navigation() {
         Levels
       </StyledLink>
       {status === 'authenticated' && <Logout />}
+      <Music></Music>
     </StyledFooter>
   )
 }
