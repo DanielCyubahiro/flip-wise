@@ -34,7 +34,7 @@ export default function CardList({
       setCorrectCardsList(index !== -1 ? correctCardsList.slice(0, index) : correctCardsList)
 
       index = completedCollections.indexOf(collectionId)
-      setCompletedCollections(index !== -1 ? completedCollections.slice(0, index) : completedCollections)
+      setCompletedCollections(index !== -1 ? completedCollections.slice(0, index+1) : completedCollections)
       console.log('correctCardsList',correctCardsList)
       console.log('completedCollections',completedCollections)
     } else {
