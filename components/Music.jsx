@@ -23,7 +23,7 @@ export default function Music() {
 
   return (
     <BackgroundMusic ref={audioRef} autoPlay loop style={{ display: 'none' }}>
-      <source src="/sound/HP-theme.mp3" type="audio/mpeg" />
+      <source src="/audio/HP-theme.mp3" type="audio/mpeg" />
       Your browser does not support the audio element.
     </BackgroundMusic>
   )
