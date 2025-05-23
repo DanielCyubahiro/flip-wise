@@ -24,11 +24,13 @@ export default function CardList({ cards, onDelete, onEdit, fromAllCardsPage = f
     }
   }
 
+  const sortedCards = [...(cards || [])].sort((a, b) => b._id.localeCompare(a._id))
+
   return (
     <>
       {!fromAllCardsPage && <StyledButton onClick={handleReset}>Reset</StyledButton>}
       {correctCardsList &&
-        cards.map((card) => (
+        sortedCards.map((card) => (
           <Card
             key={card._id}
             id={card._id}

@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     await dbConnect()
 
     if (req.method === 'GET') {
-      const cards = await Card.find().populate('collectionId').sort({ _id: -1 })
+      const cards = await Card.find().populate('collectionId')
       return res.status(200).json(cards)
     }
 
