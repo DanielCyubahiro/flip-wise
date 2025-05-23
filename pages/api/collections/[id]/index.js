@@ -11,7 +11,9 @@ export default async function handler(request, response) {
     try {
       const cardsInOneCollection = await Card.find({
         collectionId: id,
-      }).populate('collectionId')
+      })
+        .populate('collectionId')
+        .sort({ _id: -1 })
       return response.status(200).json(cardsInOneCollection)
     } catch (err) {
       return response.status(500).json({ status: 'Failed to fetch collections' })
