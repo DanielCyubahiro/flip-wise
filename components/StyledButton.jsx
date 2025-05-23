@@ -132,6 +132,24 @@ const ButtonStyle = {
     left: 45px;
     font-size: 1.3rem;
   `,
+    mark: css`
+    background-color: var(--color-button-one);
+    border-width: 6px;
+    border-color: var(--color-button-one);
+    border-radius: 15px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.5rem;
+    font-weight: normal;
+    outline: 0;
+    padding: 7.5px 15px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  `,
 }
 
 export const StyledButton = styled.button`

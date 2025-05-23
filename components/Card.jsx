@@ -8,7 +8,7 @@ const CardContainer = styled.section`
 `
 const CardBox = styled.section`
   background-color: ${(props) =>
-    props.$isCorrect ? 'var(--color-secondary)' : 'var(--color-primary)'};
+    props.$isCorrect ? 'var(--color-tertiary)' : 'var(--color-primary)'};
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   padding: 32px;
@@ -87,7 +87,7 @@ const CardFront = styled(CardFrontBack)`
 
 const CardBack = styled(CardFrontBack)`
   transform: rotateY(180deg);
-  background-color: #dcdcdc;
+  background-color: #c3c2c2;
   height: 190px;
 `
 const Logo = styled.span`
@@ -177,7 +177,9 @@ export default function Card({
               <>
                 <FlipButton onClick={() => setIsFlipped(!isFlipped)}>Flip Back</FlipButton>
                 {status !== 'authenticated' && (
-                  <StyledButton onClick={() => handleToggleCorrect(id)}>I know it!</StyledButton>
+                  <StyledButton $variant="mark" onClick={() => handleToggleCorrect(id)}>
+                    I know it!
+                  </StyledButton>
                 )}
               </>
             )}
