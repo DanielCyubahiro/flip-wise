@@ -2,6 +2,7 @@ import { AlignJustify } from 'lucide-react'
 import { useState } from 'react'
 import styled from 'styled-components'
 import { StyledButton } from '@/components/StyledButton'
+import { useSession } from 'next-auth/react'
 
 const StyledMenu = styled.ul`
   position: absolute;
@@ -28,6 +29,7 @@ const StyledMenuItem = styled.li`
 const SideMenu = ({ onCreate }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isPlaying, setIsPlaying] = useState(true)
+  const { status } = useSession()
 
   const handleCreate = () => {
     setIsOpen(false)
@@ -56,7 +58,9 @@ const SideMenu = ({ onCreate }) => {
       </StyledButton>
       {isOpen && (
         <StyledMenu>
-          <StyledMenuItem onClick={handleCreate}>Create</StyledMenuItem>
+          {status === 'authenticated' && (
+            <StyledMenuItem onClick={handleCreate}>Create</StyledMenuItem>
+          )}
           <StyledMenuItem onClick={handleToggleMusic}>
             {isPlaying ? 'Pause Music' : 'Play Music'}
           </StyledMenuItem>
